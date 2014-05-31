@@ -1,0 +1,22 @@
+body {
+	position: relative;
+	padding-top: 80px;
+}
+
+#map-canvas { height: 400px; width: 600px }
+
+#mapCanvas img { 
+  max-width: none;
+}
+
+#mapCanvas label { 
+  width: auto; display:inline; 
+}
+
+img, object, embed { max-width: 100%; }
+
+#map-canvas img {
+    max-width: none !important;
+}
+
+ 
