@@ -1,4 +1,4 @@
-## CycleSafe=========
+<h1>CycleSafe</h1>
 
 **CycleSafe** is a web app that allows cyclists to report dangerous road hazards, including construction, dangerous roads, and low visibility. 
 
