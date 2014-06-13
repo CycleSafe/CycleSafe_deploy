@@ -1,0 +1,83 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>CycleSafe</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet'>
+	<link href="{% static 'css/style.css' %}" rel='stylesheet'>
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+	<!-- Alert/Notification -->
+	<div class="alert fade in hazard-alert">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>CycleSafe allows cyclists and pedestrians to report street hazards. </strong>
+	</div>
+
+<!-- Navbar
+	================================================== -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+				<a class="brand" href="/">CycleSafe</a>
+				<ul class="list-unstyled list-inline navbar-nav">
+                    <li><a href="/">Dashboard</a></li>
+                    <li>
+                        <a href="/">Report a Hazard</a>
+                    </li>
+                    <li><a href="/">Trip Planner</a></li>
+					</ul>
+			</div>
+	</div>
+
+<!-- Subhead
+	================================================== -->
+	<div class='container'>
+		<div class='row-fluid'>
+			<!-- Region Left -->
+			<div id='hazard-request' class="formStyle">
+  				<form class="form-signin" method='POST' action=''>
+                    {% csrf_token  %}
+                          <div class="fieldWrapper">
+                              <p> Cyclist or Pedestrian? {{ form.user_type }}</p>
+                              <p> Hazard Type: {{ form.hazard_type }}</p>
+                              <p> Date & Time: {{ form.dateTime }}</p>
+                              <p> Address: {{ form.address }}</p>
+                              <p> Description: {{ form.description }}</p>
+                          </div>
+                   <input type="submit" class="submit" value="Submit" />
+				</form>
+			</div>
+		    <div id="map-canvas"></div>
+		</div>
+	</div>
+
+
+
+
+<!-- Footer
+	================================================== -->
+	<footer class="footer">
+		<div class="container">
+		</div>
+	</footer>
+
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script type="text/javascript"  src="{% static 'js/jquery_1.11.1.js' %}"></script>
+	<script type="text/javascript"  src="{% static 'js/bootstrap.js' %}"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true"></script>
+    <script type="text/javascript"  src="{% static 'js/modernizr_2.8.2.js' %}"></script>
+
+	<script type="text/javascript"  src="{% static 'js/function.js' %}"></script>
+	<script type="text/javascript"  src="{% static 'js/maps.js' %}"></script>
+
+</body>
+</html>

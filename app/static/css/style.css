@@ -1,0 +1,65 @@
+.navbar {
+    position: absolute;
+}
+
+.navbar .container {
+    vertical-align: middle;
+}
+
+.brand {
+    text-decoration: none;
+    font-size: 2em;
+    color: forestgreen;
+    float: left;
+}
+
+.brand:hover {
+    text-decoration: none;
+    color: forestgreen;
+
+}
+
+.list-unstyled {
+    color: white;
+    padding-left: 5%;
+}
+
+.list-unstyled a {
+    vertical-align: middle;
+    margin-top: 20px;
+}
+
+.list-unstyled a:hover {
+   text-decoration: none;
+}
+
+
+#map-canvas img {
+  max-width: none;
+}
+
+#map-canvas label {
+  width: auto;
+  display:inline;
+}
+
+#map-canvas{
+    width:700px;
+    height:500px;
+    display: inline-block;
+    float: right;
+    position: relative;
+}
+
+img, object, embed { max-width: 100%; }
+
+#hazard-request {
+    display: inline-block;
+    float: left;
+    text-align: right;
+}
+
+.fieldWrapper select, input:nth-child(1), input:nth-child(2), textarea {
+    width: 250px;
+    max-height: 2%;
+}
