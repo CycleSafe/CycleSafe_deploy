@@ -4,18 +4,19 @@ from django.db import models
 
 #Need to figure out how to add a tooltip here. Maybe putting this data into the model is  better.
 HAZARD_CHOICE = (
-('1', 'Construction'),
-('2', 'Dangerous Crossing'),
-('3', 'Dangerous Road'),
-('4', 'Heavy Traffic'),
-('5', 'Low Visibility'),
-('6', 'Obstruction'),
+    ('1', 'Construction'),
+    ('2', 'Dangerous Crossing'),
+    ('3', 'Dangerous Road'),
+    ('4', 'Heavy Traffic'),
+    ('5', 'Low Visibility'),
+    ('6', 'Obstruction'),
 )
 
 USER_CHOICE = (
-('1', 'Cyclist'),
-('2', 'Pedestrian'),
+    ('1', 'Cyclist'),
+    ('2', 'Pedestrian'),
 )
+
 
 class Hazard(models.Model):
     dateTime = models.DateTimeField(null=True, blank=True)

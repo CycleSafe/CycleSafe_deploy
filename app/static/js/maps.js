@@ -49,6 +49,7 @@ function mapGenerator(lat, lon){
 		mapOptions);
 
 
+//Need to pull marker data and set it to something.
 google.maps.event.addListener(marker, 'click', function() {
 	infowindow.open(map,marker)
 });

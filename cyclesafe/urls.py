@@ -12,6 +12,7 @@ v1_api.register(HazardResource())
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'app.views.index', name='index'),
+    url(r'map/', 'app.views.map', name='map'),
 
     url(r'^api/', include(v1_api.urls)),
     url(r'^admin/', include(admin.site.urls)),

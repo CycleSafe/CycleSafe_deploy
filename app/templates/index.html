@@ -6,22 +6,17 @@
 <head>
 	<meta charset="utf-8">
 	<title>CycleSafe</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width , initial-scale=1.0">
 	<meta name="description" content="">
-	<meta name="author" content="">
+	<meta name="author" content="Zhila Emadi">
 	<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet'>
 	<link href="{% static 'css/style.css' %}" rel='stylesheet'>
 
 </head>
 
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<body>
 
-	<!-- Alert/Notification -->
-	<div class="alert fade in hazard-alert">
-		<button type="button" class="close" data-dismiss="alert">×</button>
-		<strong>CycleSafe allows cyclists and pedestrians to report street hazards. </strong>
-	</div>
-
+<!-- Add Cyclesafe -->
 <!-- Navbar
 	================================================== -->
 	<div class="navbar navbar-inverse navbar-fixed-top">
@@ -39,15 +34,18 @@
 
 <!-- Subhead
 	================================================== -->
-	<div class='container'>
-		<div class='row-fluid'>
+	<div class='container' id="subcontainer">
+		<div class='row clearfix' id='row1'>
 			<!-- Region Left -->
 			<div id='hazard-request' class="formStyle">
-  				<form class="form-signin" method='POST' action=''>
+                <div id="align_left">
+                <p>CycleSafe allows cyclists and pedestrians to map dangerous routes in their communities.</p>
+                    </div>
+  				<form class="form_data" method='POST' action="">
                     {% csrf_token  %}
                           <div class="fieldWrapper">
-                              <p> Cyclist or Pedestrian? {{ form.user_type }}</p>
-                              <p> Hazard Type: {{ form.hazard_type }}</p>
+                              <p> User Type: {{ form.user_type }}</p>
+                              <p> Hazard: {{ form.hazard_type }}</p>
                               <p> Date & Time: {{ form.dateTime }}</p>
                               <p> Address: {{ form.address }}</p>
                               <p> Description: {{ form.description }}</p>
@@ -55,7 +53,9 @@
                    <input type="submit" class="submit" value="Submit" />
 				</form>
 			</div>
-		    <div id="map-canvas"></div>
+            <div id="map-canvas"></div>
+            {% block map %}
+            {% endblock %}
 		</div>
 	</div>
 

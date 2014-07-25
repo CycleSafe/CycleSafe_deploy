@@ -11,12 +11,11 @@ class Migration(SchemaMigration):
         # Adding model 'Hazard'
         db.create_table(u'app_hazard', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('time', self.gf('django.db.models.fields.TimeField')(null=True, blank=True)),
+            ('dateTime', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ('address', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('hazard_type', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('description', self.gf('django.db.models.fields.TextField')(max_length=300, null=True, blank=True)),
-            ('user_type', self.gf('django.db.models.fields.CharField')(max_length=10)),
+            ('hazard_type', self.gf('django.db.models.fields.CharField')(max_length=25)),
+            ('description', self.gf('django.db.models.fields.TextField')(max_length=150, null=True, blank=True)),
+            ('user_type', self.gf('django.db.models.fields.CharField')(max_length=20)),
         ))
         db.send_create_signal(u'app', ['Hazard'])
 
@@ -30,12 +29,11 @@ class Migration(SchemaMigration):
         u'app.hazard': {
             'Meta': {'object_name': 'Hazard'},
             'address': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'hazard_type': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'dateTime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
+            'hazard_type': ('django.db.models.fields.CharField', [], {'max_length': '25'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'time': ('django.db.models.fields.TimeField', [], {'null': 'True', 'blank': 'True'}),
-            'user_type': ('django.db.models.fields.CharField', [], {'max_length': '10'})
+            'user_type': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         }
     }
 

@@ -1,3 +1,7 @@
+body {
+    padding-top: 50px;
+}
+
 .navbar {
     position: absolute;
 }
@@ -33,7 +37,9 @@
    text-decoration: none;
 }
 
-
+#row1 {
+    margin-top: 20px;
+}
 #map-canvas img {
   max-width: none;
 }
@@ -44,7 +50,7 @@
 }
 
 #map-canvas{
-    width:700px;
+    width:65%;
     height:500px;
     display: inline-block;
     float: right;
@@ -53,12 +59,22 @@
 
 img, object, embed { max-width: 100%; }
 
+#align_left {
+    text-align: left;
+}
 #hazard-request {
     display: inline-block;
     float: left;
     text-align: right;
+    width: 30%;
+    font-size:1em;
 }
 
+.fieldWrapper p {
+    vertical-align: middle;
+}
+
+/* Styling on form elements to make them look ok.  */
 .fieldWrapper select, input:nth-child(1), input:nth-child(2), textarea {
     width: 250px;
     max-height: 2%;

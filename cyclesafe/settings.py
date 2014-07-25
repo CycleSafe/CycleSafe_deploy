@@ -19,8 +19,6 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
@@ -62,8 +60,8 @@ DATABASES = {
         'USER': 'cyclesafe',
         'PASSWORD': 'codeforsanjose',
         'HOST': '127.0.0.1',
-        'PORT': '5433',
-}
+        'PORT': '5432',
+    }
 }
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
