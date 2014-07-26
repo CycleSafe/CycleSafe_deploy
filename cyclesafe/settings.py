@@ -32,6 +32,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'app',
     'south',
+
+    #Tastypie is a Django package that builds and manages API's.
     'tastypie',
 
 )
@@ -55,14 +57,23 @@ WSGI_APPLICATION = 'cyclesafe.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cyclesafe',
-        'USER': 'cyclesafe',
-        'PASSWORD': 'codeforsanjose',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'cyclesafe',
+#         'USER': 'cyclesafe',
+#         'PASSWORD': 'codeforsanjose',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
