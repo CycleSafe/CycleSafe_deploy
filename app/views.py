@@ -7,6 +7,10 @@ from app.models import Hazard
 
 from django.shortcuts import redirect
 
+################################################################################
+# API Implementation
+################################################################################
+
 def index(request):
 	return redirect('/report_hazard/')
 
@@ -30,6 +34,7 @@ def report_hazard(request):
 
     return render(request, 'index.html', {
         'form': form,
+		'hazards': Hazard.objects.all(),
     })
 
 # Need collect data and send it to view
@@ -43,3 +48,9 @@ def map(request):
 		print("hazard found!")
 	print("----------")
 	return render(request, "map.html", data)
+
+################################################################################
+# utility functions
+################################################################################
+
+# todo: add as needed
