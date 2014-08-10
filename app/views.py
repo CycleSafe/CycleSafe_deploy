@@ -5,8 +5,15 @@ from app.forms import HazardForm
 #from django.http import HttpResponseRedirect
 from app.models import Hazard
 
+from django.shortcuts import redirect
 
 def index(request):
+	return redirect('/report_hazard/')
+
+def view_hazards(request):
+	return index(request)
+
+def report_hazard(request):
     if request.method == 'POST':
         form = HazardForm(request.POST)
         if form.is_valid():
@@ -25,7 +32,8 @@ def index(request):
         'form': form,
     })
 
-
 # Need collect data and send it to view
 def map(request):
+	# pull data here, send it to map view
+	# get request under map view
     return render(request, "map.html")
