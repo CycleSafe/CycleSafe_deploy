@@ -36,4 +36,10 @@ def report_hazard(request):
 def map(request):
 	# pull data here, send it to map view
 	# get request under map view
-    return render(request, "map.html")
+	hazards = Hazard.objects.all()
+	data = {"hazards" : hazards}
+	print("hazards:")
+	for hazard in hazards:
+		print("hazard found!")
+	print("----------")
+	return render(request, "map.html", data)
