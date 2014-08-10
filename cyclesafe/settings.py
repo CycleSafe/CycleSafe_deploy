@@ -19,6 +19,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -33,8 +34,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'app',
     'south',
-
-    #Tastypie is a Django package that builds and manages API's.
     'tastypie',
     'bootstrap3_datetime'
 )
@@ -56,13 +55,26 @@ WSGI_APPLICATION = 'cyclesafe.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES = {
+DATABASES_SQLITE = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
+DATABASES_POSTGRES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'cyclesafe',
+        'USER': 'cyclesafe',
+        'PASSWORD': 'codeforsanjose',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+
+#DATABASES = DATABASES_POSTGRES
+DATABASES = DATABASES_SQLITE
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -114,7 +126,8 @@ STATIC_URL = '/static/'
 #     os.path.join(BASE_DIR, '../app/static'),
 # )
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+# May need this later if we continue to have DB merge issues.
+# try:
+#     from local_settings import *
+# except ImportError:
+#     pass
