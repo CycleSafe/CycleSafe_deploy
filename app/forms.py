@@ -7,3 +7,7 @@ from django.forms import ModelForm
 class HazardForm(ModelForm):
     class Meta:
         model = Hazard
+        def __init__(self, *args, **kwargs):
+          super(HazardForm, self).__init__(*args, **kwargs)
+          self.fields = TextInput(attrs={
+              'class': 'form-control'})

@@ -50,15 +50,18 @@ body {
 }
 
 #map-canvas{
-    width:65%;
-    height:500px;
-    display: inline-block;
-    float: right;
-    position: relative;
+  width: 100%;
+  height:500px;
+  display: block;
+  float: right;
+  position: relative;
 }
 
 img, object, embed { max-width: 100%; }
-
+label {
+    display: block;
+}
+/*
 #align_left {
     text-align: left;
 }
@@ -72,10 +75,10 @@ img, object, embed { max-width: 100%; }
 
 .fieldWrapper p {
     vertical-align: middle;
-}
+}*/
 
 /* Styling on form elements to make them look ok.  */
-.fieldWrapper select, input:nth-child(1), input:nth-child(2), textarea {
+/*.fieldWrapper select, input:nth-child(1), input:nth-child(2), textarea {
     width: 250px;
     max-height: 2%;
-}
+}*/
