@@ -2,3 +2,4 @@ notes.txt
 venv
 *.pyc
 staticfiles
+local_settings.py

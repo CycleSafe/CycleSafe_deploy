@@ -41,7 +41,7 @@ function mapGenerator(lat, lon){
 	var mapOptions = {
 		center: new google.maps.LatLng(lat, lon),
 		zoom: 12,
-		mapTypeId: google.maps.MapTypeId.ROAD,
+		mapTypeId: google.maps.MapTypeId.ROAD
 
 	};
 	var map = new google.maps.Map(
@@ -50,8 +50,8 @@ function mapGenerator(lat, lon){
 
 
 //Need to pull marker data and set it to something.
-google.maps.event.addListener(marker, 'click', function() {
-	infowindow.open(map,marker)
-});
-
+//google.maps.event.addListener(marker, 'click', function() {
+//	infowindow.open(map,marker)
+//});
+//
 }

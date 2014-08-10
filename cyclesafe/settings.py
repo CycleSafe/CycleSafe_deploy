@@ -21,6 +21,7 @@ TEMPLATE_DEBUG = True
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -35,7 +36,7 @@ INSTALLED_APPS = (
 
     #Tastypie is a Django package that builds and manages API's.
     'tastypie',
-
+    'bootstrap3_datetime'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -44,7 +45,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 )
 
 ROOT_URLCONF = 'cyclesafe.urls'
@@ -62,17 +63,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'cyclesafe',
-#         'USER': 'cyclesafe',
-#         'PASSWORD': 'codeforsanjose',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -88,7 +78,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-MEDIA_ROOT = '/app/static/media/'
+# MEDIA_ROOT = '/app/static/media/'
 MEDIA_URL = '/static/media/'
 
 
@@ -111,12 +101,20 @@ ALLOWED_HOSTS = ['*']
 # import os
 # import os.path
 #
-# BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Static asset configuration
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # STATIC_ROOT = '/cyclesafe/app/static/'
+
+ROOT_PATH = os.path.dirname(__file__)
+
 STATIC_URL = '/static/'
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, '../app/static'),
 # )
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

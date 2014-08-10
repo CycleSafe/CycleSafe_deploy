@@ -9,8 +9,14 @@
 	<meta name="viewport" content="width=device-width , initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="Zhila Emadi">
-	<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet'>
-	<link href="{% static 'css/style.css' %}" rel='stylesheet'>
+{#    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet'>#}
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ STATIC_URL }}css/style.css" rel='stylesheet' type="text/css"/>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery_1.11.1.js"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
+    {{ form.media }}
 
 </head>
 
@@ -41,17 +47,28 @@
                 <div id="align_left">
                 <p>CycleSafe allows cyclists and pedestrians to map dangerous routes in their communities.</p>
                     </div>
-  				<form class="form_data" method='POST' action="">
-                    {% csrf_token  %}
-                          <div class="fieldWrapper">
-                              <p> User Type: {{ form.user_type }}</p>
-                              <p> Hazard: {{ form.hazard_type }}</p>
-                              <p> Date & Time: {{ form.dateTime }}</p>
-                              <p> Address: {{ form.address }}</p>
-                              <p> Description: {{ form.description }}</p>
-                          </div>
-                   <input type="submit" class="submit" value="Submit" />
-				</form>
+<form method="post" role="form">
+            {% for field in form.visible_fields %}
+            <div id="div_{{ field.html_name }}"
+                 class="form-group{% if field.errors %} has-error{% endif %}">
+                {{ field.label_tag }}
+                {{ field }}
+                <div class="text-muted pull-right">
+                    <small>{{ field.help_text }}</small>
+                </div>
+                <div class="help-block">
+                    {{ field.errors }}
+                </div>
+            </div>
+            {% endfor %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
 			</div>
             <div id="map-canvas"></div>
             {% block map %}
@@ -71,13 +88,12 @@
 
 
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript"  src="{% static 'js/jquery_1.11.1.js' %}"></script>
-	<script type="text/javascript"  src="{% static 'js/bootstrap.js' %}"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true"></script>
-    <script type="text/javascript"  src="{% static 'js/modernizr_2.8.2.js' %}"></script>
 
-	<script type="text/javascript"  src="{% static 'js/function.js' %}"></script>
-	<script type="text/javascript"  src="{% static 'js/maps.js' %}"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true"></script>
+    <script type="text/javascript"  src="{{ STATIC_URL }}js/modernizr_2.8.2.js"></script>
+
+	<script type="text/javascript"  src="{{ STATIC_URL }}js/function.js"></script>
+	<script type="text/javascript"  src="{{ STATIC_URL }}js/maps.js"></script>
 
 </body>
 </html>

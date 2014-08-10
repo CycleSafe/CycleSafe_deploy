@@ -19,7 +19,7 @@ USER_CHOICE = (
 
 
 class Hazard(models.Model):
-    dateTime = models.DateTimeField(null=True, blank=True)
+    datetime_id = models.DateTimeField(null=True, blank=True)
     #time = models.TimeField(null=True, blank=True)
     address = models.CharField(max_length=100)
     hazard_type = models.CharField(max_length=25, choices=HAZARD_CHOICE)
