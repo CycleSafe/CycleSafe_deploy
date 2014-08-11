@@ -18,4 +18,8 @@ urlpatterns = patterns('',
 
     url(r'^api/', include(v1_api.urls)),
     url(r'^admin/', include(admin.site.urls)),
+
+	# djmc new additions
+	url(r'view_hazards/', 'app.views.view_hazards', name='view_hazards'),
+	url(r'report_hazard/', 'app.views.report_hazard', name='report_hazard'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

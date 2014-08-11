@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	initLocationControls();
 
-
+	addMarkers();
 });
 
 function initLocationControls(){

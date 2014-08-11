@@ -5,8 +5,19 @@ from app.forms import HazardForm
 #from django.http import HttpResponseRedirect
 from app.models import Hazard
 
+from django.shortcuts import redirect
+
+################################################################################
+# API Implementation
+################################################################################
 
 def index(request):
+	return redirect('/report_hazard/')
+
+def view_hazards(request):
+	return index(request)
+
+def report_hazard(request):
     if request.method == 'POST':
         form = HazardForm(request.POST)
         if form.is_valid():
@@ -23,9 +34,23 @@ def index(request):
 
     return render(request, 'index.html', {
         'form': form,
+		'hazards': Hazard.objects.all(),
     })
-
 
 # Need collect data and send it to view
 def map(request):
-    return render(request, "map.html")
+	# pull data here, send it to map view
+	# get request under map view
+	hazards = Hazard.objects.all()
+	data = {"hazards" : hazards}
+	print("hazards:")
+	for hazard in hazards:
+		print("hazard found!")
+	print("----------")
+	return render(request, "map.html", data)
+
+################################################################################
+# utility functions
+################################################################################
+
+# todo: add as needed
