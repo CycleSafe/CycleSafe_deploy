@@ -8,16 +8,19 @@
 	<title>CycleSafe</title>
 	<meta name="viewport" content="width=device-width , initial-scale=1.0">
 	<meta name="description" content="">
-	<meta name="author" content="Zhila Emadi">
-{#    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet'>#}
+	<meta name="author" content="Zhila Emadi, Danny McCue, Ghaida Zahran">
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<link href="{{ STATIC_URL }}css/style.css" rel='stylesheet' type="text/css"/>
+	<link href="{{ STATIC_URL }}css/jquery-ui-timepicker.css" rel='stylesheet' type="text/css"/>
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery_1.11.1.js"></script>
-
     <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
     {{ form.media }}
+
+{# For loading files specific one template. #}
+    {% block extra_files %}
+    {% endblock %}
 
 </head>
 
@@ -99,13 +102,16 @@
 
 	<script type="text/javascript"  src="{{ STATIC_URL }}js/function.js"></script>
 	<script type="text/javascript"  src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
+	<script type="text/javascript"  src="{{ STATIC_URL }}js/jquery-ui-timepicker-addon.js"></script>
 	<script type="text/javascript"  src="{{ STATIC_URL }}js/maps.js"></script>
 
-  <script>
-    $( "#datepicker" ).datepicker({
-      inline: true
-    });
-  </script>
+    <script>
+    //jQuery datetime picker, which is part of the Report a Hazard view. Will move this later into a separate map.html file.
+{#        $( "#id_dateTime" ).datepicker({#}
+{#          inline: true#}
+{#        });#}
+        $('#id_dateTime').datetimepicker();
+    </script>
 
 </body>
 </html>
