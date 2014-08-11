@@ -1,5 +1,6 @@
 Django==1.6.5
 South==1.0
+django-appconf==0.6
 django-bootstrap3-datetimepicker==2.2.3
 django-tastypie==0.11.1
 python-dateutil==2.2

@@ -49,37 +49,16 @@
                     </div>
                 <form class="form_data" method='POST' action="">
                     {% csrf_token  %}
+                        {{ form.media }}
                           <div class="fieldWrapper">
                               <p> User Type: {{ form.user_type }}</p>
                               <p> Hazard: {{ form.hazard_type }}</p>
                               <p> Date & Time: {{ form.dateTime }}</p>
-                              <p> Address: {{ form.address }}</p>
+                              <p> Location: {{ form.lat }}</p>
                               <p> Description: {{ form.description }}</p>
                           </div>
                    <input type="submit" class="submit" value="Submit" />
 				</form>
-{#<form method="post" role="form">#}
-{#            {% for field in form.visible_fields %}#}
-{#            <div id="div_{{ field.html_name }}"#}
-{#                 class="form-group{% if field.errors %} has-error{% endif %}">#}
-{#                {{ field.label_tag }}#}
-{#                {{ field }}#}
-{#                <div class="text-muted pull-right">#}
-{#                    <small>{{ field.help_text }}</small>#}
-{#                </div>#}
-{#                <div class="help-block">#}
-{#                    {{ field.errors }}#}
-{#                </div>#}
-{#            </div>#}
-{#            {% endfor %}#}
-{#            {% for hidden in form.hidden_fields %}#}
-{#                {{ hidden }}#}
-{#            {% endfor %}#}
-{#            {% csrf_token %}#}
-{#            <div class="form-group">#}
-{#                <input type="submit" value="Submit" class="btn btn-primary" />#}
-{#            </div>#}
-{#        </form>#}
 			</div>
             <div id="map-canvas"></div>
             {% block map %}

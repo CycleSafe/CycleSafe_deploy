@@ -33,6 +33,9 @@ function locationData(position){
 	var lon = position.coords.longitude;
 	var timestamp = position.coords.timestamp;
 
+    //Set multiple values.
+    document.getElementById('#id_address').setAttribute("value", (lat + ',' + lon));
+
     mapGenerator(lat, lon);
 
 }
