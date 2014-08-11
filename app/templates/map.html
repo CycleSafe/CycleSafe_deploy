@@ -2,35 +2,5 @@
 {% load staticfiles %}
 
 {% block map %}
-	<!-- reference: http://stackoverflow.com/questions/10827613/placing-markers-on-google-map-with-django -->
-	<script type="text/javascript">
-		function addMarkers()
-		{
-			{% for hazard in hazards %}
-				var point = new google.maps.LatLng({{hazard.latitude}},{{hazard.longitude}});
-				var image = '{{ STATIC_PREFIX }}'+ 'checkmark.png';
-				var marker = new google.maps.Marker({
-					position: point,
-					map: map,
-					icon: image, 
-					url: '/hazard/' + {{hazard.id}},
-					title: '{{ hazard.id }}',
-				});
-				marker['infowindow']  = new google.maps.InfoWindow({
-					content: "<h1>{{hazard.name}}</h1> <br> {{ hazard.name }} <p> <a href=\"http:\/\/172.16.0.101:8882\/hazard\/{{ hazard.id }}\"> {{ hazard.name }}</a>",
-				});
-				google.maps.event.addListener(hazard, 'click', function() {
-					//window.location.href = this.url;
-					this['infowindow'].open(map, this);
-				});
-				google.maps.event.addListener(hazard, 'mouseover', function() {
-					// this['infowindow'].open(map, this);
-				});
-				google.maps.event.addListener(hazard, 'mouseout', function() {
-					// this['infowindow'].close(map, this);
-				});
-			{% endfor %} 
-		}
-	</script>
     <div id="map-canvas"></div>
 {% endblock %}

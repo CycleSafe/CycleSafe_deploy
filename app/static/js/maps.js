@@ -1,10 +1,8 @@
-// This was a homework assignment in the first few weeks of my bootcamp. It shows local weather on a map using GeoLocation (with HTML and libraries needed).
 
 $(document).ready(function(){ 
 
 	initLocationControls();
 
-	addMarkers();
 });
 
 function initLocationControls(){
@@ -33,8 +31,8 @@ function locationData(position){
 	var lon = position.coords.longitude;
 	var timestamp = position.coords.timestamp;
 
-    //Set multiple values.
-    document.getElementById('#id_address').setAttribute("value", (lat + ',' + lon));
+//    //Set multiple values.
+//    document.getElementById('#id_address').setAttribute("value", (lat + ',' + lon));
 
     mapGenerator(lat, lon);
 

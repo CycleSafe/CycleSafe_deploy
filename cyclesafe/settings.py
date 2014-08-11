@@ -35,7 +35,7 @@ INSTALLED_APPS = (
     'app',
     'south',
     'tastypie',
-    'bootstrap3_datetime'
+    'widget_tweaks',
 )
 
 MIDDLEWARE_CLASSES = (
