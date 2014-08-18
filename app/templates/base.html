@@ -1,0 +1,71 @@
+{# Base template for all pages-- loads common CSS and JS files, navbar, footer, etc. #}
+
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CycleSafe</title>
+    <meta name="viewport" content="width=device-width , initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Zhila Emadi, Danny McCue, Ghaida Zahran">
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}css/style.css" rel='stylesheet' type="text/css"/>
+
+    {# For loading files specific to one view. #}
+    {% block extraCSS %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery_1.11.1.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
+
+    {# For loading files specific to one view. #}
+    {% block extraJS %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+<!-- Navbar
+	================================================== -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a class="brand" href="/">CycleSafe</a>
+        <ul class="list-unstyled list-inline navbar-nav">
+            <li><a href="/">Dashboard</a></li>
+            <li>
+                <a href={% url 'report' %}>Report a Hazard</a>
+            </li>
+            <li><a href="/">Trip Planner</a></li>
+        </ul>
+    </div>
+</div>
+
+{% block main %}
+{% endblock %}
+
+<!-- Footer
+	================================================== -->
+<footer class="footer">
+    <div class="container">
+    </div>
+</footer>
+
+
+<!-- Placed at the end of the document so the pages load faster -->
+
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/modernizr_2.8.2.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/maps.js"></script>
+
+{# For loading scripts at the bottom of the view. #}
+{% block scripts_bottom %}
+{% endblock %}
+
+
+</body>
+</html>

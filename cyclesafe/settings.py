@@ -114,8 +114,6 @@ ALLOWED_HOSTS = ['*']
 # import os.path
 #
 
-# Static asset configuration
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # STATIC_ROOT = '/cyclesafe/app/static/'
 
