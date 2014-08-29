@@ -39,7 +39,15 @@ label {
     font-weight: bold;
 }
 
-
+.latlong-container .columns:first-child input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.latlong-container .columns:last-child input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+}
 
 /*Time Picker*/
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }

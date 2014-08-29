@@ -29,12 +29,12 @@
                         {#<input type="text" id="datepicker">#}
                         <p>Click on the map to set a different location.</p>
                         <label>Latitude &amp; Longitude</label>
-                        <div class="row collapse">
+                        <div class="row collapse latlong-container">
                             <div class="small-6 columns">
-                                {{ form.lat }}
+                                {{ form.lat|add_class:"radius" }}
                             </div>
                             <div class="small-6 columns">
-                                {{ form.lon }}
+                                {{ form.lon|add_class:"radius" }}
                             </div>
                         </div>
                         <label>Description:</label> {{ form.description|add_class:"form-control" }}
