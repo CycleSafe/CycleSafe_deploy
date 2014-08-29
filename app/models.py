@@ -1,6 +1,5 @@
 from django.db import models
-
-#Need to add null, default values, etc.
+from datetime import datetime
 
 #Need to figure out how to add a tooltip here. Maybe putting this data into the model is  better.
 HAZARD_CHOICE = (
@@ -19,9 +18,12 @@ USER_CHOICE = (
 
 
 class Hazard(models.Model):
-    dateTime = models.DateTimeField(null=True, blank=True)
+    dateTime = models.DateTimeField(default=datetime.now, blank=True)
     #time = models.TimeField(null=True, blank=True)
-    address = models.CharField(max_length=100)
+
+    #Separate lat and lon fields
+    lat = models.DecimalField(max_digits=15, decimal_places=10)
+    lon = models.DecimalField(max_digits=15, decimal_places=10)
     hazard_type = models.CharField(max_length=25, choices=HAZARD_CHOICE)
     description = models.TextField(max_length=150, null=True, blank=True)
     user_type = models.CharField(max_length=20, choices=USER_CHOICE)

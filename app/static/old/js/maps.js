@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	initLocationControls();
 
-
+	addMarkers();
 });
 
 function initLocationControls(){
@@ -32,6 +32,9 @@ function locationData(position){
 	var lat = position.coords.latitude;
 	var lon = position.coords.longitude;
 	var timestamp = position.coords.timestamp;
+
+    //Set multiple values.
+    document.getElementById('#id_address').setAttribute("value", (lat + ',' + lon));
 
     mapGenerator(lat, lon);
 
