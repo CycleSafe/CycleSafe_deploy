@@ -11,4 +11,4 @@ class HazardForm(ModelForm):
         # def __init__(self, *args, **kwargs):
         #   super(HazardForm, self).__init__(*args, **kwargs)
         #   self.fields = TextInput(attrs={
-        #       'class': 'form-control'})
+        #       'type': 'text'})
