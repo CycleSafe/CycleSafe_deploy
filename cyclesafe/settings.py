@@ -129,15 +129,6 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
     'compressor.finders.CompressorFinder',
 )
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, "app/static")
-BOWER_INSTALLED_APPS = (
-    'foundation',
-    "compressor",
-)
-COMPRESS_PRECOMPILERS = (
-        ('text/x-sass', 'sass --compass "{infile}" "{outfile}"'),
-        ('text/x-scss', 'sass --scss --compass -I "%s/bower_components/foundation/scss" "{infile}" "{outfile}"' % BOWER_COMPONENTS_ROOT),
-    )
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, '../app/static'),
 # )
