@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
 {% block extraCSS %}
-    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css"/>
-    <link href="{{ STATIC_URL }}css/jquery-ui-timepicker.css" rel='stylesheet' type="text/css"/>
 {% endblock %}
 
 {% block extraJS %}
@@ -12,50 +10,36 @@
 {% block main %}
     <!-- Subhead
 	================================================== -->
-    <div class='container' id="subcontainer">
-        <div class='row clearfix' id='row1'>
+    <div id="subcontainer">
+        <div class="row" id="row1">
             <!-- Region Left -->
-            <div class="col-sm-4">
-                <div id='hazard-request' class="formStyle">
+            <div class="medium-4 columns">
+                <div id='hazard-request'>
                     {% load widget_tweaks %}
                     <p class="lead">CycleSafe allows cyclists and pedestrians to map dangerous routes in their
                         communities.</p>
 
                     <form class="form_data" method='POST' action="" role="form">
                         {% csrf_token %}
-                        <div class="fieldWrapper">
-                            <div class="form-group">
-                                <label>User Type:</label>
-                                {{ form.user_type|add_class:"form-control" }}
-                            </div>
-                            <div class="form-group">
-                                <label>Hazard:</label> {{ form.hazard_type|add_class:"form-control" }}
-                            </div>
-                            <div class="form-group">
-                                <label>Date &amp; Time:</label>
-                                {{ form.dateTime|add_class:"form-control" }}
-                                {#              <input type="text" class="form-control" id="datepicker">#}
-                            </div>
-                            <div class="form-group">
-                                <p>Click on the map to set a different location.</p>
-                                <label>Latitude:</label> {{ form.lat|add_class:"form-control" }}
-                            </div>
-                             <div class="form-group">
-                                <label>Longitude:</label> {{ form.lon|add_class:"form-control" }}
-                            </div>
-                            <div class="form-group">
-                                <label>Description:</label> {{ form.description|add_class:"form-control" }}
-                            </div>
-                        </div>
-                        <input type="submit" class="submit" value="Submit"/>
+                        <label>User Type:</label>
+                        {{ form.user_type|add_class:"form-control" }}
+                        <label>Hazard:</label> {{ form.hazard_type|add_class:"form-control" }}
+                        <label>Date &amp; Time:</label>
+                        {{ form.dateTime|add_class:"form-control" }}
+                        {#              <input type="text" class="form-control" id="datepicker">#}
+                        <p>Click on the map to set a different location.</p>
+                        <label>Latitude:</label> {{ form.lat|add_class:"form-control" }}
+                        <label>Longitude:</label> {{ form.lon|add_class:"form-control" }}
+                        <label>Description:</label> {{ form.description|add_class:"form-control" }}
+                        <input type="submit" class="submit primary radius button" value="Submit">
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-8">
-            <div id="map-canvas"></div>
-            {% block map %}
-            {% endblock %}
+            <div class="medium-8 columns">
+                <div id="map-canvas"></div>
+                {% block map %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 {% endblock %}

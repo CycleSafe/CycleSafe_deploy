@@ -6,12 +6,9 @@ from django.forms import ModelForm, DateTimeInput
 class HazardForm(ModelForm):
     class Meta:
         model = Hazard
-<<<<<<< HEAD
 
         # def __init__(self, *args, **kwargs):
         #   super(HazardForm, self).__init__(*args, **kwargs)
         #   self.fields = TextInput(attrs={
         #       'type': 'text'})
-=======
         widgets = {'dateTime': DateTimeInput(attrs={'class': 'datepicker'})}
->>>>>>> origin/zhila

@@ -1,104 +1,11 @@
-<<<<<<< HEAD
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8">
-	<title>CycleSafe</title>
-	<meta name="viewport" content="width=device-width , initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="Zhila Emadi">
-  <link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet">
-  <link href="{{ STATIC_URL }}css/app.css" rel="stylesheet">
-  <script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js"></script>
-  {{ form.media }}
-
-</head>
-
-<body>
-
-<!-- Add Cyclesafe -->
-<!-- Navbar
-	================================================== -->
-
-  <nav class="top-bar" data-topbar role="navigation">
-    <ul class="title-area">
-      <li class="name">
-        <h1><a href="#">CycleSafe</a></h1>
-      </li>
-      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-    <section class="top-bar-section">
-      <!-- Right Nav Section -->
-      <ul class="right">
-        <li><a href="/">Dashboard</a></li>
-        <li><a href="/">Report a Hazard</a></li>
-        <li><a href="/">Trip Planner</a></li>
-      </ul>
-    </section>
-  </nav>
-
-<!-- Subhead
-	================================================== -->
-	<div id="subcontainer">
-		<div class="row" id="row1">
-			<!-- Region Left -->
-      <div class="medium-4 columns">
-  			<div id="hazard-request">
-          <p class="lead">CycleSafe allows cyclists and pedestrians to map dangerous routes in their communities.</p>
-          <form class="form_data" method='POST' action="" role="form">
-            {% csrf_token  %}
-      			{{ form.media }}
-            <label>User Type:</label>
-            {{ form.user_type }}
-            <label>Hazard:</label> {{ form.hazard_type }}
-            <label>Date &amp; Time:</label>
-            <input type="text" id="datepicker">
-            <label>Location:</label> {{ form.lat }}
-            <label>Description:</label> {{ form.description }}
-            <input type="submit" value="Submit" class="submit primary button">
-  				</form>
-        </div>
-			</div>
-      <div class="medium-8 columns">
-        <div id="map-canvas"></div>
-        {% block map %}
-        {% endblock %}
-      </div>
-		</div>
-	</div>
-
-
-
-
-<!-- Footer
-	================================================== -->
-	<footer class="footer">
-		<div class="container">
-		</div>
-	</footer>
-
-
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
-
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true"></script>
-
-	<script type="text/javascript"  src="{{ STATIC_URL }}js/function.js"></script>
-	<script type="text/javascript"  src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
-	<script type="text/javascript"  src="{{ STATIC_URL }}js/maps.js"></script>
-  <script type="text/javascript"  src="{{ STATIC_URL }}js/app.js"></script>
-
-</body>
-</html>
-=======
 {% extends 'base.html' %}
 
 {% block main %}
-   <div class="col-sm-10 col-lg-offset-1">
+<div class="small-12 columns">
+  <div class="map-container">
     <div id="map-canvas"></div>
-    {% block map %}
-    {% endblock %}
+  </div>
+  {% block map %}
+  {% endblock %}
 </div>
 {% endblock %}
->>>>>>> origin/zhila
