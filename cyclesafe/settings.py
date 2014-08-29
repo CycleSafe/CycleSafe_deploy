@@ -36,7 +36,7 @@ INSTALLED_APPS = (
     'app',
     'south',
     'tastypie',
-    'bootstrap3_datetime'
+    'widget_tweaks',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -115,8 +115,6 @@ ALLOWED_HOSTS = ['*']
 # import os.path
 #
 
-# Static asset configuration
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # STATIC_ROOT = '/cyclesafe/app/static/'
 

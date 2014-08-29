@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -90,3 +91,14 @@
 
 </body>
 </html>
+=======
+{% extends 'base.html' %}
+
+{% block main %}
+   <div class="col-sm-10 col-lg-offset-1">
+    <div id="map-canvas"></div>
+    {% block map %}
+    {% endblock %}
+</div>
+{% endblock %}
+>>>>>>> origin/zhila

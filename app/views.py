@@ -1,23 +1,17 @@
 from django.shortcuts import render
-
-# Create your views here.
 from app.forms import HazardForm
-#from django.http import HttpResponseRedirect
+# from django.http import HttpResponseRedirect
 from app.models import Hazard
 
-from django.shortcuts import redirect
-
-################################################################################
-# API Implementation
-################################################################################
 
 def index(request):
-	return redirect('/report_hazard/')
+    projects = Hazard.objects.all()
+    data = {'projects': projects}
+    return render(request, "index.html", data)
 
-def view_hazards(request):
-	return index(request)
 
-def report_hazard(request):
+# Will need to update report hazards when user hits submit, without reloading page.
+def report_hazards(request):
     if request.method == 'POST':
         form = HazardForm(request.POST)
         if form.is_valid():
@@ -30,24 +24,19 @@ def report_hazard(request):
     #     'data': data,
     # })
     else:
-        form = HazardForm() # An unbound form
+        form = HazardForm()  # An unbound form
 
-    return render(request, 'index.html', {
+    return render(request, 'report.html', {
         'form': form,
-		'hazards': Hazard.objects.all(),
+        'hazards': Hazard.objects.all(),
     })
 
-# Need collect data and send it to view
+'''
+JavaScript will make a direct request for the data via the API, instead of running it here.
+We may need to optimize this later to avoid slow load times. Google maps can be very client-side heavy.
+'''
 def map(request):
-	# pull data here, send it to map view
-	# get request under map view
-	hazards = Hazard.objects.all()
-	data = {"hazards" : hazards}
-	print("hazards:")
-	for hazard in hazards:
-		print("hazard found!")
-	print("----------")
-	return render(request, "map.html", data)
+    return render(request, 'map.html')
 
 ################################################################################
 # utility functions

@@ -19,11 +19,10 @@ USER_CHOICE = (
 
 class Hazard(models.Model):
     dateTime = models.DateTimeField(default=datetime.now, blank=True)
-    #time = models.TimeField(null=True, blank=True)
 
     #Separate lat and lon fields
-    lat = models.DecimalField(max_digits=15, decimal_places=10)
-    lon = models.DecimalField(max_digits=15, decimal_places=10)
+    lat = models.DecimalField(max_digits=30, decimal_places=20)
+    lon = models.DecimalField(max_digits=30, decimal_places=20)
     hazard_type = models.CharField(max_length=25, choices=HAZARD_CHOICE)
     description = models.TextField(max_length=150, null=True, blank=True)
     user_type = models.CharField(max_length=20, choices=USER_CHOICE)

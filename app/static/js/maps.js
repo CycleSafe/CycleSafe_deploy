@@ -1,60 +1,84 @@
-// This was a homework assignment in the first few weeks of my bootcamp. It shows local weather on a map using GeoLocation (with HTML and libraries needed).
+$(document).ready(function () {
 
-$(document).ready(function(){ 
 
-	initLocationControls();
+    initLocationControls();
 
-	addMarkers();
 });
 
-function initLocationControls(){
-	var geoMessage;
+function initLocationControls() {
 
-	if (Modernizr.geolocation){
-		navigator.geolocation.getCurrentPosition(locationData, locationError);
-	} else {
-		return false;
-	}
+    if (Modernizr.geolocation) {
+        navigator.geolocation.getCurrentPosition(locationData, locationError);
+    } else {
+        return false;
+    }
 
 }
 
 //If geolocation doesn't work, run an error message.
-function locationError(){
-	alert('Please enable geolocation to continue.');
-	return false;
+function locationError() {
+    alert('Please enable geolocation to continue.');
+    return false;
 }
 
-//Collects local data and weather data. 
+//Collects location data of the user.
+function locationData(position) {
+    //We'll need these variables for the map and the report a hazard form.
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
 
-function locationData(position){
-	console.log(position);	
-	//Sets variables we'll need to generate other fields.
-	var lat = position.coords.latitude;
-	var lon = position.coords.longitude;
-	var timestamp = position.coords.timestamp;
-
-    //Set multiple values.
-    document.getElementById('#id_address').setAttribute("value", (lat + ',' + lon));
+    //Set multiple values to form. Need to load this only in report.
+    $('#id_lat').val(lat);
+    $('#id_lon').val(lon);
 
     mapGenerator(lat, lon);
 
 }
 
-function mapGenerator(lat, lon){
-	var mapOptions = {
-		center: new google.maps.LatLng(lat, lon),
-		zoom: 12,
-		mapTypeId: google.maps.MapTypeId.ROAD
+function mapGenerator(lat, lon) {
+    var mapOptions = {
+        center: new google.maps.LatLng(lat, lon),
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROAD
 
-	};
-	var map = new google.maps.Map(
-		document.getElementById("map-canvas"),
-		mapOptions);
+    };
+    var map = new google.maps.Map(
+        document.getElementById("map-canvas"),
+        mapOptions);
 
+    //Get current data for map.
+    var mapData = httpGet('http://127.0.0.1:8000/api/v1/hazard/?format=json');
 
-//Need to pull marker data and set it to something.
-//google.maps.event.addListener(marker, 'click', function() {
-//	infowindow.open(map,marker)
-//});
-//
+    markerGenerator(mapData, map);
+}
+
+function markerGenerator(mapData, map) {
+
+    //Add markers to map. Not sure if there's a better way to do this, instead of just a loop.
+    for (var i = 0; i < mapData.objects.length; i++) {
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(mapData.objects[i].lat, mapData.objects[i].lon),
+            map: map,
+            animation: google.maps.Animation.DROP,
+            title: mapData.objects[i].description
+
+        });
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: 'Description: ' + mapData.objects[i].description
+        });
+    }
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker)
+    });
+}
+
+function httpGet(requestUrl) {
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", requestUrl, false);
+    xmlHttp.send(null);
+    return JSON.parse(xmlHttp.responseText);
 }
