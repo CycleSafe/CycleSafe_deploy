@@ -36,6 +36,7 @@ img, object, embed {
 
 label {
     display: block;
+    font-weight: bold;
 }
 
 

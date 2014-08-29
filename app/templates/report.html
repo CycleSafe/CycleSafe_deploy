@@ -22,14 +22,21 @@
                     <form class="form_data" method='POST' action="" role="form">
                         {% csrf_token %}
                         <label>User Type:</label>
-                        {{ form.user_type|add_class:"form-control" }}
-                        <label>Hazard:</label> {{ form.hazard_type|add_class:"form-control" }}
+                        {{ form.user_type }}
+                        <label>Hazard:</label> {{ form.hazard_type }}
                         <label>Date &amp; Time:</label>
-                        {{ form.dateTime|add_class:"form-control" }}
-                        {#              <input type="text" class="form-control" id="datepicker">#}
+                        {{ form.dateTime }}
+                        {#<input type="text" id="datepicker">#}
                         <p>Click on the map to set a different location.</p>
-                        <label>Latitude:</label> {{ form.lat|add_class:"form-control" }}
-                        <label>Longitude:</label> {{ form.lon|add_class:"form-control" }}
+                        <label>Latitude &amp; Longitude</label>
+                        <div class="row collapse">
+                            <div class="small-6 columns">
+                                {{ form.lat }}
+                            </div>
+                            <div class="small-6 columns">
+                                {{ form.lon }}
+                            </div>
+                        </div>
                         <label>Description:</label> {{ form.description|add_class:"form-control" }}
                         <input type="submit" class="submit primary radius button" value="Submit">
                     </form>
