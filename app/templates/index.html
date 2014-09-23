@@ -1,11 +1,31 @@
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block main %}#}
+{#<<<<<<< HEAD#}
+    {#    This pulls from map.html. Map.html is used both here and in report.html. #}
+{#   <div class="col-sm-10 col-lg-offset-1">#}
+{#    <input id="pac-input" class="controls" type="text" placeholder="Search Box">#}
+{#=======#}
+{#<div class="small-12 columns">#}
+{#  <div class="map-container">#}
+{#>>>>>>> origin/master#}
+{#    <div id="map-canvas"></div>#}
+{#  </div>#}
+{#  {% block map %}#}
+{#  {% endblock %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+
 {% extends 'base.html' %}
 
 {% block main %}
-    {#    This pulls from map.html. Map.html is used both here and in report.html. #}
-   <div class="col-sm-10 col-lg-offset-1">
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<div class="small-12 columns">
+  <div class="map-container">
     <div id="map-canvas"></div>
-    {% block map %}
-    {% endblock %}
+  </div>
+  {% block map %}
+  {% endblock %}
 </div>
 {% endblock %}

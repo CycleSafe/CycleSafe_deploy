@@ -1,65 +1,52 @@
 {% extends 'base.html' %}
 
 {% block extraCSS %}
-    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css"/>
-    <link href="{{ STATIC_URL }}css/jquery-ui-timepicker.css" rel='stylesheet' type="text/css"/>
 {% endblock %}
 
 {% block extraJS %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/report.js"></script>
     {{ form.media }}
 {% endblock %}
 
 {% block main %}
     <!-- Subhead
 	================================================== -->
-    <div class='container' id="subcontainer">
-        <div class='row clearfix' id='row1'>
+    <div id="subcontainer">
+        <div class="row" id="row1">
             <!-- Region Left -->
-            <div class="col-sm-4">
-                <div id='hazard-request' class="formStyle">
+            <div class="medium-4 columns">
+                <div id='hazard-request'>
                     {% load widget_tweaks %}
                     <p class="lead">CycleSafe allows cyclists and pedestrians to map dangerous routes in their
                         communities.</p>
 
                     <form class="form_data" method='POST' action="" role="form">
                         {% csrf_token %}
-                        <div class="fieldWrapper">
-                            <div class="form-group">
-                                <label>User Type:</label>
-                                {{ form.user_type|add_class:"form-control" }}
+                        <label>User Type:</label>
+                        {{ form.user_type }}
+                        <label>Hazard:</label> {{ form.hazard_type }}
+                        <label>Date &amp; Time:</label>
+                        {{ form.dateTime }}
+                        {#<input type="text" id="datepicker">#}
+                        <p>Click on the map to set a different location.</p>
+                        <label>Latitude &amp; Longitude</label>
+                        <div class="row collapse latlong-container">
+                            <div class="small-6 columns">
+                                {{ form.lat|add_class:"radius" }}
                             </div>
-                            <div class="form-group">
-                                <label>Hazard:</label> {{ form.hazard_type|add_class:"form-control" }}
-                            </div>
-                            <div class="form-group">
-                                <label>Date &amp; Time:</label>
-                                {{ form.dateTime|add_class:"form-control" }}
-                                {#              <input type="text" class="form-control" id="datepicker">#}
-                            </div>
-                            <div class="form-group">
-                                <p>Double-click on the map to set a different location.</p>
-                                <label>Latitude:</label> {{ form.lat|add_class:"form-control" }}
-                            </div>
-                             <div class="form-group">
-                                <label>Longitude:</label> {{ form.lon|add_class:"form-control" }}
-                            </div>
-                            <div class="form-group">
-                                <label>Description:</label> {{ form.description|add_class:"form-control" }}
+                            <div class="small-6 columns">
+                                {{ form.lon|add_class:"radius" }}
                             </div>
                         </div>
-                        <input type="submit" class="submit" value="Submit"/>
+                        <label>Description:</label> {{ form.description|add_class:"form-control" }}
+                        <input type="submit" class="submit primary radius button" value="Submit">
                     </form>
                 </div>
             </div>
-        </div>
-
-{#    This pulls from map.html. Map.html is used both here and in index.html. #}
-        <div class="col-sm-8">
-            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-            <div id="map-canvas"></div>
-            {% block map %}
-            {% endblock %}
+            <div class="medium-8 columns">
+                <div id="map-canvas"></div>
+                {% block map %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 {% endblock %}
