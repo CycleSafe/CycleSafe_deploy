@@ -32,10 +32,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangobower',
     'app',
     'south',
     'tastypie',
-    'bootstrap3_datetime'
+    'widget_tweaks',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -114,14 +115,18 @@ ALLOWED_HOSTS = ['*']
 # import os.path
 #
 
-# Static asset configuration
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # STATIC_ROOT = '/cyclesafe/app/static/'
 
 ROOT_PATH = os.path.dirname(__file__)
 
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+    'compressor.finders.CompressorFinder',
+)
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, '../app/static'),
 # )
