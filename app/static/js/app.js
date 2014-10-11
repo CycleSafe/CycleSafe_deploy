@@ -1,5 +1,5 @@
 $(document).foundation();
 
-$( "#datepicker" ).datepicker({
-  inline: true
-});
+//$('#id_dateTime').datepicker({
+//  inline: true
+//});

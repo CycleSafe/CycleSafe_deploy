@@ -2,9 +2,8 @@
 
 {% block main %}
 <div class="small-12 columns">
-  <div class="map-container">
-    <div id="map-canvas"></div>
-  </div>
+  <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+  <div id="map-canvas"></div>
   {% block map %}
   {% endblock %}
 </div>

@@ -3,5 +3,6 @@ venv
 *.pyc
 local_settings.py
 db.sqlite3
-.idea
+*.idea
 app/migrations/*
+*.sqlite3
