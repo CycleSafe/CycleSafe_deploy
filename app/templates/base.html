@@ -1,82 +1,3 @@
-{# Base template for all pages-- loads common CSS and JS files, navbar, footer, etc. #}
-{##}
-{#{% load staticfiles %}#}
-{##}
-{#<!doctype html>#}
-{#<html lang="en">#}
-{##}
-{#<head>#}
-{#    <meta charset="utf-8">#}
-{#    <title>CycleSafe</title>#}
-{#    <meta name="viewport" content="width=device-width , initial-scale=1.0">#}
-{#    <meta name="description" content="">#}
-{#    <meta name="author" content="Zhila Emadi, Danny McCue, Ghaida Zahran">#}
-{#    <link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet">#}
-{#    <link href="{{ STATIC_URL }}css/app.css" rel="stylesheet">#}
-{#    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>#}
-{#    <script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js"></script>#}
-    {# For loading files specific to one view. #}
-{#    {% block extraCSS %}#}
-{#    {% endblock %}#}
-{##}
-    {# For loading files specific to one view. #}
-{#    {% block extraJS %}#}
-{#    {% endblock %}#}
-{#</head>#}
-{##}
-{#<body>#}
-{#  <nav class="top-bar" data-topbar role="navigation">#}
-{#    <ul class="title-area">#}
-{#      <li class="name">#}
-{#        <h1><a href="#">CycleSafe</a></h1>#}
-{#      </li>#}
-{#      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>#}
-{#    </ul>#}
-{#    <div class="top-bar-section">#}
-{#      <!-- Right Nav Section -->#}
-{#      <ul class="right">#}
-{#        <li><a href="/">Dashboard</a></li>#}
-{#        <li><a href="/">Trip Planner</a></li>#}
-{#        <li class="active"><a href={% url 'report' %}>Report a Hazard</a></li>#}
-{#      </ul>#}
-{#    </div>#}
-{#  </nav>#}
-{##}
-{#{% block main %}#}
-{#{% endblock %}#}
-{##}
-{#<!-- Footer#}
-{#	================================================== -->#}
-{#<footer class="footer">#}
-{#    <div class="container">#}
-{#    </div>#}
-{#</footer>#}
-{##}
-{##}
-{#<!-- Placed at the end of the document so the pages load faster -->#}
-{#<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>#}
-{##}
-{#<<<<<<< HEAD#}
-{#<script type="text/javascript"#}
-{#        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&libraries=places&sensor=false"></script>#}
-{#<script type="text/javascript" src="{{ STATIC_URL }}js/modernizr_2.8.2.js"></script>#}
-{#<script type="text/javascript" src="{{ STATIC_URL }}js/maps.js"></script>#}
-{#=======#}
-{#    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true"></script>#}
-{#    <script type="text/javascript"  src="{{ STATIC_URL }}js/function.js"></script>#}
-{#    <script type="text/javascript"  src="{{ STATIC_URL }}js/maps.js"></script>#}
-{#    <script type="text/javascript"  src="{{ STATIC_URL }}js/foundation.min.js"></script>#}
-{#    <script type="text/javascript"  src="{{ STATIC_URL }}js/app.js"></script>#}
-{#>>>>>>> origin/master#}
-{##}
-{# For loading scripts at the bottom of the view. #}
-{#{% block scripts_bottom %}#}
-{#{% endblock %}#}
-{##}
-{#</body>#}
-{#</html>#}
-
-{# Base template for all pages-- loads common CSS and JS files, navbar, footer, etc. #}
 
 {% load staticfiles %}
 
@@ -106,7 +27,7 @@
   <nav class="top-bar" data-topbar role="navigation">
     <ul class="title-area">
       <li class="name">
-        <h1><a href="#">CycleSafe</a></h1>
+        <h1><a href="/">CycleSafe</a></h1>
       </li>
       <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
     </ul>

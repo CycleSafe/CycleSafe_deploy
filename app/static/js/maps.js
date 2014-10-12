@@ -36,6 +36,11 @@ function mapGenerator(lat, lon) {
         document.getElementById("map-canvas"),
         mapOptions);
 
+    //Click map to change the latitude and longitude in the form.
+    google.maps.event.addListener(map, "click", function(event) {
+        setFormLatLon(event.latLng.lat(), event.latLng.lng());
+    });
+
     //Get current data for map.
     var mapData = httpGet('/api/v1/hazard/?format=json');
     searchboxGenerator(map, markers);
@@ -57,21 +62,20 @@ function markerGenerator(mapData, map) {
 
         });
 
-        var infoWindow = new google.maps.InfoWindow({
+        var infoWindow = new google.maps.InfoWindow();
+
+        infoWindow.setOptions({
             content: 'Description: ' + mapData.objects[i].description
         });
+
+        //TODO(zemadi): Edit this when there are more form fields to add.
+        google.maps.event.addListener(marker, 'click', function() {
+            new google.maps.InfoWindow({
+                content: 'Description: ' + this.title
+            }).open(map, this);
+
+        });
     }
-
-    google.maps.event.addListener(marker, 'click', function() {
-        infoWindow.open(map, marker)
-    });
-
-
-    //Click map to change the latitude and longitude in the form.
-    google.maps.event.addListener(map, "click", function(event) {
-        setFormLatLon(event.latLng.lat(), event.latLng.lng());
-    });
-
 }
 
 function httpGet(requestUrl) {
