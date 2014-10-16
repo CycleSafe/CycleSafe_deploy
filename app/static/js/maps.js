@@ -47,7 +47,7 @@ function mapGenerator(lat, lon) {
         mapOptions);
 
     //Get current data for map.
-    var mapData = httpGet('http://localhost:8000/api/v1/hazard/?format=json');
+    var mapData = httpGet(location.href + 'api/v1/hazard/?format=json');
 
     markerGenerator(mapData, map);
 }
