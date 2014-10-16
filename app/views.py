@@ -6,6 +6,9 @@ from app.models import Hazard
 
 def index(request):
     projects = Hazard.objects.all()
+    for project in projects:
+        print(project)
+    print(projects)
     data = {'projects': projects}
     return render(request, "index.html", data)
 
@@ -37,6 +40,9 @@ We may need to optimize this later to avoid slow load times. Google maps can be 
 '''
 def map(request):
     return render(request, 'map.html')
+
+def print_hazards(request):
+	return HttpResponse("woot")
 
 ################################################################################
 # utility functions

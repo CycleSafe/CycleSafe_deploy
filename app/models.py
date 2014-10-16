@@ -26,3 +26,7 @@ class Hazard(models.Model):
     hazard_type = models.CharField(max_length=25, choices=HAZARD_CHOICE)
     description = models.TextField(max_length=150, null=True, blank=True)
     user_type = models.CharField(max_length=20, choices=USER_CHOICE)
+
+    def __repr__(self):
+        out = "Hazard @ <" + str(self.lat) + ", " + str(self.lon) + "> called \"" + self.description + "\""
+        return out

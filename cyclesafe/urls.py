@@ -12,16 +12,17 @@ v1_api = Api(api_name="v1")
 v1_api.register(HazardResource())
 
 urlpatterns = patterns('',
-                       # Examples:
-                       url(r'^$', 'app.views.index', name='index'),
+    # Examples:
+    url(r'^$', 'app.views.index', name='index'),
 
-                       # djmc new additions. Zhila edited-- turned view_hazards to just index.
-                       # url(r'view/', 'app.views.view_hazards', name='view_hazards'),
-                       url(r'report/', 'app.views.report_hazards', name='report'),
-                       url(r'map/', 'app.views.map', name='map'),
+    # djmc new additions. Zhila edited-- turned view_hazards to just index.
+    # url(r'view/', 'app.views.view_hazards', name='view_hazards'),
+    url(r'report/', 'app.views.report_hazards', name='report'),
+    url(r'map/', 'app.views.map', name='map'),
 
-                       url(r'^api/', include(v1_api.urls)),
-                       url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(v1_api.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
-
+	# debugging urls
+    url(r'^debug/all_hazards/', 'app.views.print_hazards', name='all_hazards'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
