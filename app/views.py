@@ -16,13 +16,6 @@ def report_hazards(request):
         form = HazardForm(request.POST)
         if form.is_valid():
             form.save()
-            #return HttpResponseRedirect('/')
-
-    # elif request.method == 'GET':
-    #     data = Hazard.objects.all()
-    #     return render(request, 'index.html', {
-    #     'data': data,
-    # })
     else:
         form = HazardForm()  # An unbound form
 
@@ -37,9 +30,3 @@ We may need to optimize this later to avoid slow load times. Google maps can be 
 '''
 def map(request):
     return render(request, 'map.html')
-
-################################################################################
-# utility functions
-################################################################################
-
-# todo: add as needed

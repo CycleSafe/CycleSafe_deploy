@@ -1,20 +1,21 @@
 $(document).ready(function () {
-
     return grabMyPosition();
-
 });
-
-//What should we do if they don't have geolocation? It should still set to somewhere. Center on San Jose?
-// Separate functionality for index map page and reporting map page.c
 
 function grabMyPosition() {
     if (navigator.geolocation) {
         return navigator.geolocation.getCurrentPosition(centerMap);
     } else {
-        alert("Please enable geolocation to continue.");
+        //If geolocation doesn't work, the map defaults to San Jose.
+        var lat = 37.3394444;
+        var lon = -121.8938889;
+        mapGenerator(lat, lon);
     }
 }
 
+// Add user's location to the report a hazard form and
+// generate a map centering on those coordinates.
+// If the user's location isn't available, default location is San Jose.
 function centerMap(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
@@ -23,15 +24,16 @@ function centerMap(position) {
     return mapGenerator(lat, lon);
 }
 
+//Generate the map and event listeners using lat and lon.
 function mapGenerator(lat, lon) {
     var markers = [];
-
     var mapOptions = {
         center: new google.maps.LatLng(lat, lon),
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROAD
-
     };
+
+    //Create the map at the specified element.
     var map = new google.maps.Map(
         document.getElementById("map-canvas"),
         mapOptions);
@@ -41,17 +43,18 @@ function mapGenerator(lat, lon) {
         setFormLatLon(event.latLng.lat(), event.latLng.lng());
     });
 
-    //Get current data for map.
-    var mapData = httpGet('/api/v1/hazard/?format=json');
-    searchboxGenerator(map, markers);
-
-    return markerGenerator(mapData, map);
+    //Generate markers and search box.
+    markerGenerator(map);
+    return searchboxGenerator(map, markers);
 
 }
 
-function markerGenerator(mapData, map) {
+//Generate map markers, info windows, and event listeners.
+function markerGenerator(map) {
+    //Get current data for map.
+    var mapData = httpGet('/api/v1/hazard/?format=json');
 
-    //Add markers to map. Not sure if there's a better way to do this, instead of just a loop.
+    //Add markers to map.
     for (var i = 0; i < mapData.objects.length; i++) {
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(mapData.objects[i].lat, mapData.objects[i].lon),
@@ -61,38 +64,36 @@ function markerGenerator(mapData, map) {
             draggable: true
 
         });
-
-        var infoWindow = new google.maps.InfoWindow();
-
-        infoWindow.setOptions({
-            content: 'Description: ' + mapData.objects[i].description
+        var infoWindow = new google.maps.InfoWindow({
+           content: 'Description: ' + mapData.objects[i].description
         });
 
         //TODO(zemadi): Edit this when there are more form fields to add.
         google.maps.event.addListener(marker, 'click', function() {
-            new google.maps.InfoWindow({
-                content: 'Description: ' + this.title
-            }).open(map, this);
-
+            infoWindow.setContent('Description: ' + this.title);
+            infoWindow.open(map, this);
         });
     }
+    return marker;
 }
 
+//Get data from API to generate markers.
 function httpGet(requestUrl) {
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", requestUrl, false);
     xmlHttp.send(null);
+
     return JSON.parse(xmlHttp.responseText);
 }
 
+//Add searchbox to map. When place is selected, add markers and lat and lon to form.
 function searchboxGenerator(map, markers){
 // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     var searchBox = new google.maps.places.SearchBox(input);
 
-    // [START region_getplaces]
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
     google.maps.event.addListener(searchBox, 'places_changed', function() {
@@ -125,9 +126,10 @@ function searchboxGenerator(map, markers){
                 position: place.geometry.location,
                 draggable: true
             });
-
+            //Add marker to map.
             markers.push(marker);
 
+            // Set the marker's lat and lon in the form.
             return setFormLatLon(place.geometry.location.lat(), place.geometry.location.lng());
 
         }
