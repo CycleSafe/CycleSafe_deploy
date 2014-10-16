@@ -1,3 +1,5 @@
+// TODO(zemadi): Make a common js file that both maps use.
+
 $(document).ready(function () {
     return grabMyPosition();
 });
@@ -19,7 +21,6 @@ function grabMyPosition() {
 function centerMap(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
-    setFormLatLon(lat, lon);
 
     return mapGenerator(lat, lon);
 }
@@ -38,10 +39,6 @@ function mapGenerator(lat, lon) {
         document.getElementById("map-canvas"),
         mapOptions);
 
-    //Click map to change the latitude and longitude in the form.
-    google.maps.event.addListener(map, "click", function(event) {
-        setFormLatLon(event.latLng.lat(), event.latLng.lng());
-    });
 
     //Generate markers and search box.
     markerGenerator(map);
@@ -130,15 +127,10 @@ function searchboxGenerator(map, markers){
             markers.push(marker);
 
             // Set the marker's lat and lon in the form.
-            return setFormLatLon(place.geometry.location.lat(), place.geometry.location.lng());
+            return true;
 
         }
     });
 
-}
-
-function setFormLatLon(lat, lon) {
-    $('#id_lat').val(lat);
-    $('#id_lon').val(lon);
 }
 
