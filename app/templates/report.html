@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 
-{% block extraCSS %}
-{% endblock %}
-
 {% block extraJS %}
     {{ form.media }}
 {% endblock %}
@@ -43,6 +40,7 @@
                 </div>
             </div>
             <div class="medium-8 columns">
+                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
                 <div id="map-canvas"></div>
                 {% block map %}
                 {% endblock %}
@@ -54,6 +52,7 @@
 {% block scripts_bottom %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript"  src="{{ STATIC_URL }}js/report_map.js"></script>
 
     <script>
         //jQuery datetime picker, which is part of the Report a Hazard view.
