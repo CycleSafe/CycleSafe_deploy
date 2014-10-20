@@ -123,10 +123,12 @@ function searchboxGenerator(map, markers){
                 position: place.geometry.location,
                 draggable: true
             });
+
+            //Center the map on the new marker's location.
+            map.panTo(place.geometry.location);
             //Add marker to map.
             markers.push(marker);
 
-            // Set the marker's lat and lon in the form.
             return true;
 
         }

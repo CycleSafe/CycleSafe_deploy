@@ -23,7 +23,6 @@
                         <label>Hazard:</label> {{ form.hazard_type }}
                         <label>Date &amp; Time:</label>
                         {{ form.dateTime }}
-                        {#<input type="text" id="datepicker">#}
                         <p>Click on the map to set a different location.</p>
                         <label>Latitude &amp; Longitude</label>
                         <div class="row collapse latlong-container">
@@ -40,10 +39,8 @@
                 </div>
             </div>
             <div class="medium-8 columns">
-                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                <input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. ">
                 <div id="map-canvas"></div>
-                {% block map %}
-                {% endblock %}
             </div>
         </div>
     </div>

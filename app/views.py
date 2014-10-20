@@ -1,6 +1,6 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from app.forms import HazardForm
-# from django.http import HttpResponseRedirect
 from app.models import Hazard
 
 
@@ -31,8 +31,7 @@ def report_hazards(request):
 JavaScript will make a direct request for the data via the API, instead of running it here.
 We may need to optimize this later to avoid slow load times. Google maps can be very client-side heavy.
 '''
-def map(request):
-    return render(request, 'map.html')
+
 
 def print_hazards(request):
 	return HttpResponse("woot")

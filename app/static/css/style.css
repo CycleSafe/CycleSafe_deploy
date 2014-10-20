@@ -54,28 +54,6 @@ label {
     display: block;
 }
 
-/*
-#align_left {
-    text-align: left;
-}
-#hazard-request {
-    display: inline-block;
-    float: left;
-    text-align: right;
-    width: 30%;
-    font-size:1em;
-}
-
-.fieldWrapper p {
-    vertical-align: middle;
-}*/
-
-/* Styling on form elements to make them look ok.  */
-/*.fieldWrapper select, input:nth-child(1), input:nth-child(2), textarea {
-    width: 250px;
-    max-height: 2%;
-}*/
-
 
 /* Map CSS */
 

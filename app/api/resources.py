@@ -4,6 +4,7 @@ from tastypie.bundle import Bundle
 from tastypie.fields import CharField
 from tastypie.resources import ModelResource, Resource
 from app.models import Hazard
+from tastypie import fields
 
 
 # Need to limit deletes, etc. only to admin
@@ -12,8 +13,12 @@ class HazardResource(ModelResource):
         max_limit = None
         queryset = Hazard.objects.all()
         resource_name = "hazard"
-       # authorization = Authorization()
-
+        # authorization = Authorization()
+    # Get the actual value of choice fields from the form, instead of the machine value. See models.HAZARD_CHOICE.
+    def dehydrate_hazard_type(self, bundle):
+        return u"{0}".format(bundle.obj.get_hazard_type_display())
+    def dehydrate_user_type(self, bundle):
+        return u"{0}".format(bundle.obj.get_user_type_display())
 
 ######################
 # Non-Model Resource #

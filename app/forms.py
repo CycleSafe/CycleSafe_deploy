@@ -1,4 +1,3 @@
-
 from app.models import Hazard
 from django.forms import ModelForm, DateTimeInput
 
@@ -6,9 +5,4 @@ from django.forms import ModelForm, DateTimeInput
 class HazardForm(ModelForm):
     class Meta:
         model = Hazard
-
-        # def __init__(self, *args, **kwargs):
-        #   super(HazardForm, self).__init__(*args, **kwargs)
-        #   self.fields = TextInput(attrs={
-        #       'type': 'text'})
         widgets = {'dateTime': DateTimeInput(attrs={'class': 'datepicker'})}

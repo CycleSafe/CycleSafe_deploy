@@ -34,7 +34,7 @@
       <!-- Right Nav Section -->
       <ul class="right">
         <li><a href="/">Dashboard</a></li>
-        <li><a href="/">Trip Planner</a></li>
+        <span data-tooltip aria-haspopup="true" class="has-tip" title="Coming soon!"><li><a href="/">Trip Planner</a></li></span>
         <li class="active"><a href={% url 'report' %}>Report a Hazard</a></li>
       </ul>
     </div>
@@ -54,7 +54,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true&libraries=places"></script>
-    <script type="text/javascript"  src="{{ STATIC_URL }}js/foundation.min.js">$(document).foundation();</script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/foundation.min.js">$(document).foundation();</script>
 
 
 {# For loading scripts at the bottom of the view. #}

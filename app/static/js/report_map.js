@@ -55,6 +55,7 @@ function mapGenerator(lat, lon) {
 function markerGenerator(map) {
     //Get current data for map.
     var mapData = httpGet('/api/v1/hazard/?format=json');
+    console.log(mapData);
 
     //Add markers to map.
     for (var i = 0; i < mapData.objects.length; i++) {
@@ -67,16 +68,17 @@ function markerGenerator(map) {
 
         });
         var infoWindow = new google.maps.InfoWindow({
-           content: 'Description: ' + mapData.objects[i].description
+           content: mapData.objects[i].description
         });
 
-        //TODO(zemadi): Edit this when there are more form fields to add.
+        //TODO(zemadi): Update infowindows with actual form data.
         google.maps.event.addListener(marker, 'click', function() {
             infoWindow.setContent('Description: ' + this.title);
             infoWindow.open(map, this);
         });
+
+        return marker;
     }
-    return marker;
 }
 
 //Get data from API to generate markers.
@@ -128,6 +130,9 @@ function searchboxGenerator(map, markers){
                 position: place.geometry.location,
                 draggable: true
             });
+
+            //Center the map on the new marker's location.
+            map.panTo(place.geometry.location);
             //Add marker to map.
             markers.push(marker);
 

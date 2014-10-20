@@ -15,10 +15,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'app.views.index', name='index'),
 
-    # djmc new additions. Zhila edited-- turned view_hazards to just index.
-    # url(r'view/', 'app.views.view_hazards', name='view_hazards'),
     url(r'report/', 'app.views.report_hazards', name='report'),
-    url(r'map/', 'app.views.map', name='map'),
 
     url(r'^api/', include(v1_api.urls)),
     url(r'^admin/', include(admin.site.urls)),
