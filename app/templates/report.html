@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block extraCSS %}
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet">
+{% endblock %}
+
 {% block extraJS %}
     {{ form.media }}
 {% endblock %}
@@ -22,7 +26,7 @@
                         {{ form.user_type }}
                         <label>Hazard:</label> {{ form.hazard_type }}
                         <label>Date &amp; Time:</label>
-                        {{ form.dateTime }}
+                        {{ form.date_time }}
                         <p>Click on the map to set a different location.</p>
                         <label>Latitude &amp; Longitude</label>
                         <div class="row collapse latlong-container">
@@ -34,6 +38,8 @@
                             </div>
                         </div>
                         <label>Description:</label> {{ form.description|add_class:"form-control" }}
+                        {{ form.errors }}
+                        {{ form.non_field_errors }}
                         <input type="submit" class="submit primary radius button" value="Submit">
                     </form>
                 </div>
@@ -53,6 +59,6 @@
 
     <script>
         //jQuery datetime picker, which is part of the Report a Hazard view.
-        $('#id_dateTime').datetimepicker();
+        $('#id_date_time').datetimepicker();
     </script>
 {% endblock %}

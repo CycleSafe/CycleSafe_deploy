@@ -54,8 +54,9 @@ function mapGenerator(lat, lon) {
 //Generate map markers, info windows, and event listeners.
 function markerGenerator(map) {
     //Get current data for map.
+    var contentString;
+    var infoWindow = new google.maps.InfoWindow();
     var mapData = httpGet('/api/v1/hazard/?format=json');
-    console.log(mapData);
 
     //Add markers to map.
     for (var i = 0; i < mapData.objects.length; i++) {
@@ -67,18 +68,21 @@ function markerGenerator(map) {
             draggable: true
 
         });
-        var infoWindow = new google.maps.InfoWindow({
-           content: mapData.objects[i].description
-        });
+        contentString = '<div class="infoindow">' +
+            '<h4><span class="blue">User: </span>' + mapData.objects[i].user_type + '</h4>' +
+            '<p> <span class="blue">Date and Time: </span>' + mapData.objects[i].date_time + '<br>' +
+            '<span class="blue">Hazard: </span>' + mapData.objects[i].hazard_type + '<br>' +
+            '<span class="blue">Description: </span>' + mapData.objects[i].description + '</p>' +
+            '</div>';
 
-        //TODO(zemadi): Update infowindows with actual form data.
-        google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.setContent('Description: ' + this.title);
-            infoWindow.open(map, this);
-        });
-
-        return marker;
+        google.maps.event.addListener(marker, 'mouseover', (function(marker, contentString) {
+            return function() {
+                infoWindow.setContent(contentString);
+                infoWindow.open(map, marker);
+            }
+        })(marker, contentString));
     }
+    return marker;
 }
 
 //Get data from API to generate markers.

@@ -49,6 +49,8 @@ function mapGenerator(lat, lon) {
 //Generate map markers, info windows, and event listeners.
 function markerGenerator(map) {
     //Get current data for map.
+    var contentString;
+    var infoWindow = new google.maps.InfoWindow();
     var mapData = httpGet('/api/v1/hazard/?format=json');
 
     //Add markers to map.
@@ -61,15 +63,19 @@ function markerGenerator(map) {
             draggable: true
 
         });
-        var infoWindow = new google.maps.InfoWindow({
-           content: 'Description: ' + mapData.objects[i].description
-        });
+        contentString = '<div class="infoindow">' +
+            '<h4><span class="blue">User: </span>' + mapData.objects[i].user_type + '</h4>' +
+            '<p> <span class="blue">Date and Time: </span>' + mapData.objects[i].date_time + '<br>' +
+            '<span class="blue">Hazard: </span>' + mapData.objects[i].hazard_type + '<br>' +
+            '<span class="blue">Description: </span>' + mapData.objects[i].description + '</p>' +
+            '</div>';
 
-        //TODO(zemadi): Edit this when there are more form fields to add.
-        google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.setContent('Description: ' + this.title);
-            infoWindow.open(map, this);
-        });
+        google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString) {
+            return function () {
+                infoWindow.setContent(contentString);
+                infoWindow.open(map, marker);
+            }
+        })(marker, contentString));
     }
     return marker;
 }
@@ -85,7 +91,7 @@ function httpGet(requestUrl) {
 }
 
 //Add searchbox to map. When place is selected, add markers and lat and lon to form.
-function searchboxGenerator(map, markers){
+function searchboxGenerator(map, markers) {
 // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -93,7 +99,7 @@ function searchboxGenerator(map, markers){
 
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
-    google.maps.event.addListener(searchBox, 'places_changed', function() {
+    google.maps.event.addListener(searchBox, 'places_changed', function () {
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {

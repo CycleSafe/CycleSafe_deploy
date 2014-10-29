@@ -14,6 +14,8 @@ class HazardResource(ModelResource):
         queryset = Hazard.objects.all()
         resource_name = "hazard"
         # authorization = Authorization()
+    def dehydrate_date_time(self, bundle):
+        return u"{0}".format((bundle.obj.date_time).strftime('%m-%d-%Y, %I:%M %p'))
     # Get the actual value of choice fields from the form, instead of the machine value. See models.HAZARD_CHOICE.
     def dehydrate_hazard_type(self, bundle):
         return u"{0}".format(bundle.obj.get_hazard_type_display())

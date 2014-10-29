@@ -4,62 +4,74 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>CycleSafe</title>
-    <meta name="viewport" content="width=device-width , initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Zhila Emadi, Danny McCue, Ghaida Zahran">
-    <link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/app.css" rel="stylesheet">
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js"></script>
-    {# For loading files specific to one view. #}
-    {% block extraCSS %}
-    {% endblock %}
+	<meta charset="utf-8">
+	<title>CycleSafe</title>
+	<meta name="viewport" content="width=device-width , initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Zhila Emadi, Danny McCue, Ghaida Zahran">
+	<link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}css/app.css" rel="stylesheet">
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js"></script>
+	{# For loading files specific to one view. #}
+	{% block extraCSS %}
+	{% endblock %}
 
-    {# For loading files specific to one view. #}
-    {% block extraJS %}
-    {% endblock %}
+	{# For loading files specific to one view. #}
+	{% block extraJS %}
+	{% endblock %}
 </head>
 
 <body>
-  <nav class="top-bar" data-topbar role="navigation">
-    <ul class="title-area">
-      <li class="name">
-        <h1><a href="/">CycleSafe</a></h1>
-      </li>
-      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-    <div class="top-bar-section">
-      <!-- Right Nav Section -->
-      <ul class="right">
-        <li><a href="/">Dashboard</a></li>
-        <span data-tooltip aria-haspopup="true" class="has-tip" title="Coming soon!"><li><a href="/">Trip Planner</a></li></span>
-        <li class="active"><a href={% url 'report' %}>Report a Hazard</a></li>
-      </ul>
-    </div>
-  </nav>
+	<nav class="top-bar" data-topbar role="navigation">
+		<ul class="title-area">
+			<li class="name">
+				<h1><a href="/">CycleSafe</a></h1>
+			</li>
+			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+		</ul>
+		<div class="top-bar-section">
+			<!-- Right Nav Section -->
+			<ul class="right">
+				<li><a href="#" data-reveal-id="aboutModal">About</a></li>
+				<div id="aboutModal" class="reveal-modal" data-reveal>
+					<div class="modal-text-wrapper inline-block align-middle">
+						<h3>We make roads safer for everyone.</h3>
+						<p>CycleSafe allows cyclists and pedestrians to see and report road hazards.<br>
+							This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</a>, a <a href="http://www.codeforamerica.org/">Code for America</a> brigade. </p>
+						</div>
+						<img src="{{ STATIC_URL }}media/cfa_logo_resize.png" id="modal-img">
+						<a class="close-reveal-modal">&#215;</a>
+					</div>
+					<li><a href="/">Dashboard</a></li>
+					<li><a href="/" data-tooltip aria-haspopup="true" class="has-tip" title="Coming soon!">Trip Planner</a></li>
+					<li class="active"><a href={% url 'report' %}>Report a Hazard</a></li>
+				</ul>
+			</div>
+		</nav>
 
-{% block main %}
-{% endblock %}
+		{% block main %}
+		{% endblock %}
 
 <!-- Footer
 	================================================== -->
-<footer class="footer">
-    <div class="container">
-    </div>
-</footer>
+	<footer class="footer">
+		<div class="container">
+		</div>
+	</footer>
 
 
-<!-- Placed at the end of the document so the pages load faster -->
+	<!-- Placed at the end of the document so the pages load faster -->
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true&libraries=places"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/foundation.min.js">$(document).foundation();</script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true&libraries=places"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/foundation.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/foundation.reveal.js"></script>
+	<script>$(document).foundation();</script>
 
 
-{# For loading scripts at the bottom of the view. #}
-{% block scripts_bottom %}
-{% endblock %}
+	{# For loading scripts at the bottom of the view. #}
+	{% block scripts_bottom %}
+	{% endblock %}
 
 </body>
 </html>

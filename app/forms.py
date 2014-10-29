@@ -1,8 +1,9 @@
 from app.models import Hazard
 from django.forms import ModelForm, DateTimeInput
 
-#Need to add value attribute to form item and get datepicker to work.
 class HazardForm(ModelForm):
     class Meta:
         model = Hazard
-        widgets = {'dateTime': DateTimeInput(attrs={'class': 'datepicker'})}
+        widgets = {'date_time': DateTimeInput(attrs={'class': 'datepicker'})}
+        # TODO(zemadi): Assign someone to edit ranking field once it's implemented.
+        exclude = ('ranking',)
