@@ -1,6 +1,8 @@
 // File not active yet. Need to clean it up so it removes some functions from maps.js that are only relevant to the form.
 
 $(document).ready(function () {
+    $('.active').toggleClass('active');
+    $('#report-hazard').toggleClass('active');
     return grabMyPosition();
 });
 

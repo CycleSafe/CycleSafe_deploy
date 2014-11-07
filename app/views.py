@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from app.forms import HazardForm
@@ -19,6 +20,11 @@ def report_hazards(request):
         form = HazardForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Entry saved. Thank you for making our roads safer.')
+
+        else:
+            messages.error(request, 'Error. Please re-submit the form.')
+
     else:
         form = HazardForm()  # An unbound form
 
