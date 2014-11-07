@@ -63,18 +63,6 @@ DATABASES_SQLITE = {
     }
 }
 
-DATABASES_POSTGRES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cyclesafe',
-        'USER': 'cyclesafe',
-        'PASSWORD': 'codeforsanjose',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-
-#DATABASES = DATABASES_POSTGRES
 DATABASES = DATABASES_SQLITE
 
 # Internationalization
@@ -90,32 +78,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# MEDIA_ROOT = '/app/static/media/'
 MEDIA_URL = '/static/media/'
-
-
-#TASTYPIE_SWAGGER_API_MODULE = "tastypie_tutorial.urls.v1_api"
 
 TASTYPIE_FULL_DEBUG = True
 API_LIMIT_PER_PAGE = 0
 
-# # Parse database configuration from $DATABASE_URL
-# import dj_database_url
-# DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
-
-# import os
-# import os.path
-#
-
-
-# STATIC_ROOT = '/cyclesafe/app/static/'
 
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -126,12 +97,3 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
     'compressor.finders.CompressorFinder',
 )
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, '../app/static'),
-# )
-
-# May need this later if we continue to have DB merge issues.
-# try:
-#     from local_settings import *
-# except ImportError:
-#     pass

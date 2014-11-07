@@ -62,7 +62,6 @@ function markerGenerator(map) {
             map: map,
             animation: google.maps.Animation.DROP,
             title: mapData.objects[i].description,
-            draggable: true
 
         });
         contentString = '<div class="infoindow">' +
@@ -129,7 +128,6 @@ function searchboxGenerator(map, markers) {
                 icon: image,
                 title: place.name,
                 position: place.geometry.location,
-                draggable: true
             });
 
             //Center the map on the new marker's location.
