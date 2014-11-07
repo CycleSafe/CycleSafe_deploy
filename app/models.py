@@ -21,11 +21,11 @@ USER_CHOICE = (
 class Hazard(models.Model):
     date_time = models.DateTimeField(default=datetime.now, blank=True)
     description = models.TextField(max_length=150, null=True, blank=True)
-    hazard_type = models.CharField(max_length=25, choices=HAZARD_CHOICE)
+    hazard_type = models.CharField(max_length=25, choices=HAZARD_CHOICE, default='3')
     lat = models.DecimalField(max_digits=30, decimal_places=20)
     lon = models.DecimalField(max_digits=30, decimal_places=20)
     ranking = models.IntegerField(default=0)
-    user_type = models.CharField(max_length=20, choices=USER_CHOICE)
+    user_type = models.CharField(max_length=20, choices=USER_CHOICE, default='1')
 
     def __repr__(self):
         out = "Hazard @ <" + str(self.lat) + ", " + str(self.lon) + "> called \"" + self.description + "\""
