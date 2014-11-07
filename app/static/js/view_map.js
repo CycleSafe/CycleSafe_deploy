@@ -1,6 +1,8 @@
 // TODO(zemadi): Make a common js file that both maps use.
 
 $(document).ready(function () {
+    $('.active').toggleClass('active');
+    $('#dashboard').toggleClass('active');
     return grabMyPosition();
 });
 

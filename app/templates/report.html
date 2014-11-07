@@ -9,6 +9,15 @@
 {% endblock %}
 
 {% block main %}
+    {% if messages %}
+    	<p>{{ message }}</p>
+    	{% for message in messages %}
+			<div data-alert class="alert-box {{ message.tags }}">
+			  {{ message }}
+			  <a href="#" class="close">&times;</a>
+			</div>
+		{% endfor %}
+    {% endif %}
     <!-- Subhead
 	================================================== -->
     <div id="subcontainer">

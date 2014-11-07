@@ -33,19 +33,19 @@
 		<div class="top-bar-section">
 			<!-- Right Nav Section -->
 			<ul class="right">
-				<li><a href="#" data-reveal-id="aboutModal">About</a></li>
-				<div id="aboutModal" class="reveal-modal" data-reveal>
-					<div class="modal-text-wrapper inline-block align-middle">
-						<h3>We make roads safer for everyone.</h3>
-						<p>CycleSafe allows cyclists and pedestrians to see and report road hazards.<br>
+					<li id="dashboard"><a href="/">Dashboard</a></li>
+					<li id="report-hazard" class="active"><a href={% url 'report' %}>Report a Hazard</a></li>
+					<li><a href="/" data-tooltip aria-haspopup="true" class="has-tip" title="Coming soon!">Trip Planner</a></li>
+				    <li><a href="#" data-reveal-id="aboutModal">About</a></li>
+				    <div id="aboutModal" class="reveal-modal" data-reveal>
+					    <div class="modal-text-wrapper inline-block align-middle">
+						    <h3>We make roads safer for everyone.</h3>
+						    <p>CycleSafe allows cyclists and pedestrians to view and report road hazards.<br>
 							This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</a>, a <a href="http://www.codeforamerica.org/">Code for America</a> brigade. </p>
 						</div>
 						<img src="{{ STATIC_URL }}media/cfa_logo_resize.png" id="modal-img">
 						<a class="close-reveal-modal">&#215;</a>
 					</div>
-					<li><a href="/">Dashboard</a></li>
-					<li><a href="/" data-tooltip aria-haspopup="true" class="has-tip" title="Coming soon!">Trip Planner</a></li>
-					<li class="active"><a href={% url 'report' %}>Report a Hazard</a></li>
 				</ul>
 			</div>
 		</nav>
