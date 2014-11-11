@@ -78,6 +78,11 @@
         font-weight: bold;
     }
 
+    /* InfoWindow styling. Limits div width. */
+    .gm-style-iw {
+        max-width: 400px;
+    }
+
 /*Time Picker*/
     .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
     .ui-timepicker-div dl { text-align: left; }

@@ -11,17 +11,17 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import os.path
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9)3#6^1+)p8mx=8kev8$!)i2-ssjc*%(kbq^yr8ovj$$2j5i$5'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+# TODO (debianmaster): Change allowed_hosts to host name. See: https://docs.djangoproject.com/en/1.6/ref/settings/#std:setting-ALLOWED_HOSTS
+ALLOWED_HOSTS = ['*']
+
+ROOT_PATH = os.path.dirname(__file__)
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 
 # Application definition
 
@@ -52,44 +52,33 @@ ROOT_URLCONF = 'cyclesafe.urls'
 
 WSGI_APPLICATION = 'cyclesafe.wsgi.application'
 
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.CryptPasswordHasher',
+)
 
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES_SQLITE = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-DATABASES = DATABASES_SQLITE
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-MEDIA_URL = '/static/media/'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 TASTYPIE_FULL_DEBUG = True
 API_LIMIT_PER_PAGE = 0
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
 
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
+TEMPLATE_LOADERS = ('django.template.loaders.filesystem.Loader', 'django.template.loaders.app_directories.Loader')
 
-ROOT_PATH = os.path.dirname(__file__)
-
+MEDIA_URL = '/static/media/'
 STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -97,3 +86,8 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
     'compressor.finders.CompressorFinder',
 )
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
