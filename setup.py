@@ -3,13 +3,13 @@ from setuptools import setup, find_packages
  
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
  
-setup(name='paasbakeoff',
+setup(name='cyclesafe',
     version='1.0',
-    author='Nate Aune',
-    author_email='nate@appsembler.com',
-    url='https://github.com/appsembler/paasbakeoff',
+    author='Zhila',
+    author_email='zfemadi@gmail.com',
+    url='https://github.com/zemadi/CycleSafe_deploy',
     packages=find_packages(),
     include_package_data=True,
-    description='Example Mezzanine CMS deploy to OpenShift PaaS',
-    install_requires=open('%s/cyclesafe/requirements.txt' % os.environ.get('OPENSHIFT_REPO_DIR', PROJECT_ROOT)).readlines(),
+    description='cycle safe',
+    install_requires=open('%s/requirements.txt' % os.environ.get('OPENSHIFT_REPO_DIR', PROJECT_ROOT)).readlines(),
 )
