@@ -53,7 +53,17 @@ INSTALLED_APPS = (
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-DATABASES = {
+# Database
+# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+
+DATABASES_SQLITE = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+DATABASES_MYSQL = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cyclesafe',
@@ -63,6 +73,8 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+DATABASES = DATABASES_MYSQL
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
