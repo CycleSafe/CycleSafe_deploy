@@ -1,4 +1,3 @@
-notes.txt
 venv
 *.pyc
 local_settings.py
@@ -6,3 +5,4 @@ db.sqlite3
 *.idea
 app/migrations/*
 *.sqlite3
+cyclesafe_dump.sql
