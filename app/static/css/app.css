@@ -30,6 +30,10 @@
         display: none;
     }
 
+    textarea {
+        max-height: 100px;
+    }
+
 
 /* Navbar CSS */
     .top-bar {
@@ -63,10 +67,14 @@
 
     #map-canvas {
         width: 100%;
-        height: 500px;
+        height: 85vh;
         display: block;
         float: right;
         position: relative;
+    }
+
+    .edit-form-map {
+        max-height: 665px;
     }
 
     img, object, embed {

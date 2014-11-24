@@ -36,7 +36,6 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,8 +123,7 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-
-
+# Use local settings if available.
 try:
     from local_settings import *
 except ImportError:
