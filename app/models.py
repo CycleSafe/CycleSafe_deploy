@@ -19,7 +19,7 @@ USER_CHOICE = (
 
 
 class Hazard(models.Model):
-    date_time = models.DateTimeField(default=datetime.now, blank=True)
+    date_time = models.DateTimeField(blank=True)
     description = models.TextField(max_length=150, null=True, blank=True)
     hazard_type = models.CharField(max_length=25, choices=HAZARD_CHOICE, default='3')
     lat = models.DecimalField(max_digits=30, decimal_places=20)

@@ -42,6 +42,11 @@ function mapGenerator(lat, lon) {
         document.getElementById("map-canvas"),
         mapOptions);
 
+    var localDateTime = new Date();
+    var formattedDate = (localDateTime.getMonth()+1) + '/' + localDateTime.getDate() + '/' +  localDateTime.getFullYear() + ' ' + localDateTime.getHours() + ':' + localDateTime.getMinutes();
+
+    $('#id_date_time').val(formattedDate);
+
     //Click map to change the latitude and longitude in the form.
     google.maps.event.addListener(map, "click", function(event) {
         setFormLatLon(event.latLng.lat(), event.latLng.lng());
