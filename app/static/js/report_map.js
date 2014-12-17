@@ -3,6 +3,7 @@
 $(document).ready(function () {
     $('.active').toggleClass('active');
     $('#report-hazard').toggleClass('active');
+    setFormDefaults();
     return grabMyPosition();
 });
 
@@ -42,11 +43,6 @@ function mapGenerator(lat, lon) {
         document.getElementById("map-canvas"),
         mapOptions);
 
-    var localDateTime = new Date();
-    var formattedDate = (localDateTime.getMonth()+1) + '/' + localDateTime.getDate() + '/' +  localDateTime.getFullYear() + ' ' + localDateTime.getHours() + ':' + localDateTime.getMinutes();
-
-    $('#id_date_time').val(formattedDate);
-
     //Click map to change the latitude and longitude in the form.
     google.maps.event.addListener(map, "click", function(event) {
         setFormLatLon(event.latLng.lat(), event.latLng.lng());
@@ -71,8 +67,7 @@ function markerGenerator(map) {
             position: new google.maps.LatLng(mapData.objects[i].lat, mapData.objects[i].lon),
             map: map,
             animation: google.maps.Animation.DROP,
-            title: mapData.objects[i].description,
-
+            title: mapData.objects[i].description
         });
         contentString = '<div class="infoindow">' +
             '<h4><span class="blue">User: </span>' + mapData.objects[i].user_type + '</h4>' +
@@ -156,4 +151,14 @@ function searchboxGenerator(map, markers){
 function setFormLatLon(lat, lon) {
     $('#id_lat').val(lat);
     $('#id_lon').val(lon);
+}
+
+function setFormDefaults() {
+    var localDateTime = new Date();
+    var formattedDate = (localDateTime.getMonth()+1) + '/' + localDateTime.getDate() + '/' +  localDateTime.getFullYear() + ' ' + localDateTime.getHours() + ':' + localDateTime.getMinutes();
+    $('#id_date_time').val(formattedDate);
+    $(".select-buttons").click(function(){
+       $(".select-buttons").removeClass('selected');
+       $(this).addClass('selected');
+    });
 }
