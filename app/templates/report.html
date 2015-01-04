@@ -2,7 +2,6 @@
 
 {% block extraCSS %}
     <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block extraJS %}
@@ -30,21 +29,10 @@
                     <p class="lead">CycleSafe allows cyclists and pedestrians to map dangerous routes in their
                         communities.</p>
 
-                    <form class="form-data" method='POST' action="" role="form">
+                    <form class="form_data" method='POST' action="" role="form">
                         {% csrf_token %}
                         <label>User Type:</label>
-							<div class="select-buttons">
-								<input class="hidden inline-block" id="value_0" name="user_type" type="radio" value="1">
-								<label for="value_0" class="select-label inline-block" title="Cyclist">
-									<i class="fa fa-bicycle fa-3x"></i>
-								</label>
-							</div>
-							<div class="select-buttons">
-								<input class="hidden inline-block" id="value_1" name="user_type" type="radio" value="2">
-								<label for="value_1" class="select-label inline-block" title="Pedestrian">
-									<i class="fa fa-child fa-3x"></i>
-								</label>
-							</div>
+                        {{ form.user_type }}
                         <label>Hazard:</label> {{ form.hazard_type }}
                         <label>Date &amp; Time:</label>
                         {{ form.date_time }}

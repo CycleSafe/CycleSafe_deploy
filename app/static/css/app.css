@@ -4,7 +4,6 @@
     select {
         border-radius: 3px;
     }
-
     select {
         background-color: #fff;
         cursor: pointer;
@@ -31,13 +30,10 @@
         display: none;
     }
 
-    .invisible {
-        visibility: hidden;
-    }
-
     textarea {
         max-height: 100px;
     }
+
 
 /* Navbar CSS */
     .top-bar {
@@ -52,47 +48,6 @@
         border-bottom: none;
     }
 
- /* Form CSS */
-    .select-buttons {
-        background-color: #008cba;
-        border: 1px solid #aaa;
-        border-radius: 3px;
-        display: inline-block;
-        text-align: center;
-        width: 90px;
-}
-    .select-buttons i {
-        color: white;
-    }
-
-    .select-buttons:hover {
-        background-color:#f2f2f2;
-        border-color:#888;
-        box-shadow:0 0 2px #ccc;
-    }
-
-    .select-buttons:hover i {
-        color: #333333;
-    }
-
-    .select-buttons:active {
-        color: #333333;
-        vertical-align:-1px;
-    }
-
-    .selected {
-        background-color:#f2f2f2;
-        border-color:#888;
-        box-shadow:0 0 2px #ccc;
-    }
-
-    .selected i {
-        color: #333333;
-    }
-
-    .select-label {
-        padding: 5px;
-    }
 /* Map CSS */
 
     #modal-img {
