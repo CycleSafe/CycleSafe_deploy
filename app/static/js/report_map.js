@@ -2,6 +2,7 @@
 $(document).ready(function () {
     $('.active').toggleClass('active');
     $('#report-hazard').toggleClass('active');
+    setFormDefaults();
     return grabMyPosition();
 });
 
@@ -40,11 +41,6 @@ function mapGenerator(lat, lon) {
     var map = new google.maps.Map(
         document.getElementById("map-canvas"),
         mapOptions);
-
-    var localDateTime = new Date();
-    var formattedDate = (localDateTime.getMonth()+1) + '/' + localDateTime.getDate() + '/' +  localDateTime.getFullYear() + ' ' + localDateTime.getHours() + ':' + localDateTime.getMinutes();
-
-    $('#id_date_time').val(formattedDate);
 
     //Click map to change the latitude and longitude in the form.
     google.maps.event.addListener(map, "click", function(event) {
@@ -151,6 +147,13 @@ function searchboxGenerator(map, markers){
     });
 
 }
+
+function setFormDefaults() {
+   var localDateTime = new Date();
+   var formattedDate = (localDateTime.getMonth()+1) + '/' + localDateTime.getDate() + '/' +  localDateTime.getFullYear() + ' ' + localDateTime.getHours() + ':' + ('0'+localDateTime.getMinutes()).slice(-2);
+   $('#id_date_time').val(formattedDate);
+}
+
 
 function setFormLatLon(lat, lon) {
     $('#id_lat').val(lat);
