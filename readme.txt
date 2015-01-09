@@ -13,8 +13,5 @@ Instructions for getting set up (from scratch):
  > python manage.py schemamigration app --initial
    installers for various platforms (including Windows):
      http://www.enterprisedb.com/products-services-training/pgdownload#windows
-   Windows: add PostgreSQL bin dir to path: C:\Program Files\PostgreSQL\9.3\bin
  - Windows: install Visual Studio 2008:
    http://download.microsoft.com/download/A/5/4/A54BADB6-9C3F-478D-8657-93B3FC9FE62D/vcsetup.exe
- > pip install psycopg2
-   (problem with this one...)
