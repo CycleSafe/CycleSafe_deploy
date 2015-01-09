@@ -66,7 +66,7 @@ function markerGenerator(map) {
             position: new google.maps.LatLng(mapData.objects[i].lat, mapData.objects[i].lon),
             map: map,
             animation: google.maps.Animation.DROP,
-            title: mapData.objects[i].description,
+            title: mapData.objects[i].description
 
         });
         contentString = '<div class="infoindow">' +
@@ -132,7 +132,7 @@ function searchboxGenerator(map, markers){
                 map: map,
                 icon: image,
                 title: place.name,
-                position: place.geometry.location,
+                position: place.geometry.location
             });
 
             //Center the map on the new marker's location.

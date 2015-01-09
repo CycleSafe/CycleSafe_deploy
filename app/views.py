@@ -33,6 +33,9 @@ def report_hazards(request):
         'hazards': Hazard.objects.all(),
     })
 
+def trip_planner(request):
+    return render(request, "trip_planner.html")
+
 '''
 JavaScript will make a direct request for the data via the API, instead of running it here.
 We may need to optimize this later to avoid slow load times. Google maps can be very client-side heavy.

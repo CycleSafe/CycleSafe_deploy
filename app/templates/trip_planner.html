@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block extraCSS %}
+{% endblock %}
+
+{% block extraJS %}
+    {{ form.media }}
+{% endblock %}
+
+{% block main %}
+<div id="panel">
+    <b>Start: </b>
+    <select id="start" onchange="calcRoute();">
+      <option value="chicago, il">Chicago</option>
+      <option value="st louis, mo">St Louis</option>
+      <option value="joplin, mo">Joplin, MO</option>
+      <option value="oklahoma city, ok">Oklahoma City</option>
+      <option value="amarillo, tx">Amarillo</option>
+      <option value="gallup, nm">Gallup, NM</option>
+      <option value="flagstaff, az">Flagstaff, AZ</option>
+      <option value="winona, az">Winona</option>
+      <option value="kingman, az">Kingman</option>
+      <option value="barstow, ca">Barstow</option>
+      <option value="san bernardino, ca">San Bernardino</option>
+      <option value="los angeles, ca">Los Angeles</option>
+    </select>
+    <b>End: </b>
+    <select id="end" onchange="calcRoute();">
+      <option value="chicago, il">Chicago</option>
+      <option value="st louis, mo">St Louis</option>
+      <option value="joplin, mo">Joplin, MO</option>
+      <option value="oklahoma city, ok">Oklahoma City</option>
+      <option value="amarillo, tx">Amarillo</option>
+      <option value="gallup, nm">Gallup, NM</option>
+      <option value="flagstaff, az">Flagstaff, AZ</option>
+      <option value="winona, az">Winona</option>
+      <option value="kingman, az">Kingman</option>
+      <option value="barstow, ca">Barstow</option>
+      <option value="san bernardino, ca">San Bernardino</option>
+      <option value="los angeles, ca">Los Angeles</option>
+    </select>
+    </div>
+	<div class="medium-8 columns">
+		<input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. ">
+		<div id="map-canvas" class="edit-form-map"></div>
+	</div>
+
+{% endblock %}
+
+{% block scripts_bottom %}
+	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
+	<script type="text/javascript"  src="{{ STATIC_URL }}js/trip_planner.js"></script>
+{% endblock %}
