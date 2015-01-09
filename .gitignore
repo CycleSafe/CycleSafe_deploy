@@ -6,3 +6,5 @@ db.sqlite3
 app/migrations/*
 *.sqlite3
 cyclesafe_dump.sql
+trip_planner.js
+trip_planner.html
