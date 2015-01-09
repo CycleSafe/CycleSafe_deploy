@@ -11,6 +11,7 @@ Instructions for getting set up (from scratch):
  > pip install -r requirements.txt
  > python manage.py syncdb
  > python manage.py schemamigration app --initial
+ > python manage.py migrate app
    installers for various platforms (including Windows):
      http://www.enterprisedb.com/products-services-training/pgdownload#windows
  - Windows: install Visual Studio 2008:
