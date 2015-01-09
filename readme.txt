@@ -8,10 +8,7 @@ Instructions for getting set up (from scratch):
  > python get-pip.py
  - install django
  > pip install Django==1.6.5
- - install tastypie
- > pip install django-tastypie
- > pip install south
- - install PostgreSQL
+ > pip install -r requirements.txt
    installers for various platforms (including Windows):
      http://www.enterprisedb.com/products-services-training/pgdownload#windows
    Windows: add PostgreSQL bin dir to path: C:\Program Files\PostgreSQL\9.3\bin
