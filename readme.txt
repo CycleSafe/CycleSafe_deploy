@@ -9,6 +9,8 @@ Instructions for getting set up (from scratch):
  - install django
  > pip install Django==1.6.5
  > pip install -r requirements.txt
+ > python manage.py syncdb
+ > python manage.py schemamigration app --initial
    installers for various platforms (including Windows):
      http://www.enterprisedb.com/products-services-training/pgdownload#windows
    Windows: add PostgreSQL bin dir to path: C:\Program Files\PostgreSQL\9.3\bin
