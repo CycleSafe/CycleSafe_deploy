@@ -10,23 +10,6 @@ Installing into a virtual evironment is highly recommended!
  - install django
  > pip install Django==1.6.5
  > pip install -r requirements.txt
- Create a local_settings.py file in the same folder as settings.py.
- - Add the following to that file:
-  from settings import BASE_DIR
-  import os
-  
-  DEBUG = True
-  TEMPLATE_DEBUG = True
-  
-  DATABASES_SQLITE = {
-      'default': {
-          'ENGINE': 'django.db.backends.sqlite3',
-          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-      }
-  }
-  
-  DATABASES = DATABASES_SQLITE
-  
  - Get the secret key from someone already on the project. Add it as an environment variable. 
  - If you are using virtualenv, add the secret key to yourenvironmentname/bin/activate:
   export SECRET_KEY='ADD_YOUR_SECRET_KEY_STRING_HERE'
