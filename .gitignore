@@ -1,10 +1,10 @@
 venv
 *.pyc
-local_settings.py
+local_settings_old.py
 db.sqlite3
 *.idea
 app/migrations/*
 *.sqlite3
-cyclesafe_dump.sql
 trip_planner.js
 trip_planner.html
+.idea
