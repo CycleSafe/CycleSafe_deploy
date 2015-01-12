@@ -7,4 +7,4 @@ app/migrations/*
 trip_planner.js
 trip_planner.html
 .idea
-cyclesafe/local_settings_old.py
+local_settings_old.py
