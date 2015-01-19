@@ -1,3 +1,6 @@
+// TODO(zemadi): Move all common js into a common file and clean up code!
+// TODO(zemadi): Add places search to form.
+
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
@@ -7,39 +10,69 @@ var markers = [];
 
 $(document).ready(function () {
     launchMap();
-
 });
 
 function launchMap() {
-    initialize();
+    // If there's geolocation, try to get user coords.
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+    //If geolocation isn't available, the map defaults to San Jose.
+        var lat = 37.3394444;
+        var lon = -121.8938889;
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+        coords = [lat, lon];
+        initialize(coords);
+        google.maps.event.addDomListener(window, 'load', initialize);
+    }
+}
+
+function success(position) {
+    coords = [position.coords.latitude, position.coords.longitude];
+    initialize(coords);
     google.maps.event.addDomListener(window, 'load', initialize);
 }
 
-function initialize() {
+function error(err){
+    //If geolocation doesn't work, the map defaults to San Jose.
+    console.warn('ERROR(' + err.code + '): ' + err.message);
+
+    var lat = 37.3394444;
+    var lon = -121.8938889;
+    coords = [lat, lon];
+    initialize(coords);
+    google.maps.event.addDomListener(window, 'load', initialize);
+}
+
+function initialize(coords) {
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+    var centerPoint = new google.maps.LatLng(coords[0], coords[1]);
     var mapOptions = {
-        zoom:7,
-        center: chicago
+        zoom: 12,
+        center: centerPoint
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('directions-panel'));
 }
 
 function calcRoute() {
+    var selectedMode = document.getElementById('mode_travel').value;
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var request = {
         origin:start,
         destination:end,
-        travelMode: google.maps.TravelMode.DRIVING
+        travelMode: google.maps.TravelMode[selectedMode]
     };
+
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
+            //TODO(zemadi): Look at response to figure out how to add markers into text directions.
 
             // Box the overview path of the first route
-            var distance = .01;
+            var distance = .03;
             var path = response.routes[0].overview_path;
             var boxes = rboxer.box(path, distance);
 
@@ -49,8 +82,7 @@ function calcRoute() {
                 var latBound2 = bounds.Ea.j;
                 var lonBound1 = bounds.wa.k;
                 var lonBound2 = bounds.wa.j;
-                //TODO(zemadi): Remove host name.
-                var queryString = 'http://127.0.0.1:8000/api/v1/hazard/?format=json'
+                var queryString = '/api/v1/hazard/?format=json'
 
                 //Build the querystring. Negative numbers require different greater/less than logic,
                 // so testing for that here.
@@ -73,14 +105,14 @@ function calcRoute() {
                 if (segmentDataPoints.objects) {
                     mapData.push.apply(mapData, segmentDataPoints.objects);
                 }
-
             }
+        // Once the loop is done, add the markers to the map.
+        markerGenerator(map, mapData);
         }
     });
-    markerGenerator(map, mapData);
+
 }
 
-//TODO(zemadi): Similar code to report_map.js consolidate and standardize this.
 //Generate map markers, info windows, and event listeners.
 function markerGenerator(map, mapData) {
     //Get current data for map.
@@ -117,7 +149,6 @@ function markerGenerator(map, mapData) {
     return marker;
 }
 
-//TODO(zemadi): This function is also used in report_map.js. Create a common js file.
 //Get data from API to generate markers.
 function httpGet(requestUrl) {
 
