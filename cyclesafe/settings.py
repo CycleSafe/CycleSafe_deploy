@@ -32,8 +32,8 @@ ROOT_PATH = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Turned off debugging.
-DEBUG = False
-TEMPLATE_DEBUG = False
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 # Application definition
 INSTALLED_APPS = (
@@ -73,7 +73,13 @@ DATABASES_MYSQL = {
     }
 }
 
-DATABASES = DATABASES_MYSQL
+try:
+    import MySQLdb
+    DATABASES = DATABASES_MYSQL
+    print('database: using mysql')
+except:
+    print('database: falling back to sqlite')
+    DATABASES = DATABASES_SQLITE
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,15 +94,19 @@ ROOT_URLCONF = 'cyclesafe.urls'
 
 WSGI_APPLICATION = 'cyclesafe.wsgi.application'
 
-PASSWORD_HASHERS = (
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.BCryptPasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.SHA1PasswordHasher',
-    'django.contrib.auth.hashers.MD5PasswordHasher',
-    'django.contrib.auth.hashers.CryptPasswordHasher',
-)
+try:
+    import bcrypt
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        'django.contrib.auth.hashers.BCryptPasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+        'django.contrib.auth.hashers.SHA1PasswordHasher',
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+        'django.contrib.auth.hashers.CryptPasswordHasher',
+    )
+except:
+    print('skipping bcrypt...')
 
 TASTYPIE_FULL_DEBUG = True
 API_LIMIT_PER_PAGE = 0
@@ -128,3 +138,4 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
