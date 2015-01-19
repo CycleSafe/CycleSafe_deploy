@@ -21,7 +21,8 @@ class HazardResource(ModelResource):
             # Look up Django ORM filtering
             # Example query url: http://127.0.0.1:8000/api/v1/hazard/?format=json&lat__startswith=37
             # Lookup range in ORM
-            "lat": ('startswith',),
+            "lat": ['gte', 'lte'],
+            "lon": ['gte', 'lte'],
         }
 
     def query_params(self, bundle):
