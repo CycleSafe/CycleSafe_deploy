@@ -4,7 +4,5 @@ db.sqlite3
 *.idea
 app/migrations/*
 *.sqlite3
-trip_planner.js
-trip_planner.html
 .idea
 local_settings_old.py
