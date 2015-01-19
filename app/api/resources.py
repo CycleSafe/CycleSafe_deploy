@@ -1,7 +1,7 @@
 from django.conf import settings
+from tastypie import bundle
 from tastypie.authentication import Authentication
 from tastypie.authorization import DjangoAuthorization
-from tastypie.bundle import Bundle
 from tastypie.fields import CharField
 from tastypie.resources import ModelResource, Resource
 from app.models import Hazard
@@ -9,12 +9,25 @@ from app.models import Hazard
 
 # Need to limit deletes, etc. only to admin
 class HazardResource(ModelResource):
+
     class Meta:
         max_limit = None
         queryset = Hazard.objects.all()
         resource_name = "hazard"
         authentication = Authentication()
         authorization = DjangoAuthorization()
+
+        filtering = {
+            # Look up Django ORM filtering
+            # Example query url: http://127.0.0.1:8000/api/v1/hazard/?format=json&lat__startswith=37
+            # Lookup range in ORM
+            "lat": ['gte', 'lte'],
+            "lon": ['gte', 'lte'],
+        }
+
+    def query_params(self, bundle):
+        print bundle.request.GET
+
     def dehydrate_date_time(self, bundle):
         return u"{0}".format((bundle.obj.date_time).strftime('%m-%d-%Y, %I:%M %p'))
     # Get the actual value of choice fields from the form, instead of the machine value. See models.HAZARD_CHOICE.

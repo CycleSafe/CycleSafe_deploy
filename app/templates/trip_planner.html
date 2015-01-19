@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block extraCSS %}
+{% endblock %}
+
+{% block extraJS %}
+    {{ form.media }}
+{% endblock %}
+
+{% block main %}
+<div id="panel">
+    <b>Start: </b>
+    <input id="start" onchange="calcRoute();">
+    </input>
+    <b>End: </b>
+    <input id="end" onchange="calcRoute();">
+    </input>
+    </div>
+	<div class="medium-8 columns">
+		<input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. ">
+		<div id="map-canvas" class="edit-form-map"></div>
+	</div>
+
+{% endblock %}
+
+{% block scripts_bottom %}
+	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
+	<script type="text/javascript"  src="{{ STATIC_URL }}js/trip_planner.js"></script>
+{% endblock %}

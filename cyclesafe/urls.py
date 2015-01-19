@@ -14,8 +14,8 @@ v1_api.register(HazardResource())
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'app.views.index', name='index'),
-
     url(r'report/', 'app.views.report_hazards', name='report'),
+    url(r'trip_planner/', 'app.views.trip_planner', name='trip_planner'),
 
     url(r'^api/', include(v1_api.urls)),
     url(r'^admin/', include(admin.site.urls)),
