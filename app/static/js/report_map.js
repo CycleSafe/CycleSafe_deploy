@@ -1,3 +1,4 @@
+var coords;
 
 $(document).ready(function () {
     $('.active').toggleClass('active');
@@ -7,22 +8,63 @@ $(document).ready(function () {
 });
 
 function grabMyPosition() {
-    if (navigator.geolocation) {
-        return navigator.geolocation.getCurrentPosition(centerMap);
+    var geoOptions = { maximumAge: 30000,  //  Valid for 5 minutes
+        timeout:5000,  // Wait 5 seconds
+        enableHighAccuracy:true
+    }
+
+    // If there's geolocation, try to get user coords.
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error, geoOptions);
     } else {
-        //If geolocation doesn't work, the map defaults to San Jose.
+    //If geolocation isn't available, the map defaults to San Jose.
         var lat = 37.3394444;
         var lon = -121.8938889;
-        mapGenerator(lat, lon);
+        if (!err) {
+            console.warn('Geolocation isnt available for this user.');
+        }
+        coords = [lat, lon];
+        centerMap();
+        google.maps.event.addDomListener(window, 'load', initialize);
     }
+
+    setTimeout(function () {
+        if(!coords){
+            window.console.log("No confirmation from user, using fallback");
+            error();
+        }else{
+            window.console.log("Location was set");
+        }
+    }, geoOptions.timeout + 1000); // Wait extra second
+}
+
+function success(position) {
+    coords = [position.coords.latitude, position.coords.longitude];
+    centerMap();
+    google.maps.event.addDomListener(window, 'load', centerMap(coords));
+}
+
+function error(err){
+    //If geolocation doesn't work, the map defaults to San Jose.
+        if (!err) {
+            console.warn('Error. User didnt respond to geolocation request.');
+        } else {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+        }
+
+    var lat = 37.3394444;
+    var lon = -121.8938889;
+    coords = [lat, lon];
+    centerMap();
+    google.maps.event.addDomListener(window, 'load', centerMap());
 }
 
 // Add user's location to the report a hazard form and
 // generate a map centering on those coordinates.
 // If the user's location isn't available, default location is San Jose.
-function centerMap(position) {
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
+function centerMap() {
+    var lat = coords[0];
+    var lon = coords[1];
     setFormLatLon(lat, lon);
 
     return mapGenerator(lat, lon);
