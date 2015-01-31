@@ -8,26 +8,27 @@
 {% endblock %}
 
 {% block main %}
-<div id="panel">
-    <b>Start: </b>
-    <input id="start" onchange="calcRoute();">
-    </input>
-    <b>End: </b>
-    <input id="end" onchange="calcRoute();">
-    </input>
-    <b>Mode of Travel: </b>
-    <select id="mode_travel" onchange="calcRoute();">
-      <option value="BICYCLING">Bicycling</option>
-	  <option value="WALKING">Walking</option>
-    </select>
-    </div>
-	<div class="medium-8 columns">
-	<!-- TODO(zemadi): Add places search in. -->
-		<!-- <input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. "> -->
-		<div id="map-canvas" class="edit-form-map"></div>
-		<div id="directions-panel"></div>
-	</div>
-
+<div id="row">
+	<div id="medium-4 columns">
+		<b>Start: </b>
+		<input id="start" class="trip-planner-form" onchange="calcRoute();">
+		</input>
+		<b>End: </b>
+		<input id="end" class="trip-planner-form" onchange="calcRoute();">
+		</input>
+		<b>Mode of Travel: </b>
+		<select id="mode_travel" class="trip-planner-form" onchange="calcRoute();">
+		  <option value="BICYCLING">Bicycling</option>
+		  <option value="WALKING">Walking</option>
+		</select>
+		</div>
+		<div class="medium-8 columns">
+		<!-- TODO(zemadi): Add places search in. -->
+			<!-- <input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. "> -->
+			<div id="map-canvas" class="edit-form-map"></div>
+			<div id="directions-panel"></div>
+		</div>
+</div>
 {% endblock %}
 
 {% block scripts_bottom %}

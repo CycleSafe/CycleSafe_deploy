@@ -7,44 +7,65 @@ var map;
 var rboxer = new RouteBoxer();
 var mapData = []
 var markers = [];
+var coords;
 
 $(document).ready(function () {
     launchMap();
 });
 
 function launchMap() {
+    var geoOptions = { maximumAge: 30000,  //  Valid for 5 minutes
+        timeout:5000,  // Wait 5 seconds
+        enableHighAccuracy:true
+    }
+
     // If there's geolocation, try to get user coords.
     if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
+        navigator.geolocation.getCurrentPosition(success, error, geoOptions);
     } else {
     //If geolocation isn't available, the map defaults to San Jose.
         var lat = 37.3394444;
         var lon = -121.8938889;
-        console.warn('ERROR(' + err.code + '): ' + err.message);
+        if (!err) {
+            console.warn('Geolocation isnt available for this user.');
+        }
         coords = [lat, lon];
-        initialize(coords);
+        initialize();
         google.maps.event.addDomListener(window, 'load', initialize);
     }
+
+    setTimeout(function () {
+        if(!coords){
+            window.console.log("No confirmation from user, using fallback");
+            error();
+        }else{
+            window.console.log("Location was set");
+        }
+    }, geoOptions.timeout + 1000); // Wait extra second
 }
 
 function success(position) {
     coords = [position.coords.latitude, position.coords.longitude];
-    initialize(coords);
+    initialize();
     google.maps.event.addDomListener(window, 'load', initialize);
 }
 
 function error(err){
     //If geolocation doesn't work, the map defaults to San Jose.
-    console.warn('ERROR(' + err.code + '): ' + err.message);
+        if (!err) {
+            console.warn('Error. User didnt respond to geolocation request.');
+        } else {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+        }
 
     var lat = 37.3394444;
     var lon = -121.8938889;
     coords = [lat, lon];
-    initialize(coords);
+    initialize();
     google.maps.event.addDomListener(window, 'load', initialize);
 }
 
-function initialize(coords) {
+function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     var centerPoint = new google.maps.LatLng(coords[0], coords[1]);
     var mapOptions = {
@@ -78,10 +99,14 @@ function calcRoute() {
 
             for (var i = 0; i < boxes.length; i++) {
                 var bounds = boxes[i];
-                var latBound1 = bounds.Ea.k;
-                var latBound2 = bounds.Ea.j;
-                var lonBound1 = bounds.wa.k;
-                var lonBound2 = bounds.wa.j;
+                var first_key = Object.keys(bounds);
+
+                // Using an array of keys here, because the key changes
+                // slightly each time RouteBoxer runs.
+                var latBound1 = bounds[first_key[0]]['k'];
+                var latBound2 = bounds[first_key[0]]['j'];
+                var lonBound1 = bounds[first_key[1]]['k'];
+                var lonBound2 = bounds[first_key[1]]['j'];
                 var queryString = '/api/v1/hazard/?format=json'
 
                 //Build the querystring. Negative numbers require different greater/less than logic,
