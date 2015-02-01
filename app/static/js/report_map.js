@@ -1,4 +1,8 @@
+// TODO(zemadi): Make a common js file that all maps use.
+
 var coords;
+var defaultLat = 37.3394444;
+var defaultLon = -121.8938889;
 
 $(document).ready(function () {
     $('.active').toggleClass('active');
@@ -8,31 +12,24 @@ $(document).ready(function () {
 });
 
 function grabMyPosition() {
-    var geoOptions = { maximumAge: 30000,  //  Valid for 5 minutes
-        timeout:5000,  // Wait 5 seconds
-        enableHighAccuracy:true
+    var geoOptions = { maximumAge: 30000,  //  Valid for 3 minutes
+        timeout: 5000,  // Wait 5 seconds
+        enableHighAccuracy: true
     }
 
     // If there's geolocation, try to get user coords.
-    if(navigator.geolocation) {
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error, geoOptions);
     } else {
-    //If geolocation isn't available, the map defaults to San Jose.
-        var lat = 37.3394444;
-        var lon = -121.8938889;
-        if (!err) {
-            console.warn('Geolocation isnt available for this user.');
-        }
-        coords = [lat, lon];
-        centerMap();
-        google.maps.event.addDomListener(window, 'load', initialize);
+        console.warn('Geolocation isnt available for this user.');
+        //If geolocation isn't available, the map defaults to San Jose coordinates.
+        coords = [defaultLat, defaultLon];
     }
 
     setTimeout(function () {
-        if(!coords){
-            window.console.log("No confirmation from user, using fallback");
-            error();
-        }else{
+        if (!coords) {
+          error();
+        } else {
             window.console.log("Location was set");
         }
     }, geoOptions.timeout + 1000); // Wait extra second
@@ -40,41 +37,27 @@ function grabMyPosition() {
 
 function success(position) {
     coords = [position.coords.latitude, position.coords.longitude];
-    centerMap();
-    google.maps.event.addDomListener(window, 'load', centerMap(coords));
+    mapGenerator();
+    google.maps.event.addDomListener(window, 'load', mapGenerator());
 }
 
-function error(err){
+function error(err) {
     //If geolocation doesn't work, the map defaults to San Jose.
-        if (!err) {
-            console.warn('Error. User didnt respond to geolocation request.');
-        } else {
-            console.warn('ERROR(' + err.code + '): ' + err.message);
-        }
-
-    var lat = 37.3394444;
-    var lon = -121.8938889;
-    coords = [lat, lon];
-    centerMap();
-    google.maps.event.addDomListener(window, 'load', centerMap());
+    if (!err) {
+        console.warn('Error. User didnt respond to geolocation request.');
+    } else {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+    }
+    coords = [defaultLat, defaultLon];
+    mapGenerator();
+    google.maps.event.addDomListener(window, 'load', mapGenerator());
 }
 
-// Add user's location to the report a hazard form and
-// generate a map centering on those coordinates.
-// If the user's location isn't available, default location is San Jose.
-function centerMap() {
-    var lat = coords[0];
-    var lon = coords[1];
-    setFormLatLon(lat, lon);
-
-    return mapGenerator(lat, lon);
-}
-
-//Generate the map and event listeners using lat and lon.
-function mapGenerator(lat, lon) {
+//Generate the map and event listeners using lat and lon, set map center to user's location.
+function mapGenerator() {
     var markers = [];
     var mapOptions = {
-        center: new google.maps.LatLng(lat, lon),
+        center: new google.maps.LatLng(coords[0], coords[1]),
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROAD
     };
@@ -84,8 +67,10 @@ function mapGenerator(lat, lon) {
         document.getElementById("map-canvas"),
         mapOptions);
 
+    setFormLatLon(coords[0], coords[1]);
+
     //Click map to change the latitude and longitude in the form.
-    google.maps.event.addListener(map, "click", function(event) {
+    google.maps.event.addListener(map, "click", function (event) {
         setFormLatLon(event.latLng.lat(), event.latLng.lng());
     });
 
@@ -118,8 +103,8 @@ function markerGenerator(map) {
             '<span class="blue">Description: </span>' + mapData.objects[i].description + '</p>' +
             '</div>';
 
-        google.maps.event.addListener(marker, 'mouseover', (function(marker, contentString) {
-            return function() {
+        google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString) {
+            return function () {
                 infoWindow.setContent(contentString);
                 infoWindow.open(map, marker);
             }
@@ -139,7 +124,7 @@ function httpGet(requestUrl) {
 }
 
 //Add searchbox to map. When place is selected, add markers and lat and lon to form.
-function searchboxGenerator(map, markers){
+function searchboxGenerator(map, markers) {
 // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -147,7 +132,7 @@ function searchboxGenerator(map, markers){
 
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
-    google.maps.event.addListener(searchBox, 'places_changed', function() {
+    google.maps.event.addListener(searchBox, 'places_changed', function () {
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {
@@ -191,9 +176,9 @@ function searchboxGenerator(map, markers){
 }
 
 function setFormDefaults() {
-   var localDateTime = new Date();
-   var formattedDate = (localDateTime.getMonth()+1) + '/' + localDateTime.getDate() + '/' +  localDateTime.getFullYear() + ' ' + localDateTime.getHours() + ':' + ('0'+localDateTime.getMinutes()).slice(-2);
-   $('#id_date_time').val(formattedDate);
+    var localDateTime = new Date();
+    var formattedDate = (localDateTime.getMonth() + 1) + '/' + localDateTime.getDate() + '/' + localDateTime.getFullYear() + ' ' + localDateTime.getHours() + ':' + ('0' + localDateTime.getMinutes()).slice(-2);
+    $('#id_date_time').val(formattedDate);
 }
 
 

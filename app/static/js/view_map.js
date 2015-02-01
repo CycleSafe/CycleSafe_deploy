@@ -1,6 +1,8 @@
-// TODO(zemadi): Make a common js file that both maps use.
+// TODO(zemadi): Make a common js file that all maps use.
 
 var coords;
+var defaultLat = 37.3394444;
+var defaultLon = -121.8938889;
 
 $(document).ready(function () {
     $('.active').toggleClass('active');
@@ -9,72 +11,54 @@ $(document).ready(function () {
 });
 
 function grabMyPosition() {
-    var geoOptions = { maximumAge: 30000,  //  Valid for 5 minutes
-        timeout:5000,  // Wait 5 seconds
-        enableHighAccuracy:true
+    var geoOptions = { maximumAge: 30000,  //  Valid for 3 minutes
+        timeout: 5000,  // Wait 5 seconds
+        enableHighAccuracy: true
     }
 
     // If there's geolocation, try to get user coords.
-    if(navigator.geolocation) {
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error, geoOptions);
     } else {
-    //If geolocation isn't available, the map defaults to San Jose.
-        var lat = 37.3394444;
-        var lon = -121.8938889;
-        if (!err) {
-            console.warn('Geolocation isnt available for this user.');
-        }
-        coords = [lat, lon];
-        centerMap();
-        google.maps.event.addDomListener(window, 'load', initialize);
+        console.warn('Geolocation isnt available for this user.');
+        //If geolocation isn't available, the map defaults to San Jose coordinates.
+        coords = [defaultLat, defaultLon];
     }
 
     setTimeout(function () {
-        if(!coords){
-            window.console.log("No confirmation from user, using fallback");
-            error();
-        }else{
+        if (!coords) {
+          error();
+        } else {
             window.console.log("Location was set");
         }
     }, geoOptions.timeout + 1000); // Wait extra second
+
 }
 
 function success(position) {
     coords = [position.coords.latitude, position.coords.longitude];
-    centerMap();
-    google.maps.event.addDomListener(window, 'load', centerMap(coords));
+    mapGenerator();
+    google.maps.event.addDomListener(window, 'load', mapGenerator());
 }
 
-function error(err){
+function error(err) {
     //If geolocation doesn't work, the map defaults to San Jose.
-        if (!err) {
-            console.warn('Error. User didnt respond to geolocation request.');
-        } else {
-            console.warn('ERROR(' + err.code + '): ' + err.message);
-        }
+    coords = [defaultLat, defaultLon];
+    if (!err) {
+        console.warn('Error. User didnt respond to geolocation request.');
+    } else {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+    }
 
-    var lat = 37.3394444;
-    var lon = -121.8938889;
-    coords = [lat, lon];
-    centerMap();
-    google.maps.event.addDomListener(window, 'load', centerMap());
-}
-
-// Add user's location to the report a hazard form and
-// generate a map centering on those coordinates.
-// If the user's location isn't available, default location is San Jose.
-function centerMap() {
-    var lat = coords[0];
-    var lon = coords[1];
-
-    return mapGenerator(lat, lon);
+    mapGenerator();
+    google.maps.event.addDomListener(window, 'load', mapGenerator());
 }
 
 //Generate the map and event listeners using lat and lon.
-function mapGenerator(lat, lon) {
+function mapGenerator() {
     var markers = [];
     var mapOptions = {
-        center: new google.maps.LatLng(lat, lon),
+        center: new google.maps.LatLng(coords[0], coords[1]),
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROAD
     };
@@ -104,8 +88,7 @@ function markerGenerator(map) {
             position: new google.maps.LatLng(mapData.objects[i].lat, mapData.objects[i].lon),
             map: map,
             animation: google.maps.Animation.DROP,
-            title: mapData.objects[i].description,
-
+            title: mapData.objects[i].description
         });
         contentString = '<div class="infoindow">' +
             '<h4><span class="blue">User: </span>' + mapData.objects[i].user_type + '</h4>' +
@@ -170,7 +153,7 @@ function searchboxGenerator(map, markers) {
                 map: map,
                 icon: image,
                 title: place.name,
-                position: place.geometry.location,
+                position: place.geometry.location
             });
 
             //Center the map on the new marker's location.

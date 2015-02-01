@@ -8,38 +8,30 @@ var rboxer = new RouteBoxer();
 var mapData = []
 var markers = [];
 var coords;
+var defaultLat = 37.3394444;
+var defaultLon = -121.8938889;
 
 $(document).ready(function () {
     launchMap();
 });
 
 function launchMap() {
-    var geoOptions = { maximumAge: 30000,  //  Valid for 5 minutes
-        timeout:5000,  // Wait 5 seconds
-        enableHighAccuracy:true
+    var geoOptions = { maximumAge: 30000,  //  Valid for 3 minutes
+        timeout: 5000,  // Wait 5 seconds
+        enableHighAccuracy: true
     }
 
     // If there's geolocation, try to get user coords.
-    if(navigator.geolocation) {
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error, geoOptions);
     } else {
-    //If geolocation isn't available, the map defaults to San Jose.
-        var lat = 37.3394444;
-        var lon = -121.8938889;
-        if (!err) {
-            console.warn('Geolocation isnt available for this user.');
-        }
-        coords = [lat, lon];
-        initialize();
-        google.maps.event.addDomListener(window, 'load', initialize);
+        //If geolocation isn't available, the map defaults to San Jose.
+        coords = [defaultLat, defaultLon];
     }
 
     setTimeout(function () {
-        if(!coords){
-            window.console.log("No confirmation from user, using fallback");
+        if (!coords) {
             error();
-        }else{
-            window.console.log("Location was set");
         }
     }, geoOptions.timeout + 1000); // Wait extra second
 }
@@ -50,17 +42,14 @@ function success(position) {
     google.maps.event.addDomListener(window, 'load', initialize);
 }
 
-function error(err){
+function error(err) {
     //If geolocation doesn't work, the map defaults to San Jose.
-        if (!err) {
-            console.warn('Error. User didnt respond to geolocation request.');
-        } else {
-            console.warn('ERROR(' + err.code + '): ' + err.message);
-        }
-
-    var lat = 37.3394444;
-    var lon = -121.8938889;
-    coords = [lat, lon];
+    if (!err) {
+        console.warn('Error. User didnt respond to geolocation request.');
+    } else {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+    }
+    coords = [defaultLat, defaultLon];
     initialize();
     google.maps.event.addDomListener(window, 'load', initialize);
 }
@@ -82,12 +71,12 @@ function calcRoute() {
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var request = {
-        origin:start,
-        destination:end,
+        origin: start,
+        destination: end,
         travelMode: google.maps.TravelMode[selectedMode]
     };
 
-    directionsService.route(request, function(response, status) {
+    directionsService.route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             //TODO(zemadi): Look at response to figure out how to add markers into text directions.
@@ -131,8 +120,8 @@ function calcRoute() {
                     mapData.push.apply(mapData, segmentDataPoints.objects);
                 }
             }
-        // Once the loop is done, add the markers to the map.
-        markerGenerator(map, mapData);
+            // Once the loop is done, add the markers to the map.
+            markerGenerator(map, mapData);
         }
     });
 
@@ -161,8 +150,8 @@ function markerGenerator(map, mapData) {
             '<span class="blue">Description: </span>' + mapData[i].description + '</p>' +
             '</div>';
 
-        google.maps.event.addListener(marker, 'mouseover', (function(marker, contentString) {
-            return function() {
+        google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString) {
+            return function () {
                 infoWindow.setContent(contentString);
                 infoWindow.open(map, marker);
             }
