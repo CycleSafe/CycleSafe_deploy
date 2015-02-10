@@ -32,8 +32,8 @@ ROOT_PATH = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Turned off debugging.
-DEBUG = True
-TEMPLATE_DEBUG = True
+DEBUG = False
+TEMPLATE_DEBUG = False
 
 # Application definition
 INSTALLED_APPS = (
@@ -124,7 +124,8 @@ MEDIA_URL = '/static/media/'
 STATIC_URL = '/static/'
 # NOTE: The STATIC_ROOT directory is where staticfiles need to be stored. This may need to be changed depending on
 # OpenShift's requirements.
-STATIC_ROOT = os.path.join(PROJECT_DIR, '..', 'static')
+if not os.environ['LOCAL']:
+    STATIC_ROOT = os.environ['OPENSHIFT_REPO_DIR'] + 'wsgi/static/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

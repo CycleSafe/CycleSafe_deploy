@@ -24,7 +24,7 @@
 		</div>
 		<div class="medium-8 columns">
 		<!-- TODO(zemadi): Add places search in. -->
-			<!-- <input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. "> -->
+			<input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. ">
 			<div id="map-canvas" class="edit-form-map"></div>
 			<div id="directions-panel"></div>
 		</div>
@@ -33,5 +33,6 @@
 
 {% block scripts_bottom %}
 	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
+	<script type="text/javascript"  src="{{ STATIC_URL }}js/common.js"></script>
 	<script type="text/javascript"  src="{{ STATIC_URL }}js/trip_planner.js"></script>
 {% endblock %}
