@@ -4,11 +4,9 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 var rboxer = new RouteBoxer();
-var mapData = []
+var mapData = {'objects': []};
 var markers = [];
 var coords;
-var defaultLat = 37.3394444;
-var defaultLon = -121.8938889;
 
 $(document).ready(function () {
     $('.active').toggleClass('active');
@@ -82,9 +80,9 @@ function calcRoute() {
                     mapData.push.apply(mapData, segmentDataPoints.objects);
                 }
             }
-            markers = []
+
             // Once the loop is done, add the markers to the map.
-            markerGenerator(map, mapData);
+            markerGenerator(map, mapData, true);
         }
     });
 
