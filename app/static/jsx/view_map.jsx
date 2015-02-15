@@ -1,4 +1,4 @@
-var CSViewMap  = React.createClass({displayName: "CSViewMap",
+var CSViewMap  = React.createClass({
     getInitialState: function(){
         return {coords:[]}
     },
@@ -30,28 +30,28 @@ var CSViewMap  = React.createClass({displayName: "CSViewMap",
         */
         var csMap;
         if(this.state.coords.length < 2){
-            csMap = React.createElement(CSMap, null)
+            csMap = <CSMap />
         }else{
-            csMap = React.createElement(CSMap, {coords: this.state.coords, zoom: 12})
+            csMap = <CSMap coords={this.state.coords} zoom={12}/>
         }
         return (
-            React.createElement("div", null, 
-                React.createElement(CSSearchBox, null), 
-                csMap
-            )
+            <div>
+                <CSSearchBox />
+                {csMap}
+            </div>
         )
     }
 });
 
-var CSSearchBox = React.createClass({displayName: "CSSearchBox",
+var CSSearchBox = React.createClass({
     render: function(){
         return (
-            React.createElement("input", {id: "pac-input", className: "controls", type: "text", placeholder: "Search for a location here."})
+            <input id="pac-input" className="controls" type="text" placeholder="Search for a location here."></input>
         )
     }
 });
 
-var CSMap = React.createClass({displayName: "CSMap",
+var CSMap = React.createClass({
 
     getInitialState: function() {
         return {map:null, mapData:null}
@@ -166,14 +166,14 @@ var CSMap = React.createClass({displayName: "CSMap",
     },
     render: function(){
         return (
-            React.createElement("div", {className: "map-canvas"})
+            <div className="map-canvas"></div>
         )
     }
 });
 
 $(document).ready(function(){
     React.render(
-        React.createElement(CSViewMap, null),
+        <CSViewMap />,
         $('.content')[0]
     );
 });

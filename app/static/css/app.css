@@ -56,16 +56,24 @@
        width: 30%;
     }
 
-    #map-canvas img {
+    .map-canvas img {
         max-width: none;
     }
 
-    #map-canvas label {
+    .map-canvas label {
         width: auto;
         display: inline;
     }
 
-    #map-canvas {
+    .map-canvas {
+        width: 100%;
+        height: 85vh;
+        display: block;
+        float: right;
+        position: relative;
+    }
+
+    .content{
         width: 100%;
         height: 85vh;
         display: block;
