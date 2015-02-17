@@ -1,4 +1,7 @@
-$(document).ready(function () {
+
+
+
+/*$(document).ready(function () {
     $('.active').toggleClass('active');
     $('#report-hazard').toggleClass('active');
 });
@@ -22,4 +25,4 @@ function setFormListeners() {
     google.maps.event.addListener(map, "click", function (event) {
         setFormLatLon(event.latLng.lat(), event.latLng.lng(), '#id_lat', '#id_lon');
     });
-}
+}*/
