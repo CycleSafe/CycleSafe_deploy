@@ -114,7 +114,7 @@ define([], function(){
         },
         render: function(){
             return (
-                React.createElement("div", {className: "map-canvas"})
+                React.createElement("div", {id: "map-canvas"})
             )
         }
     });

@@ -9,10 +9,9 @@
 	<meta name="viewport" content="width=device-width , initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="Zhila Emadi, Danny McCue, Ghaida Zahran">
-	<link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}css/app.css" rel="stylesheet">
 	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/modernizr.js"></script>
+	<!--<script type="text/javascript" src="{{ STATIC_URL }}js/libs/modernizr.js"></script>-->
 	{# For loading files specific to one view. #}
 	{% block extraCSS %}
 	{% endblock %}
@@ -23,52 +22,15 @@
 </head>
 
 <body>
-	<nav class="top-bar" data-topbar role="navigation">
-		<ul class="title-area">
-			<li class="name">
-				<h1><a href="/">CycleSafe</a></h1>
-			</li>
-			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-		</ul>
-		<div class="top-bar-section">
-			<!-- Right Nav Section -->
-			<ul class="right">
-					<li id="dashboard"><a href="/">Dashboard</a></li>
-					<li id="report-hazard" class="active"><a href={% url 'report' %}>Report a Hazard</a></li>
-					<li id="trip-planner"><a href={% url 'trip_planner' %}>Trip Planner</a></li>
-				    <li><a href="#" data-reveal-id="aboutModal">About</a></li>
-				    <div id="aboutModal" class="reveal-modal" data-reveal>
-					    <div class="modal-text-wrapper inline-block align-middle">
-						    <h3>We make roads safer for everyone.</h3>
-						    <p>CycleSafe allows cyclists and pedestrians to view and report road hazards.<br>
-							This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</a>, a <a href="http://www.codeforamerica.org/">Code for America</a> brigade. </p>
-						</div>
-						<img src="{{ STATIC_URL }}img/cfa_logo_resize.png" id="modal-img">
-						<a class="close-reveal-modal">&#215;</a>
-					</div>
-				</ul>
-			</div>
-		</nav>
 
-		{% block main %}
-		{% endblock %}
-
-<!-- Footer
-	================================================== -->
-	<footer class="footer">
-		<div class="container">
-		</div>
-	</footer>
-
+	{% block main %}
+	{% endblock %}
 
 	<!-- Placed at the end of the document so the pages load faster -->
-
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true&libraries=places"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/foundation.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/foundation.reveal.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.min.js"></script>
-	<script>$(document).foundation();</script>
 	{# For loading scripts at the bottom of the view. #}
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true&libraries=places"></script>
+	<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.min.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js"></script>
 	{% block scripts_bottom %}
 	{% endblock %}
 

@@ -4,5 +4,8 @@ db.sqlite3
 *.idea
 app/migrations/*
 *.sqlite3
+*.css.map
+*.swp
+*.sass-cache
 .idea
 local_settings_old.py

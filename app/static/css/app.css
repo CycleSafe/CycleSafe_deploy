@@ -1,119 +1,79 @@
-/* General settings */
-    input[type="text"],
-    textarea,
-    select {
-        border-radius: 3px;
-    }
-    select {
-        background-color: #fff;
-        cursor: pointer;
-        box-shadow: 0 -1px 2px rgba(0,0,0,.1) inset;
-    }
+/* VARIABLES */
+body {
+  margin: 0;
+  padding: 0; }
 
-    .blue {
-        color: #008cba;
-    }
+.wrap {
+  width: 100%;
+  height: 100%; }
 
-    .center {
-        text-align: center;
-    }
+.nav {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: #333333;
+  z-index: 1;
+  -webkit-box-shadow: 0px 8px 22px -3px rgba(0, 0, 0, 0.48);
+  -moz-box-shadow: 0px 8px 22px -3px rgba(0, 0, 0, 0.48);
+  box-shadow: 0px 8px 22px -3px rgba(0, 0, 0, 0.48); }
+  .nav .title {
+    position: relative;
+    font-family: "Roboto";
+    font-size: 20px;
+    top: 14px;
+    left: 10px;
+    color: white; }
+  .nav .title:hover {
+    color: #DADFE1; }
+  .nav .tagline {
+    position: relative;
+    font-style: italic;
+    font-family: "Roboto";
+    font-size: 18px;
+    top: 13.5px;
+    left: 15px;
+    color: #DADFE1; }
 
-    .inline-block {
-        display: inline-block;
-    }
+.nav:hover {
+  cursor: pointer; }
 
-    .align-middle {
-        vertical-align: middle;
-    }
+/*.tools {
+	position: absolute;
+	z-index: 1;
+	bottom: 20px;
+	right: 10px;
+	.btn-report {
+		margin-top: 10px;
+		width: 50px;
+		height: 50px;
+		background-color: red;
+	}
+}*/
+#map-canvas {
+  position: relative;
+  height: 100vh;
+  z-index: 0; }
+  #map-canvas .map-search-box {
+    margin-top: 24px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+  #map-canvas #pac-input {
+    background-color: #fff;
+    padding: 0 11px 0 13px;
+    width: 400px;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    text-overflow: ellipsis; }
+  #map-canvas #pac-input:focus {
+    border-color: #4d90fe;
+    margin-left: -1px;
+    padding-left: 14px;
+    width: 401px; }
 
-    .hidden {
-        display: none;
-    }
-
-    textarea {
-        max-height: 100px;
-    }
-
-
-/* Navbar CSS */
-    .top-bar {
-        margin-bottom: 16px;
-    }
-
-    .has-tip {
-        border-bottom: none;
-    }
-
-    .has-tip:hover {
-        border-bottom: none;
-    }
-
-/* Map CSS */
-
-    #modal-img {
-       float: right;
-       margin-right: 60px;
-       width: 30%;
-    }
-
-    .map-canvas img {
-        max-width: none;
-    }
-
-    .map-canvas label {
-        width: auto;
-        display: inline;
-    }
-
-    .map-canvas {
-        width: 100%;
-        height: 85vh;
-        display: block;
-        float: right;
-        position: relative;
-    }
-
-    .content{
-        width: 100%;
-        height: 85vh;
-        display: block;
-        float: right;
-        position: relative;
-    }
-
-    .edit-form-map {
-        max-height: 665px;
-    }
-
-    img, object, embed {
-        max-width: 100%;
-    }
-
-    label {
-        display: block;
-        font-weight: bold;
-    }
-
-    /* InfoWindow styling. Limits div width. */
-    .gm-style-iw {
-        max-width: 400px;
-    }
-
-/* Trip planner form styling. */
-
-.trip-planner-form {
-    padding-right: 20px;
-    width: 150px;
-}
-/*Time Picker*/
-    .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
-    .ui-timepicker-div dl { text-align: left; }
-    .ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
-    .ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
-    .ui-timepicker-div td { font-size: 90%; }
-    .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
-
-    .ui-timepicker-rtl{ direction: rtl; }
-    .ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
-    .ui-timepicker-rtl dl dt{ float: right; clear: right; }
-    .ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
+/*# sourceMappingURL=app.css.map */

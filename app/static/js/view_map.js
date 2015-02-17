@@ -38,9 +38,19 @@ require(["components/CSMap"], function(CSMap){
             }
             return (
                 React.createElement("div", null, 
+                    React.createElement(CSNavBar, null), 
                     React.createElement(CSSearchBox, null), 
+                    React.createElement(CSTools, null), 
                     csMap
                 )
+            )
+        }
+    });
+
+    var CSNavBar = React.createClass({displayName: "CSNavBar",
+        render: function(){
+            return (
+                React.createElement("div", {className: "nav"}, React.createElement("span", {className: "title"}, "CycleSafe"), React.createElement("span", {className: "tagline"}, "We make roads safer for everyone"))
             )
         }
     });
@@ -48,7 +58,25 @@ require(["components/CSMap"], function(CSMap){
     var CSSearchBox = React.createClass({displayName: "CSSearchBox",
         render: function(){
             return (
-                React.createElement("input", {id: "pac-input", className: "controls", type: "text", placeholder: "Search for a location here."})
+                React.createElement("input", {id: "pac-input", className: "map-search-box", type: "text", placeholder: "Search for a location here."})
+            )
+        }
+    });
+
+    var CSTools = React.createClass({displayName: "CSTools",
+        render: function(){
+            return (
+                React.createElement("div", {className: "tools"}, 
+                    React.createElement(CSReportButton, null)
+                )
+            )
+        }
+    });
+
+    var CSReportButton = React.createClass({displayName: "CSReportButton",
+        render: function(){
+            return (
+                React.createElement("div", {className: "btn-report"})
             )
         }
     });
@@ -56,7 +84,7 @@ require(["components/CSMap"], function(CSMap){
     $(document).ready(function(){
         React.render(
             React.createElement(CSViewMap, null),
-            $('.content')[0]
+            $('.wrap')[0]
         );
     });
 

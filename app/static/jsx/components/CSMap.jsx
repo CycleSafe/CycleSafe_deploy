@@ -114,7 +114,7 @@ define([], function(){
         },
         render: function(){
             return (
-                <div className="map-canvas"></div>
+                <div id="map-canvas"></div>
             )
         }
     });

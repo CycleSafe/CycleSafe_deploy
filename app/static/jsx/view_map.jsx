@@ -38,9 +38,19 @@ require(["components/CSMap"], function(CSMap){
             }
             return (
                 <div>
+                    <CSNavBar />
                     <CSSearchBox />
+                    <CSTools />
                     {csMap}
                 </div>
+            )
+        }
+    });
+
+    var CSNavBar = React.createClass({
+        render: function(){
+            return (
+                <div className="nav"><span className="title">CycleSafe</span><span className="tagline">We make roads safer for everyone</span></div>
             )
         }
     });
@@ -48,7 +58,25 @@ require(["components/CSMap"], function(CSMap){
     var CSSearchBox = React.createClass({
         render: function(){
             return (
-                <input id="pac-input" className="controls" type="text" placeholder="Search for a location here."></input>
+                <input id="pac-input" className="map-search-box" type="text" placeholder="Search for a location here."></input>
+            )
+        }
+    });
+
+    var CSTools = React.createClass({
+        render: function(){
+            return (
+                <div className="tools">
+                    <CSReportButton />
+                </div>
+            )
+        }
+    });
+
+    var CSReportButton = React.createClass({
+        render: function(){
+            return (
+                <div className="btn-report"></div>
             )
         }
     });
@@ -56,7 +84,7 @@ require(["components/CSMap"], function(CSMap){
     $(document).ready(function(){
         React.render(
             <CSViewMap />,
-            $('.content')[0]
+            $('.wrap')[0]
         );
     });
 
