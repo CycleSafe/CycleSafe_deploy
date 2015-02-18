@@ -48,7 +48,7 @@ If you're confused about `.scss` and `.sass` read [this](http://thesassway.com/e
 
 [Bourbon](http://bourbon.io/) is a SASS mixin library. I mainly use it to "forget about writing vendor prefixes". 
 
-### Sublime Plugins
+#### Sublime Plugins
 
 If you use Sublime Text editor, you can install the following plugins to make your JSX and SASS development a lot easier. If you've never used Sublime plugins (gasp!), you can quickly get up to speed [here](https://packagecontrol.io/installation).
 
