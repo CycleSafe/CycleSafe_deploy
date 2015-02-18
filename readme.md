@@ -8,6 +8,14 @@ This branch uses [React.js](http://facebook.github.io/react/) as a frontend fram
 
 `sass --watch scss/app.scss:css/app.css` will compile SASS files to CSS
 
+### Sublime Plugins
+
+If you use Sublime Text editor, you can install the following plugins to make your JSX and SASS development a lot easier. If you've never used Sublime plugins (gasp!), you can quickly get up to speed [here](https://packagecontrol.io/installation).
+
+[JSX Syntax Highlighting](https://packagecontrol.io/packages/ReactJS)
+
+[SASS/SCSS Syntax Highlighting](https://packagecontrol.io/packages/Sass)
+
 ### Compiling JSX to Js
 
 React uses a type of markup called "JSX" which allows us to write our HTML code inside the `render` methods of React classes. Since HTML markup is not Javascript compliant, we cannot simply use the `.jsx` files. In order to compile `.jsx` to `.js`, we need to use [react-tools](https://www.npmjs.com/package/react-tools), an npm module that compiles JSX to Js. 
@@ -47,14 +55,6 @@ If you're confused about `.scss` and `.sass` read [this](http://thesassway.com/e
 #### What's Bourbon?
 
 [Bourbon](http://bourbon.io/) is a SASS mixin library. I mainly use it to "forget about writing vendor prefixes". 
-
-#### Sublime Plugins
-
-If you use Sublime Text editor, you can install the following plugins to make your JSX and SASS development a lot easier. If you've never used Sublime plugins (gasp!), you can quickly get up to speed [here](https://packagecontrol.io/installation).
-
-[JSX Syntax Highlighting](https://packagecontrol.io/packages/ReactJS)
-
-[SASS/SCSS Syntax Highlighting](https://packagecontrol.io/packages/Sass)
 
 ### Moving Forward
 
