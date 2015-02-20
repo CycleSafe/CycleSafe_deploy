@@ -4,6 +4,7 @@ var coords;
 var defaultLat = 37.3394444;
 var defaultLon = -121.8938889;
 var deferred = new $.Deferred();
+var mapMarkers = [];
 
 //Run geolocation checks. Success and error callbacks are separate functions.
 function initGeolocation() {
@@ -80,11 +81,12 @@ function mapGenerator(coords, skipMarker) {
 }
 
 //Generate map markers, info windows, and event listeners.
-function markerGenerator(map, mapData, resetMarkers) {
+function markerGenerator(map, mapData) {
     //Get current data for map.
     var contentString;
     var infoWindow = new google.maps.InfoWindow();
 
+    // TODO(zemadi): Build a limit on the query so only data points within the map bounds are displayed.
     if (!mapData) {
      var mapData = httpGet('/api/v1/hazard/?format=json');
     }
@@ -111,10 +113,23 @@ function markerGenerator(map, mapData, resetMarkers) {
                 infoWindow.open(map, marker);
             }
         })(marker, contentString));
+        mapMarkers.push(marker);
     }
-    return marker;
+    return mapMarkers;
 }
 
+// Hide and optionally remove all existing markers from a map and the map object.
+function removeMarkers(deleteMarkers) {
+    // Hide the markers on the map.
+    for(i = 0; i < mapMarkers.length; i++) {
+        mapMarkers[i].setMap(null);
+    }
+
+   // If the markers should be deleted completely, reset map markers to an empty array.
+    if (deleteMarkers) {
+        mapMarkers = []
+    }
+}
 
 //Add searchbox to map. When place is selected, add markers and lat and lon to form.
 function searchboxGenerator(map) {
