@@ -2,7 +2,7 @@ require(["components/CSMap"], function(CSMap){
 
     var CSViewMap  = React.createClass({
         getInitialState: function(){
-            return {coords:[]}
+            return {coords:[], selectedCoords:[]}
         },
         componentDidMount: function(){
             var geoOptions = { maximumAge: 30000,
@@ -16,14 +16,12 @@ require(["components/CSMap"], function(CSMap){
             } else {
                 console.warn('Geolocation isnt available for this user.');
             }
-            /* What does this do ?
-            setTimeout(function () {
-                if(!coords){
-                    window.console.log("No confirmation from user, using fallback");
-                }else{
-                    window.console.log("Location was set");
-                }
-            }, geoOptions.timeout + 1000); // Wait extra second */
+        },
+        handleMapClick: function(e){
+            var nextSelectedCoords = this.state.selectedCoords;
+            nextSelectedCoords[0] = e.latLng.D;
+            nextSelectedCoords[1] = e.latLng.k;
+            this.setState({selectedCoords:nextSelectedCoords});
         },
         render: function(){
             /*
@@ -32,51 +30,103 @@ require(["components/CSMap"], function(CSMap){
             */
             var csMap;
             if(this.state.coords.length < 2){
-                csMap = <CSMap />
-            }else{
-                csMap = <CSMap coords={this.state.coords} zoom={12}/>
+                csMap = <CSMap handleMapClick={this.handleMapClick}/>
+            }
+            else{
+                csMap = <CSMap coords={this.state.coords} zoom={12} handleMapClick={this.handleMapClick}/>
             }
             return (
                 <div>
-                    <CSNavBar />
-                    <CSSearchBox />
-                    <CSTools />
+                    <div className="nav"><span className="title">CycleSafe</span><span className="tagline">We make roads safer for everyone</span></div>
+                    <input id="pac-input" className="map-search-box" type="text" placeholder="Search for a location here."></input>
                     {csMap}
+                    <CSUtils selectedCoords={this.state.selectedCoords} />
                 </div>
             )
         }
     });
 
-    var CSNavBar = React.createClass({
+    var CSUtils = React.createClass({
+        getInitialState: function(){
+            return {expanded: false, activeTab: 0, selectedCoords: [], tabs:[{title:"Report Hazard"},{title:"Trip Planner"}]};
+        },
+        componentWillReceiveProps: function(p){
+            if(p.selectedCoords.length==2){
+                this.setState({expanded: true, activeTab: 0, selectedCoords: p.selectedCoords});
+            }
+        },
+        handleHeaderClick: function(e){
+            this.setState({expanded: !this.state.expanded});
+        },
+        handleChangeTab: function(tab){
+            this.setState({activeTab: tab});
+        },
         render: function(){
+            if(this.state.expanded){
+                $('.menu-utils').addClass('menu-utils-expand');
+            }else{
+                $('.menu-utils').removeClass('menu-utils-expand');                
+            }
+            var tabContent;
+            switch(this.state.activeTab){
+                case 1: tabContent = <CSTripPlanner />; break;
+                default: tabContent = <CSReportHazard selectedCoords={this.state.selectedCoords}/>;
+            }
+            var tabs = this.state.tabs.map(function(tab, i){
+                return (
+                    <CSTab tab={tab} iter={i} key={i} title={tab.title} handleChangeTab={this.handleChangeTab}></CSTab>
+                )
+            }.bind(this));
             return (
-                <div className="nav"><span className="title">CycleSafe</span><span className="tagline">We make roads safer for everyone</span></div>
-            )
-        }
-    });
-
-    var CSSearchBox = React.createClass({
-        render: function(){
-            return (
-                <input id="pac-input" className="map-search-box" type="text" placeholder="Search for a location here."></input>
-            )
-        }
-    });
-
-    var CSTools = React.createClass({
-        render: function(){
-            return (
-                <div className="tools">
-                    <CSReportButton />
+                <div className="menu-utils">
+                    <div onClick={this.handleHeaderClick} className="header"></div>
+                    <div className="tab-container">
+                       {tabs}
+                    </div>
+                    <div className="tab-content">
+                        {tabContent}
+                    </div>
                 </div>
             )
         }
     });
 
-    var CSReportButton = React.createClass({
+    var CSTab = React.createClass({
         render: function(){
-            return (
-                <div className="btn-report"></div>
+            return ( 
+                <div className="tab" onClick={this.handleClick}>
+                    <span className="tab-title">{this.props.title}</span>
+                </div>
+            )
+        },
+        handleClick: function(){
+            this.props.handleChangeTab(this.props.iter);
+        }
+    });
+
+    var CSReportHazard = React.createClass({
+        getInitialState: function(){
+            return {selectedCoords:[],userType:"",time:{},hazardType:"",description:""}
+        },
+        componentWillReceiveProps: function(p){
+            if(p.selectedCoords.length==2){
+                this.setState({selectedCoords:p.selectedCoords});
+            }
+        },
+        render: function(){
+            return (  
+                <div className="report-hazard">
+                    <span>{this.props.selectedCoords}</span>
+                </div>
+            )
+        }
+    });
+
+    var CSTripPlanner = React.createClass({
+        render: function(){
+            return (  
+                <div className="trip-planner">
+                </div>
             )
         }
     });

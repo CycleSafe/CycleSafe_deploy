@@ -1,5 +1,5 @@
 /* VARIABLES */
-body {
+html, body {
   margin: 0;
   padding: 0; }
 
@@ -37,6 +37,43 @@ body {
 .nav:hover {
   cursor: pointer; }
 
+.menu-utils {
+  -webkit-transition: height 0.1s ease-in;
+  -moz-transition: height 0.1s ease-in;
+  transition: height 0.1s ease-in;
+  position: fixed;
+  bottom: 0px;
+  z-index: 1;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  background-color: red; }
+  .menu-utils .header {
+    height: 50px;
+    background-color: green; }
+  .menu-utils .tab-container {
+    height: 50px;
+    background-color: blue;
+    display: flex; }
+    .menu-utils .tab-container .tab {
+      width: 50%;
+      height: 100%;
+      background-color: orange; }
+  .menu-utils .tab-content {
+    height: 100%;
+    width: 100%; }
+    .menu-utils .tab-content .report-hazard {
+      height: 100%;
+      background-color: blue; }
+    .menu-utils .tab-content .trip-planner {
+      height: 100%;
+      background-color: pink; }
+
+.menu-utils-expand {
+  height: 250px; }
+
 /*.tools {
 	position: absolute;
 	z-index: 1;
@@ -51,7 +88,9 @@ body {
 }*/
 #map-canvas {
   position: relative;
-  height: 100vh;
+  /* This might be a hack...*/
+  height: -webkit-calc(100vh - 50px);
+  height: calc(100vh - 50px);
   z-index: 0; }
   #map-canvas .map-search-box {
     margin-top: 24px;

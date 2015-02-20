@@ -26,9 +26,6 @@ define([], function(){
                     }
                 }.bind(this));
             }
-            /*
-                Another example of a component that could have been easily "Reactified" but can't because Google...
-            */
             var input = document.getElementById('pac-input');
             this.state.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
             var searchBox = new google.maps.places.SearchBox(input);
@@ -41,6 +38,22 @@ define([], function(){
                 }
                 this.drawPlaces(places);
             }.bind(this));
+
+            google.maps.event.addListener(this.state.map, 'click', function(e){
+                this.handleClick(e);
+            }.bind(this));
+        },
+        handleClick: function(e){
+            this.props.handleMapClick(e);
+        },
+        shouldComponentUpdate: function(p,s){
+            /*
+                If the next props (p) are not the same as the default, then update the map
+            */
+            if(p.coords != this.props.coords){
+                return true;
+            }
+            return false;
         },
         componentDidUpdate: function(){
             if(this.state.map){
@@ -61,7 +74,6 @@ define([], function(){
                     title: this.state.mapData.objects[i].description,
                 });
                 /* Unfortunately the Maps API requires an HTML string. Can't "Reactify". 
-                   This would have been the perfect example of a reusable web component.
                 */
                 contentString = '<div class="infoindow">' +
                     '<h4><span class="blue">User: </span>' + this.state.mapData.objects[i].user_type + '</h4>' +
