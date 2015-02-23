@@ -1,4 +1,3 @@
-// TODO(zemadi): Move all common js into a common file and clean up code!
 // TODO(zemadi): Add places search to form.
 
 var directionsDisplay;
@@ -12,56 +11,19 @@ var defaultLat = 37.3394444;
 var defaultLon = -121.8938889;
 
 $(document).ready(function () {
-    launchMap();
+    $('.active').toggleClass('active');
+    $('#trip-planner').toggleClass('active');
 });
 
-function launchMap() {
-    var geoOptions = { maximumAge: 30000,  //  Valid for 3 minutes
-        timeout: 5000,  // Wait 5 seconds
-        enableHighAccuracy: true
-    }
+// Run these functions after setting geolocation. All except setFormDateTime() are dependent on geolocation to run.
+initGeolocation().then(function (coords) {
+    map = mapGenerator(coords);
+    setDirectionsDisplay(map);
+});
 
-    // If there's geolocation, try to get user coords.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error, geoOptions);
-    } else {
-        //If geolocation isn't available, the map defaults to San Jose.
-        coords = [defaultLat, defaultLon];
-    }
 
-    setTimeout(function () {
-        if (!coords) {
-            error();
-        }
-    }, geoOptions.timeout + 1000); // Wait extra second
-}
-
-function success(position) {
-    coords = [position.coords.latitude, position.coords.longitude];
-    initialize();
-    google.maps.event.addDomListener(window, 'load', initialize);
-}
-
-function error(err) {
-    //If geolocation doesn't work, the map defaults to San Jose.
-    if (!err) {
-        console.warn('Error. User didnt respond to geolocation request.');
-    } else {
-        console.warn('ERROR(' + err.code + '): ' + err.message);
-    }
-    coords = [defaultLat, defaultLon];
-    initialize();
-    google.maps.event.addDomListener(window, 'load', initialize);
-}
-
-function initialize() {
+function setDirectionsDisplay(map) {
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var centerPoint = new google.maps.LatLng(coords[0], coords[1]);
-    var mapOptions = {
-        zoom: 12,
-        center: centerPoint
-    };
-    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 }
@@ -90,8 +52,8 @@ function calcRoute() {
                 var bounds = boxes[i];
                 var first_key = Object.keys(bounds);
 
-                // Using an array of keys here, because the key changes
-                // slightly each time RouteBoxer runs.
+                // Using array indices here, because the key changes slightly
+                // each time RouteBoxer runs.
                 var latBound1 = bounds[first_key[0]]['k'];
                 var latBound2 = bounds[first_key[0]]['j'];
                 var lonBound1 = bounds[first_key[1]]['k'];
@@ -120,56 +82,10 @@ function calcRoute() {
                     mapData.push.apply(mapData, segmentDataPoints.objects);
                 }
             }
+            markers = []
             // Once the loop is done, add the markers to the map.
             markerGenerator(map, mapData);
         }
     });
 
 }
-
-//Generate map markers, info windows, and event listeners.
-function markerGenerator(map, mapData) {
-    //Get current data for map.
-    var contentString;
-    var infoWindow = new google.maps.InfoWindow();
-
-    //Add markers to map.
-    for (var i = 0; i < mapData.length; i++) {
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(mapData[i].lat, mapData[i].lon),
-            map: map,
-            animation: google.maps.Animation.DROP,
-
-            title: mapData[i].description
-
-        });
-        contentString = '<div class="infoindow">' +
-            '<h4><span class="blue">User: </span>' + mapData[i].user_type + '</h4>' +
-            '<p> <span class="blue">Date and Time: </span>' + mapData[i].date_time + '<br>' +
-            '<span class="blue">Hazard: </span>' + mapData[i].hazard_type + '<br>' +
-            '<span class="blue">Description: </span>' + mapData[i].description + '</p>' +
-            '</div>';
-
-        google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString) {
-            return function () {
-                infoWindow.setContent(contentString);
-                infoWindow.open(map, marker);
-            }
-        })(marker, contentString));
-    }
-    //Add marker to map.
-    markers.push(marker);
-
-    return marker;
-}
-
-//Get data from API to generate markers.
-function httpGet(requestUrl) {
-
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", requestUrl, false);
-    xmlHttp.send(null);
-
-    return JSON.parse(xmlHttp.responseText);
-
-};
