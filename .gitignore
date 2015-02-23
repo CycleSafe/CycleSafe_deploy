@@ -6,3 +6,4 @@ app/migrations/*
 *.sqlite3
 .idea
 local_settings_old.py
+local_settings.py
