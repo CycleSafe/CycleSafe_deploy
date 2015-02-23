@@ -109,6 +109,7 @@ except:
     print('skipping bcrypt...')
 
 TASTYPIE_FULL_DEBUG = True
+TASTYPIE_DEFAULT_FORMATS = ['json']
 API_LIMIT_PER_PAGE = 0
 
 LANGUAGE_CODE = 'en-us'

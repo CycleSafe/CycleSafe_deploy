@@ -1,24 +1,26 @@
 // TODO(zemadi): Add places search to form.
 
+var coords;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
-var rboxer = new RouteBoxer();
-var mapData = {'objects': []};
 var markers = [];
-var coords;
+var rboxer = new RouteBoxer();
+var travelMode;
 
 $(document).ready(function () {
     $('.active').toggleClass('active');
     $('#trip-planner').toggleClass('active');
-    $('#start').val('1901 rock st mountain view')
-    $('#end').val('725 san antonio palo alto')
+    //TODO(zemadi): Remove two lines below.
+    $('#start').val('1901 rock st mountain view');
+    $('#end').val('725 san antonio palo alto');
 });
 
 // Run these functions after setting geolocation. All except setFormDateTime() are dependent on geolocation to run.
 initGeolocation().then(function (coords) {
     map = mapGenerator(coords);
     setDirectionsDisplay(map);
+    formListener();
 });
 
 
@@ -28,103 +30,147 @@ function setDirectionsDisplay(map) {
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 }
 
+function formListener() {
+    $('#mode_travel').change(function(){
+       calcRoute();
+    });
+}
+
 function calcRoute() {
-    var selectedMode = document.getElementById('mode_travel').value;
+    travelMode = document.getElementById('mode_travel').value;
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var request = {
         origin: start,
         destination: end,
-        travelMode: google.maps.TravelMode[selectedMode]
+        travelMode: google.maps.TravelMode[travelMode]
     };
 
     directionsService.route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
 
-
-            //TODO(zemadi): Look at response to figure out how to add markers into text directions.
-
-            // Box the overview path of the first route
-            var distance = .03;
-            var path = response.routes[0].overview_path;
-            var boxes = rboxer.box(path, distance);
-
-            // Get markers around the route. This is done by getting the boundaries for the route
-            // and using those as query params.
             queryResults = getMarkers(response);
-            //TODO(zemadi): remove all console.logs.
-            console.log(queryResults.objects);
-            console.log(boxes);
 
-
-           // RouteBoxer chops up the user's route into sections.
-           // Go through each route path box and filter the query results further.
-           // TODO(zemadi): Improve this. Avoid nested loop if possible.
-           for (var i = 0; i < boxes.length; i++) {
-               var bounds = boxes[i];
-
-               var objectKey = Object.keys(bounds);
-               // Using array indices here, because the key changes slightly
-               // each time RouteBoxer runs.
-               var latBound1 = bounds[objectKey[0]]['k'];
-               var latBound2 = bounds[objectKey[0]]['j'];
-               var lonBound1 = bounds[objectKey[1]]['k'];
-               var lonBound2 = bounds[objectKey[1]]['j'];
-
-               // TODO(zemadi): Add description here of what's going on.
-               for (var j = 0; j < queryResults.objects.length; j++) {
-                   var currentLat = parseFloat(queryResults.objects[j].lat);
-                   var currentLon = parseFloat(queryResults.objects[j].lon)
-                   var latArraySort = [currentLat, latBound1, latBound2].sort();
-                   var lonArraySort = [currentLon, lonBound1, lonBound2].sort();
-
-                   if (latArraySort.indexOf(currentLat) == 1) {
-                       console.log('Got here!');
-                       if (lonArraySort.indexOf(currentLon) == 1) {
-                        console.log('Got here too!');
-                        mapData['objects'].push(queryResults.objects[j]);
-                       }
-                   }
-               }
-           }
-            // Remove existing markers from the map and map object.
-            removeMarkers(true);
-            // Once the loop is done, add only route markers on the map
-            markerGenerator(map, mapData);
+            if (queryResults.objects.length > 0) {
+                // Filter the query results further by comparing coords with each route section.
+                narrowResults(queryResults.objects, response);
+            }
         }
     });
 
 }
 
+// Get markers around the route. This is done by getting the boundaries for the route
+// as a whole and using those as query params.
 function getMarkers(response){
-    var queryString = '/api/v1/hazard/?format=json&?order_by=lat';
-    var keyByIndex = Object.keys(response.routes[0].bounds);
+    var userType;
+    if (travelMode == "BICYCLING") {
+        userType = 1;
+    } else {
+        userType = 2;
+    }
 
+    // Build the query string, limiting the results for cyclists and pedestrians.
+    var queryString = '/api/v1/hazard/?format=json&?user_type=' + userType;
 
     // Get the maximum and minimum lat/lon bounds for the route.
-    // This will narrow the query to a box around the route.
-    var latBound1 = response.routes[0].bounds[keyByIndex[0]]['k'];
-    var latBound2 = response.routes[0].bounds[keyByIndex[0]]['j'];
-    var lonBound1 = response.routes[0].bounds[keyByIndex[1]]['k'];
-    var lonBound2 = response.routes[0].bounds[keyByIndex[1]]['j'];
+    // This will narrow the query to a box around the route as a whole.
+    var routeBounds = getBounds(response.routes[0].bounds);
 
     //Build the querystring. Negative numbers require different greater/less than logic,
     // so testing for that here.
-    if (latBound1 >= 0 && latBound2 >= 0) {
-        queryString += '&lat__gte=' + latBound1 + '&lat__lte=' + latBound2;
+    if (routeBounds.lat1 >= 0 && routeBounds.lat2 >= 0) {
+        queryString += '&lat__gte=' + routeBounds.lat1 + '&lat__lte=' + routeBounds.lat2;
     } else {
-        queryString += '&lat__gte=' + latBound2 + '&lat__lte=' + latBound1;
+        queryString += '&lat__gte=' + routeBounds.lat2 + '&lat__lte=' + routeBounds.lat1;
     }
 
-    if (lonBound1 >= 0 && lonBound2 >= 0) {
-        queryString += '&lon__gte=' + lonBound1 + '&lon__lte=' + lonBound2;
+    if (routeBounds.lon1 >= 0 && routeBounds.lon2 >= 0) {
+        queryString += '&lon__gte=' + routeBounds.lon1 + '&lon__lte=' + routeBounds.lon2;
     } else {
-        queryString += '&lon__gte=' + lonBound2 + '&lon__lte=' + lonBound1;
+        queryString += '&lon__gte=' + routeBounds.lon2 + '&lon__lte=' + routeBounds.lon1;
     }
 
     // Run the query.
     queryResults = httpGet(queryString);
 
     return queryResults
+}
+
+function narrowResults(queryResults, directionsResponse) {
+    // RouteBoxer chops up the user's route into sections.
+    // Refer to: http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/docs/examples.html
+    var distance = .04;
+    var path = directionsResponse.routes[0].overview_path;
+    var boxes = rboxer.box(path, distance);
+    var mapData = {'objects': []};
+
+    // TODO(zemadi): Improve this. See if there's a way to skip routeBoxer. Avoid nested loop if possible.
+    for (var i = 0; i < boxes.length; i++) {
+        var sectionBounds = getBounds(boxes[i]);
+
+        // In order for a data point to be on the route, the coordinates
+        // need to be between the values of a box in routeBoxer.
+        // RouteBoxer chops up a route into sections and returns the upper and lower
+        // boundaries for that section of the route.
+
+        for (var j = 0; j < queryResults.length; j++) {
+            var currentLat = parseFloat(queryResults[j].lat);
+            var currentLon = parseFloat(queryResults[j].lon);
+            var latArraySort = [currentLat, sectionBounds.lat1, sectionBounds.lat2].sort();
+            var lonArraySort = [currentLon, sectionBounds.lon1, sectionBounds.lon2].sort();
+
+            // If a marker is between the latitude and longitude bounds of the route (index 1), add
+            // it to the map.
+            if (latArraySort.indexOf(currentLat) === 1) {
+                if (lonArraySort.indexOf(currentLon) === 1) {
+                    mapData.objects.push(queryResults[j]);
+
+                    // Build the text for the warning message.
+                    // Add a description to the warning message.
+                    if (queryResults[j].description) {
+                        var more_information = 'Details: ' + queryResults[j].description;
+                        directionsResponse.routes[0].warnings.unshift(more_information);
+                    }
+                    // Add the hazard type and address.
+                    var address = coordsToAddress([queryResults[j].lat, queryResults[j].lon]);
+                    var partialAddress = [address.results[0].address_components[0].short_name, address.results[0].address_components[1].short_name];
+                    var markerWarning = [queryResults[j].hazard_type, 'near', partialAddress.join(' ')];
+                    directionsResponse.routes[0].warnings.unshift(markerWarning.join(' '));
+                }
+            }
+        }
+    }
+
+    // Add general hazard info to the warnings section.
+    // TODO(zemadi): Make custom directions panel so it combines marker and directions data.
+    var warningText = [];
+    if (mapData.length === 1) {
+        Array.prototype.push.apply(warningText, ['There is', mapData.objects.length,  'hazard along your route.']);
+    } else {
+        Array.prototype.push.apply(warningText, ['There are', mapData.objects.length, 'hazards along your route.']);
+    }
+    directionsResponse.routes[0].warnings.unshift(warningText.join(' '));
+    // Remove existing markers from the map and map object.
+    removeMarkers(true);
+
+    if (mapData.objects.length > 0) {
+        // Add new markers to the map.
+        markerGenerator(map, mapData);
+    }
+}
+
+// Function to get coordinate boundaries from the Directions route callback and RouteBoxer.
+// They both hold boundary data in a similar format.
+function getBounds(data){
+    var coordinateBounds = {};
+    var keyByIndex = Object.keys(data);
+
+    coordinateBounds['lat1'] = data[keyByIndex[0]]['k'];
+    coordinateBounds['lat2'] = data[keyByIndex[0]]['j'];
+    coordinateBounds['lon1'] = data[keyByIndex[1]]['k'];
+    coordinateBounds['lon2'] = data[keyByIndex[1]]['j'];
+
+    return coordinateBounds;
 }

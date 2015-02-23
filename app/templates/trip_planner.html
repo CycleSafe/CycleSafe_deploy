@@ -4,27 +4,37 @@
 {% endblock %}
 
 {% block extraJS %}
-    {{ form.media }}
+	{{ form.media }}
 {% endblock %}
 
 {% block main %}
-<div id="row">
-	<div id="medium-4 columns">
-		<b>Start: </b>
-		<input id="start" class="trip-planner-form" onchange="calcRoute();">
-		</input>
-		<b>End: </b>
-		<input id="end" class="trip-planner-form" onchange="calcRoute();">
-		</input>
-		<b>Mode of Travel: </b>
-		<select id="mode_travel" class="trip-planner-form" onchange="calcRoute();">
-		  <option value="BICYCLING">Bicycling</option>
-		  <option value="WALKING" selected="selected">Walking</option>
-		</select>
+	<div id="row">
+	<div class="medium-12 columns"><p>Find out if there are any hazards along your route. Enter your start and end
+		addresses, and mode of transportation.</p></div>
+	<div class="medium-12 columns">
+		<div class="medium-4 columns">
+			<label>Start: </label>
+			<input id="start" class="trip-planner-form" type="text">
+			</input>
+	    </div>
+		<div class="medium-4 columns">
+			<label>End: </label>
+			<input id="end" class="trip-planner-form" type="text">
+			</input>
 		</div>
-		<div class="medium-8 columns">
-		<!-- TODO(zemadi): Add places search in. -->
-			<input id="pac-input" class="controls" type="text" placeholder="Search for a location here. The position will be added to the form. ">
+		<div class="medium-4 columns">
+			<label>Mode of Travel: </label>
+			<select id="mode_travel" class="trip-planner-form">
+			  <option disabled="disabled" selected="selected">Choose One</option>
+			  <option value="BICYCLING">Bicycling</option>
+			  <option value="WALKING">Walking</option>
+			</select>
+	    </div>
+		</div>
+		<div class="medium-12 columns">
+			<!-- TODO(zemadi): Add places search. -->
+			<input id="pac-input" class="controls" type="text"
+				   placeholder="Places search is currently disabled. We'll add this feature soon!">
 			<div id="map-canvas" class="edit-form-map"></div>
 			<div id="directions-panel"></div>
 		</div>
@@ -32,7 +42,8 @@
 {% endblock %}
 
 {% block scripts_bottom %}
-	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
-	<script type="text/javascript"  src="{{ STATIC_URL }}js/common.js"></script>
-	<script type="text/javascript"  src="{{ STATIC_URL }}js/trip_planner.js"></script>
+	<script type="text/javascript"
+			src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/common.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/trip_planner.js"></script>
 {% endblock %}

@@ -189,7 +189,7 @@ function searchboxGenerator(map) {
 //Set latitude and longitude in forms.
 function setFormLatLon(lat, lon, element1, element2) {
     if (!element2) {
-        $(element1).val(lat + lon);
+        $(element1).val(lat + ', ' + lon);
     } else {
         $(element1).val(lat);
         $(element2).val(lon);
@@ -198,6 +198,12 @@ function setFormLatLon(lat, lon, element1, element2) {
     return true;
 }
 
+// Convert coordinates to an address (coords must be an array [lat, lon]).
+function coordsToAddress(coords) {
+    var test = httpGet('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coords[0] + ',' + coords[1]);
+
+    return test;
+}
 
 //Get data from API to generate markers.
 function httpGet(requestUrl) {
@@ -207,3 +213,4 @@ function httpGet(requestUrl) {
 
     return JSON.parse(xmlHttp.responseText);
 }
+
