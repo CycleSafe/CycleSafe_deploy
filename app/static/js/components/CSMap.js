@@ -2,7 +2,7 @@ define([], function(){
 	var CSMap = React.createClass({displayName: "CSMap",
 
         getInitialState: function() {
-            return {map:null, mapData:null}
+            return {map:null, markerData:null}
         },
         getDefaultProps: function(){
             /* Coords of the United States. Default if this component is rendered without props 
@@ -18,14 +18,6 @@ define([], function(){
             };
             var map = new google.maps.Map(this.getDOMNode(),mapOptions);
             this.setState({map:map});
-            if(this.state.map){
-                $.get('/api/v1/hazard/?format=json', function(mapData){
-                    if(mapData) {
-                        this.setState({mapData:mapData});
-                        this.drawMarkers();
-                    }
-                }.bind(this));
-            }
             var input = document.getElementById('pac-input');
             this.state.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
             var searchBox = new google.maps.places.SearchBox(input);
@@ -55,8 +47,11 @@ define([], function(){
             }
             return false;
         },
-        componentDidUpdate: function(){
+        componentDidUpdate: function(nextProps){
             if(this.state.map){
+                if(nextProps.markerData){
+                    this.setState({markerData:nextProps.markerData});
+                }
                 this.state.map.panTo(this.centerMap());
                 this.state.map.setZoom(this.props.zoom);
             }
@@ -66,20 +61,20 @@ define([], function(){
         },
         drawMarkers: function(){
             var infoWindow = new google.maps.InfoWindow();
-            for (var i = 0; i < this.state.mapData.objects.length; i++) {
+            for (var i = 0; i < this.state.markerData.objects.length; i++) {
                 var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(this.state.mapData.objects[i].lat, this.state.mapData.objects[i].lon),
+                    position: new google.maps.LatLng(this.state.markerData.objects[i].lat, this.state.markerData.objects[i].lon),
                     map: this.state.map,
                     animation: google.maps.Animation.DROP,
-                    title: this.state.mapData.objects[i].description,
+                    title: this.state.markerData.objects[i].description,
                 });
                 /* Unfortunately the Maps API requires an HTML string. Can't "Reactify". 
                 */
                 contentString = '<div class="infoindow">' +
-                    '<h4><span class="blue">User: </span>' + this.state.mapData.objects[i].user_type + '</h4>' +
-                    '<p> <span class="blue">Date and Time: </span>' + this.state.mapData.objects[i].date_time + '<br>' +
-                    '<span class="blue">Hazard: </span>' + this.state.mapData.objects[i].hazard_type + '<br>' +
-                    '<span class="blue">Description: </span>' + this.state.mapData.objects[i].description + '</p>' +
+                    '<h4><span class="blue">User: </span>' + this.state.markerData.objects[i].user_type + '</h4>' +
+                    '<p> <span class="blue">Date and Time: </span>' + this.state.markerData.objects[i].date_time + '<br>' +
+                    '<span class="blue">Hazard: </span>' + this.state.markerData.objects[i].hazard_type + '<br>' +
+                    '<span class="blue">Description: </span>' + this.state.markerData.objects[i].description + '</p>' +
                     '</div>';
                 google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString) {
                     return function () {

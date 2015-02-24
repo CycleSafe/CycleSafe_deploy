@@ -2,7 +2,7 @@ require(["components/CSMap"], function(CSMap){
 
     var CSViewMap  = React.createClass({displayName: "CSViewMap",
         getInitialState: function(){
-            return {coords:[], selectedCoords:[]}
+            return {coords:[], selectedCoords:[],markerData: []}
         },
         componentDidMount: function(){
             var geoOptions = { maximumAge: 30000,
@@ -16,6 +16,11 @@ require(["components/CSMap"], function(CSMap){
             } else {
                 console.warn('Geolocation isnt available for this user.');
             }
+            $.get('/api/v1/hazard/?format=json', function(markerData){
+                if(markerData) {
+                    this.setState({markerData:markerData});
+                }
+            }.bind(this));
         },
         handleMapClick: function(e){
             var nextSelectedCoords = this.state.selectedCoords;
@@ -30,10 +35,10 @@ require(["components/CSMap"], function(CSMap){
             */
             var csMap;
             if(this.state.coords.length < 2){
-                csMap = React.createElement(CSMap, {handleMapClick: this.handleMapClick})
+                csMap = React.createElement(CSMap, {handleMapClick: this.handleMapClick, markerData: this.markerData})
             }
             else{
-                csMap = React.createElement(CSMap, {coords: this.state.coords, zoom: 12, handleMapClick: this.handleMapClick})
+                csMap = React.createElement(CSMap, {coords: this.state.coords, zoom: 12, handleMapClick: this.handleMapClick, markerData: this.markerData})
             }
             return (
                 React.createElement("div", null, 
