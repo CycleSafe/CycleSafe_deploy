@@ -111,17 +111,55 @@ require(["components/CSMap"], function(CSMap){
 
     var CSReportHazard = React.createClass({
         getInitialState: function(){
-            return {selectedCoords:[],userType:"",time:{},hazardType:"",description:""}
+            return {selectedCoords:[],userType:"",time:{},hazardType:"",description:"",
+                    formFields: {userType:0,hazardType:0,dateTime:"",latLong:[],description:""}}
         },
         componentWillReceiveProps: function(p){
+            // {BUG} Not called when tabs are switched
             if(p.selectedCoords.length==2){
-                this.setState({selectedCoords:p.selectedCoords});
+                var nextFormFields = this.state.formFields;
+                nextFormFields.latLong = p.selectedCoords;
+                this.setState({formFields:nextFormFields});
             }
+        },
+        handleChangeInput: function(field,value,e) {
+            // {REFACTOR} This is the wrong way to be doing forms in React.
+            var fieldValue;
+            switch(field){
+                case 'latLong':
+                    fieldValue = [];
+                    fieldValue[0] = this.refs.inputLat.getDOMNode().value;
+                    fieldValue[1] = this.refs.inputLong.getDOMNode().value;
+                    break;
+                case 'userType':
+                    fieldValue = value;
+                    console.log(fieldValue);
+                    break;
+                default:
+                    fieldValue = e.target.value;
+            }
+            var nextFormFields = this.state.formFields;
+            nextFormFields[field] = fieldValue;
+            this.setState({formFields: nextFormFields});
         },
         render: function(){
             return (  
                 <div className="report-hazard">
-                    <span>{this.props.selectedCoords}</span>
+                    <div className="user-type">
+                        <div className="bicycle" onClick={this.handleChangeInput.bind(this,'userType',0)}></div>
+                        <div className="pedestrian" onClick={this.handleChangeInput.bind(this,'userType',1)}></div>
+                    </div>
+                    <div className="report-time">
+                        <input type="text" defaultValue={new Date()} onChange={this.handleChangeInput.bind(this,'dateTime')}></input>
+                    </div>
+                    <div className="lat-long">
+                        <input type="text" ref="inputLat" value={this.state.formFields.latLong[0]} onChange={this.handleChangeInput.bind(this,'latLong')}></input>
+                        <input type="text" ref="inputLong" value={this.state.formFields.latLong[1]} onChange={this.handleChangeInput.bind(this,'latLong')}></input>
+                    </div>
+                    <div className="description">
+                        <textarea onChange={this.handleChangeInput.bind(this,'description')}></textarea>
+                    </div>
+                    <div className="submit"></div>
                 </div>
             )
         }

@@ -111,17 +111,55 @@ require(["components/CSMap"], function(CSMap){
 
     var CSReportHazard = React.createClass({displayName: "CSReportHazard",
         getInitialState: function(){
-            return {selectedCoords:[],userType:"",time:{},hazardType:"",description:""}
+            return {selectedCoords:[],userType:"",time:{},hazardType:"",description:"",
+                    formFields: {userType:0,hazardType:0,dateTime:"",latLong:[],description:""}}
         },
         componentWillReceiveProps: function(p){
+            // {BUG} Not called when tabs are switched
             if(p.selectedCoords.length==2){
-                this.setState({selectedCoords:p.selectedCoords});
+                var nextFormFields = this.state.formFields;
+                nextFormFields.latLong = p.selectedCoords;
+                this.setState({formFields:nextFormFields});
             }
+        },
+        handleChangeInput: function(field,value,e) {
+            // {REFACTOR} This is the wrong way to be doing forms in React.
+            var fieldValue;
+            switch(field){
+                case 'latLong':
+                    fieldValue = [];
+                    fieldValue[0] = this.refs.inputLat.getDOMNode().value;
+                    fieldValue[1] = this.refs.inputLong.getDOMNode().value;
+                    break;
+                case 'userType':
+                    fieldValue = value;
+                    console.log(fieldValue);
+                    break;
+                default:
+                    fieldValue = e.target.value;
+            }
+            var nextFormFields = this.state.formFields;
+            nextFormFields[field] = fieldValue;
+            this.setState({formFields: nextFormFields});
         },
         render: function(){
             return (  
                 React.createElement("div", {className: "report-hazard"}, 
-                    React.createElement("span", null, this.props.selectedCoords)
+                    React.createElement("div", {className: "user-type"}, 
+                        React.createElement("div", {className: "bicycle", onClick: this.handleChangeInput.bind(this,'userType',0)}), 
+                        React.createElement("div", {className: "pedestrian", onClick: this.handleChangeInput.bind(this,'userType',1)})
+                    ), 
+                    React.createElement("div", {className: "report-time"}, 
+                        React.createElement("input", {type: "text", defaultValue: new Date(), onChange: this.handleChangeInput.bind(this,'dateTime')})
+                    ), 
+                    React.createElement("div", {className: "lat-long"}, 
+                        React.createElement("input", {type: "text", ref: "inputLat", value: this.state.formFields.latLong[0], onChange: this.handleChangeInput.bind(this,'latLong')}), 
+                        React.createElement("input", {type: "text", ref: "inputLong", value: this.state.formFields.latLong[1], onChange: this.handleChangeInput.bind(this,'latLong')})
+                    ), 
+                    React.createElement("div", {className: "description"}, 
+                        React.createElement("textarea", {onChange: this.handleChangeInput.bind(this,'description')})
+                    ), 
+                    React.createElement("div", {className: "submit"})
                 )
             )
         }

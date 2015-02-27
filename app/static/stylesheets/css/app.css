@@ -1,4 +1,26 @@
 /* VARIABLES */
+/* KEYFRAMES */
+@-webkit-keyframes pulse-header {
+  0% {
+    background-color: #333333; }
+  50% {
+    background-color: #525252; }
+  100% {
+    background-color: #333333; } }
+@-moz-keyframes pulse-header {
+  0% {
+    background-color: #333333; }
+  50% {
+    background-color: #525252; }
+  100% {
+    background-color: #333333; } }
+@keyframes pulse-header {
+  0% {
+    background-color: #333333; }
+  50% {
+    background-color: #525252; }
+  100% {
+    background-color: #333333; } }
 html, body {
   margin: 0;
   padding: 0; }
@@ -52,7 +74,11 @@ html, body {
   background-color: red; }
   .menu-utils .header {
     height: 50px;
-    background-color: green; }
+    -webkit-animation: pulse-header 3s linear infinite;
+    -moz-animation: pulse-header 3s linear infinite;
+    animation: pulse-header 3s linear infinite; }
+  .menu-utils .header:hover {
+    cursor: pointer; }
   .menu-utils .tab-container {
     height: 50px;
     background-color: blue;
@@ -66,13 +92,63 @@ html, body {
     width: 100%; }
     .menu-utils .tab-content .report-hazard {
       height: 100%;
-      background-color: blue; }
+      background-color: blue;
+      display: flex;
+      overflow-y: auto; }
+      .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .report-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
+        display: block;
+        position: relative;
+        height: 100px;
+        top: 25px;
+        margin: 0 10px;
+        margin-bottom: 10px; }
+        @media screen and (max-width: 700px) {
+          .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .report-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
+            width: 350px; } }
+        @media screen and (min-width: 701px) {
+          .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .report-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
+            width: 300px; } }
+      .menu-utils .tab-content .report-hazard .user-type {
+        background-color: red;
+        display: flex; }
+        .menu-utils .tab-content .report-hazard .user-type .bicycle {
+          width: 50%;
+          height: 100px;
+          background-color: orange; }
+        .menu-utils .tab-content .report-hazard .user-type .pedestrian {
+          width: 50%;
+          height: 100px;
+          background-color: black; }
+      .menu-utils .tab-content .report-hazard .report-time {
+        background-color: pink; }
+      .menu-utils .tab-content .report-hazard .lat-long {
+        background-color: orange; }
+      .menu-utils .tab-content .report-hazard .description {
+        background-color: green; }
+      .menu-utils .tab-content .report-hazard .submit {
+        height: 75px;
+        width: 200px;
+        top: 37px;
+        background-color: Magenta; }
+      @media screen and (max-width: 700px) {
+        .menu-utils .tab-content .report-hazard {
+          align-items: center;
+          flex-direction: column; } }
+      @media screen and (min-width: 701px) {
+        .menu-utils .tab-content .report-hazard {
+          justify-content: space-between;
+          flex-direction: row; } }
     .menu-utils .tab-content .trip-planner {
       height: 100%;
       background-color: pink; }
 
-.menu-utils-expand {
-  height: 250px; }
+@media screen and (max-width: 700px) {
+  .menu-utils-expand {
+    height: -webkit-calc(100% - 50px);
+    height: calc(100% - 50px); } }
+@media screen and (min-width: 701px) {
+  .menu-utils-expand {
+    height: 250px; } }
 
 /*.tools {
 	position: absolute;

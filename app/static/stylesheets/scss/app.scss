@@ -3,6 +3,23 @@
 @import 'bourbon/bourbon';
 
 $font: 'Roboto';
+$break-small: 700px;
+$break-large: 701px;
+
+
+/* KEYFRAMES */
+
+@include keyframes(pulse-header) {
+	0% {
+		background-color: #333333;
+	}
+	50% {
+		background-color: #525252;
+	}
+	100% {
+		background-color: #333333;
+	}
+}
 
 html,body{
     margin: 0;
@@ -66,7 +83,10 @@ html,body{
 	background-color: red;
 	.header{
 		height: 50px;
-		background-color: green;
+		@include animation(pulse-header 3s linear infinite);
+	}
+	.header:hover{
+		cursor: pointer;
 	}
 	.tab-container{
 		height: 50px;
@@ -85,7 +105,66 @@ html,body{
 		.report-hazard{
 			height: 100%;
 			background-color: blue;
+			display: flex;
+			overflow-y: auto;
+			.input-container{
+				display: block;
+				position: relative;
+				height: 100px;
+				top: 25px;
+				margin: 0 10px;
+				margin-bottom: 10px;
+				@media screen and (max-width: $break-small) {
+					width: 350px;
+  				}
+  				@media screen and (min-width: $break-large) {
+  					width: 300px;
+				}
+			}
+			.user-type{
+				@extend .input-container;
+				background-color: red;
+				display: flex;
+				.bicycle{
+					width: 50%;
+					height: 100px;
+					background-color: orange;
+				}
+				.pedestrian{
+					width: 50%;
+					height: 100px;
+					background-color: black;
+				}
+			}
+			.report-time{
+				@extend .input-container;
+				background-color: pink;
+			}
+			.lat-long{
+				@extend .input-container;
+				background-color: orange;
+			}
+			.description{
+				@extend .input-container;
+				background-color: green;
+			}
+			.submit{
+				@extend .input-container;
+				height: 75px;
+				width: 200px;
+				top: 37px;
+				background-color: Magenta;
+			}
+			@media screen and (max-width: $break-small) {
+				align-items: center;
+  				flex-direction: column;
+  			}
+  			@media screen and (min-width: $break-large) {
+  				justify-content: space-between;
+  				flex-direction: row;
+			}
 		}
+
 		.trip-planner{
 			height: 100%;
 			background-color: pink;
@@ -95,7 +174,12 @@ html,body{
 }
 
 .menu-utils-expand {
-	height: 250px;
+	@media screen and (max-width: $break-small) {
+  		@include calc(height, "100% - 50px");
+  	}
+  	@media screen and (min-width: $break-large) {
+		height: 250px;
+	}
 }
 
 /*.tools {
