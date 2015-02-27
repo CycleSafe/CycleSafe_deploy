@@ -73,7 +73,17 @@ html, body {
   padding: 0px;
   background-color: red; }
   .menu-utils .header {
-    height: 50px;
+    background-color: #333333;
+    width: 100%;
+    height: 50px; }
+    .menu-utils .header img {
+      display: block;
+      position: relative;
+      top: 7.5px;
+      height: 35px;
+      margin: 0 auto;
+      width: auto; }
+  .menu-utils .header-pulse {
     -webkit-animation: pulse-header 3s linear infinite;
     -moz-animation: pulse-header 3s linear infinite;
     animation: pulse-header 3s linear infinite; }
@@ -84,18 +94,31 @@ html, body {
     background-color: blue;
     display: flex; }
     .menu-utils .tab-container .tab {
+      box-sizing: border-box;
       width: 50%;
       height: 100%;
-      background-color: orange; }
+      background-color: #525252;
+      text-align: center; }
+      .menu-utils .tab-container .tab .tab-title {
+        font-family: "Roboto";
+        font-size: 18px;
+        color: white;
+        position: relative;
+        top: 16px; }
+    .menu-utils .tab-container .tab:hover {
+      cursor: pointer; }
+    .menu-utils .tab-container .tab-selected {
+      background-color: #262626;
+      border-bottom: 4px solid #0078a0; }
   .menu-utils .tab-content {
     height: 100%;
-    width: 100%; }
+    width: 100%;
+    background-color: #ECF0F1; }
     .menu-utils .tab-content .report-hazard {
       height: 100%;
-      background-color: blue;
       display: flex;
       overflow-y: auto; }
-      .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .report-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
+      .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .hazard-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
         display: block;
         position: relative;
         height: 100px;
@@ -103,10 +126,10 @@ html, body {
         margin: 0 10px;
         margin-bottom: 10px; }
         @media screen and (max-width: 700px) {
-          .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .report-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
+          .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .hazard-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
             width: 350px; } }
         @media screen and (min-width: 701px) {
-          .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .report-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
+          .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .hazard-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
             width: 300px; } }
       .menu-utils .tab-content .report-hazard .user-type {
         background-color: red;
@@ -119,7 +142,7 @@ html, body {
           width: 50%;
           height: 100px;
           background-color: black; }
-      .menu-utils .tab-content .report-hazard .report-time {
+      .menu-utils .tab-content .report-hazard .hazard-time {
         background-color: pink; }
       .menu-utils .tab-content .report-hazard .lat-long {
         background-color: orange; }
@@ -139,8 +162,7 @@ html, body {
           justify-content: space-between;
           flex-direction: row; } }
     .menu-utils .tab-content .trip-planner {
-      height: 100%;
-      background-color: pink; }
+      height: 100%; }
 
 @media screen and (max-width: 700px) {
   .menu-utils-expand {
@@ -150,18 +172,6 @@ html, body {
   .menu-utils-expand {
     height: 250px; } }
 
-/*.tools {
-	position: absolute;
-	z-index: 1;
-	bottom: 20px;
-	right: 10px;
-	.btn-report {
-		margin-top: 10px;
-		width: 50px;
-		height: 50px;
-		background-color: red;
-	}
-}*/
 #map-canvas {
   position: relative;
   /* This might be a hack...*/

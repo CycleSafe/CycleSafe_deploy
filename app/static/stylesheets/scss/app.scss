@@ -82,7 +82,19 @@ html,body{
 	padding: 0px;
 	background-color: red;
 	.header{
+		background-color: #333333;
+		width: 100%;
 		height: 50px;
+		img{
+			display: block;
+			position: relative;
+			top: (50px - 35px)/2;
+			height: 35px;
+			margin: 0 auto;
+			width: auto;
+		}
+	}
+	.header-pulse{
 		@include animation(pulse-header 3s linear infinite);
 	}
 	.header:hover{
@@ -93,18 +105,34 @@ html,body{
 		background-color: blue;
 		display: flex;
 		.tab{
+			box-sizing: border-box;
 			width: 50%;
 			height: 100%;
-			background-color: orange;
+			background-color: #525252;
+			text-align: center;
+			.tab-title{
+				font-family: $font;
+				font-size: 18px;
+				color: white;
+				position: relative;
+				top: (50px - 18px)/2;
+			}
+		}
+		.tab:hover{
+			cursor: pointer;
+		}
+		.tab-selected{
+			background-color: #262626;
+			border-bottom: 4px solid #0078a0;
 		}
 	}
 
 	.tab-content{
 		height: 100%;
 		width: 100%;
+		background-color: #ECF0F1;
 		.report-hazard{
 			height: 100%;
-			background-color: blue;
 			display: flex;
 			overflow-y: auto;
 			.input-container{
@@ -136,7 +164,7 @@ html,body{
 					background-color: black;
 				}
 			}
-			.report-time{
+			.hazard-time{
 				@extend .input-container;
 				background-color: pink;
 			}
@@ -167,7 +195,6 @@ html,body{
 
 		.trip-planner{
 			height: 100%;
-			background-color: pink;
 		}
 	}
 
@@ -181,19 +208,6 @@ html,body{
 		height: 250px;
 	}
 }
-
-/*.tools {
-	position: absolute;
-	z-index: 1;
-	bottom: 20px;
-	right: 10px;
-	.btn-report {
-		margin-top: 10px;
-		width: 50px;
-		height: 50px;
-		background-color: red;
-	}
-}*/
 
 #map-canvas {
 	position: relative;

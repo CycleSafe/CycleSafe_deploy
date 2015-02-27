@@ -78,13 +78,23 @@ require(["components/CSMap"], function(CSMap){
                 default: tabContent = React.createElement(CSReportHazard, {selectedCoords: this.state.selectedCoords});
             }
             var tabs = this.state.tabs.map(function(tab, i){
+                var tabClassName = "tab";
+                if(this.state.activeTab == i){
+                    tabClassName+=" tab-selected";
+                }
                 return (
-                    React.createElement(CSTab, {tab: tab, iter: i, key: i, title: tab.title, handleChangeTab: this.handleChangeTab})
+                    React.createElement(CSTab, {className: tabClassName, tab: tab, iter: i, key: i, title: tab.title, handleChangeTab: this.handleChangeTab})
                 )
             }.bind(this));
+            var headerClass="header header-pulse";
+            if(this.state.expanded){
+                headerClass = "header";
+            }
             return (
                 React.createElement("div", {className: "menu-utils"}, 
-                    React.createElement("div", {onClick: this.handleHeaderClick, className: "header"}), 
+                    React.createElement("div", {onClick: this.handleHeaderClick, className: headerClass}, 
+                        React.createElement("img", {src: "/static/img/ic_bike.svg"})
+                    ), 
                     React.createElement("div", {className: "tab-container"}, 
                        tabs
                     ), 
@@ -99,7 +109,7 @@ require(["components/CSMap"], function(CSMap){
     var CSTab = React.createClass({displayName: "CSTab",
         render: function(){
             return ( 
-                React.createElement("div", {className: "tab", onClick: this.handleClick}, 
+                React.createElement("div", {className: this.props.className, onClick: this.handleClick}, 
                     React.createElement("span", {className: "tab-title"}, this.props.title)
                 )
             )
@@ -122,7 +132,7 @@ require(["components/CSMap"], function(CSMap){
                 this.setState({formFields:nextFormFields});
             }
         },
-        handleChangeInput: function(field,value,e) {
+        handleChangeInput: function(field,e,value) {
             // {REFACTOR} This is the wrong way to be doing forms in React.
             var fieldValue;
             switch(field){
@@ -137,6 +147,7 @@ require(["components/CSMap"], function(CSMap){
                     break;
                 default:
                     fieldValue = e.target.value;
+                    console.log(fieldValue);
             }
             var nextFormFields = this.state.formFields;
             nextFormFields[field] = fieldValue;
@@ -149,8 +160,17 @@ require(["components/CSMap"], function(CSMap){
                         React.createElement("div", {className: "bicycle", onClick: this.handleChangeInput.bind(this,'userType',0)}), 
                         React.createElement("div", {className: "pedestrian", onClick: this.handleChangeInput.bind(this,'userType',1)})
                     ), 
-                    React.createElement("div", {className: "report-time"}, 
-                        React.createElement("input", {type: "text", defaultValue: new Date(), onChange: this.handleChangeInput.bind(this,'dateTime')})
+                    React.createElement("div", {className: "hazard-time"}, 
+                        React.createElement("input", {type: "text", defaultValue: new Date(), onChange: this.handleChangeInput.bind(this,'dateTime')}), 
+                        React.createElement("select", {ref: "subject", className: "subject-selection", onChange: this.handleChangeInput.bind(this,'hazardType')}, 
+                            React.createElement("option", {value: "0"}, "Choose a Hazard"), 
+                            React.createElement("option", {value: "1"}, "Construction"), 
+                            React.createElement("option", {value: "2"}, "Dangerous Crossing"), 
+                            React.createElement("option", {value: "3"}, "Dangerous Road"), 
+                            React.createElement("option", {value: "4"}, "Heavy Traffic"), 
+                            React.createElement("option", {value: "5"}, "Low Visibility"), 
+                            React.createElement("option", {value: "6"}, "Obstruction")
+                        )
                     ), 
                     React.createElement("div", {className: "lat-long"}, 
                         React.createElement("input", {type: "text", ref: "inputLat", value: this.state.formFields.latLong[0], onChange: this.handleChangeInput.bind(this,'latLong')}), 

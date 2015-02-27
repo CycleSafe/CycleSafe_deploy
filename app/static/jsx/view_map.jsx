@@ -78,13 +78,23 @@ require(["components/CSMap"], function(CSMap){
                 default: tabContent = <CSReportHazard selectedCoords={this.state.selectedCoords}/>;
             }
             var tabs = this.state.tabs.map(function(tab, i){
+                var tabClassName = "tab";
+                if(this.state.activeTab == i){
+                    tabClassName+=" tab-selected";
+                }
                 return (
-                    <CSTab tab={tab} iter={i} key={i} title={tab.title} handleChangeTab={this.handleChangeTab}></CSTab>
+                    <CSTab className={tabClassName} tab={tab} iter={i} key={i} title={tab.title} handleChangeTab={this.handleChangeTab}></CSTab>
                 )
             }.bind(this));
+            var headerClass="header header-pulse";
+            if(this.state.expanded){
+                headerClass = "header";
+            }
             return (
                 <div className="menu-utils">
-                    <div onClick={this.handleHeaderClick} className="header"></div>
+                    <div onClick={this.handleHeaderClick} className={headerClass}>
+                        <img src="/static/img/ic_bike.svg"></img>
+                    </div>
                     <div className="tab-container">
                        {tabs}
                     </div>
@@ -99,7 +109,7 @@ require(["components/CSMap"], function(CSMap){
     var CSTab = React.createClass({
         render: function(){
             return ( 
-                <div className="tab" onClick={this.handleClick}>
+                <div className={this.props.className} onClick={this.handleClick}>
                     <span className="tab-title">{this.props.title}</span>
                 </div>
             )
@@ -122,7 +132,7 @@ require(["components/CSMap"], function(CSMap){
                 this.setState({formFields:nextFormFields});
             }
         },
-        handleChangeInput: function(field,value,e) {
+        handleChangeInput: function(field,e,value) {
             // {REFACTOR} This is the wrong way to be doing forms in React.
             var fieldValue;
             switch(field){
@@ -137,6 +147,7 @@ require(["components/CSMap"], function(CSMap){
                     break;
                 default:
                     fieldValue = e.target.value;
+                    console.log(fieldValue);
             }
             var nextFormFields = this.state.formFields;
             nextFormFields[field] = fieldValue;
@@ -149,8 +160,17 @@ require(["components/CSMap"], function(CSMap){
                         <div className="bicycle" onClick={this.handleChangeInput.bind(this,'userType',0)}></div>
                         <div className="pedestrian" onClick={this.handleChangeInput.bind(this,'userType',1)}></div>
                     </div>
-                    <div className="report-time">
+                    <div className="hazard-time">
                         <input type="text" defaultValue={new Date()} onChange={this.handleChangeInput.bind(this,'dateTime')}></input>
+                        <select ref="subject" className="subject-selection" onChange={this.handleChangeInput.bind(this,'hazardType')}>
+                            <option value="0">Choose a Hazard</option>
+                            <option value="1">Construction</option>
+                            <option value="2">Dangerous Crossing</option>
+                            <option value="3">Dangerous Road</option>
+                            <option value="4">Heavy Traffic</option>
+                            <option value="5">Low Visibility</option>
+                            <option value="6">Obstruction</option>
+                        </select>
                     </div>
                     <div className="lat-long">
                         <input type="text" ref="inputLat" value={this.state.formFields.latLong[0]} onChange={this.handleChangeInput.bind(this,'latLong')}></input>
