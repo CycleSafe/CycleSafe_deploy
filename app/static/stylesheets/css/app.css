@@ -25,6 +25,15 @@ html, body {
   margin: 0;
   padding: 0; }
 
+input, textarea {
+  font-family: "Roboto";
+  box-sizing: border-box;
+  border: 1px solid #808080;
+  border-radius: 5px;
+  padding-left: 5px;
+  outline: 0px;
+  resize: none; }
+
 .wrap {
   width: 100%;
   height: 100%; }
@@ -132,27 +141,71 @@ html, body {
           .menu-utils .tab-content .report-hazard .input-container, .menu-utils .tab-content .report-hazard .user-type, .menu-utils .tab-content .report-hazard .hazard-time, .menu-utils .tab-content .report-hazard .lat-long, .menu-utils .tab-content .report-hazard .description, .menu-utils .tab-content .report-hazard .submit {
             width: 300px; } }
       .menu-utils .tab-content .report-hazard .user-type {
-        background-color: red;
         display: flex; }
-        .menu-utils .tab-content .report-hazard .user-type .bicycle {
+        .menu-utils .tab-content .report-hazard .user-type img {
+          display: block;
+          position: relative;
+          width: auto;
+          height: 50%;
+          top: -webkit-calc((100px - 50%)/2);
+          top: calc((100px - 50%)/2);
+          margin: 0 auto; }
+        .menu-utils .tab-content .report-hazard .user-type .user-button {
           width: 50%;
           height: 100px;
-          background-color: orange; }
-        .menu-utils .tab-content .report-hazard .user-type .pedestrian {
-          width: 50%;
-          height: 100px;
-          background-color: black; }
-      .menu-utils .tab-content .report-hazard .hazard-time {
-        background-color: pink; }
-      .menu-utils .tab-content .report-hazard .lat-long {
-        background-color: orange; }
-      .menu-utils .tab-content .report-hazard .description {
-        background-color: green; }
+          background-color: #468EA6;
+          border-radius: 3px;
+          margin: 5px; }
+        .menu-utils .tab-content .report-hazard .user-type .user-button-selected {
+          background-color: #0078a0; }
+        .menu-utils .tab-content .report-hazard .user-type .user-button:hover {
+          cursor: pointer; }
+      .menu-utils .tab-content .report-hazard .hazard-time input {
+        font-size: 14px;
+        margin-top: 25px;
+        width: 100%;
+        height: 30px; }
+      .menu-utils .tab-content .report-hazard .hazard-time select {
+        position: relative;
+        top: -webkit-calc((100% - 60px)/2);
+        top: calc((100% - 60px)/2);
+        font-family: "Roboto";
+        font-size: 14px;
+        width: 100%;
+        height: 30px;
+        border: 1px solid #808080;
+        border-radius: 2px;
+        outline: 0; }
+      .menu-utils .tab-content .report-hazard .lat-long input {
+        position: relative;
+        top: -webkit-calc((100% - 70px)/2);
+        top: calc((100% - 70px)/2);
+        font-size: 14px;
+        width: 100%;
+        height: 30px;
+        margin-top: 5px; }
+      .menu-utils .tab-content .report-hazard .description textarea {
+        padding-top: 10px;
+        font-size: 14px;
+        width: 100%;
+        height: 100%;
+        outline: 0; }
       .menu-utils .tab-content .report-hazard .submit {
         height: 75px;
         width: 200px;
         top: 37px;
-        background-color: Magenta; }
+        border-radius: 5px;
+        background-color: #468EA6;
+        text-align: center; }
+        .menu-utils .tab-content .report-hazard .submit span {
+          color: white;
+          position: relative;
+          font-family: "Roboto";
+          font-size: 18px;
+          top: 28.5px; }
+      .menu-utils .tab-content .report-hazard .submit:hover {
+        cursor: pointer;
+        background-color: #0078a0; }
       @media screen and (max-width: 700px) {
         .menu-utils .tab-content .report-hazard {
           align-items: center;

@@ -26,6 +26,16 @@ html,body{
     padding: 0;
 }
 
+input,textarea{
+	font-family: $font;
+	box-sizing: border-box;
+	border: 1px solid #808080;
+	border-radius: 5px;
+	padding-left: 5px;
+	outline: 0px;
+	resize: none;
+}
+
 .wrap{
 	width: 100%;
 	height: 100%;
@@ -151,37 +161,92 @@ html,body{
 			}
 			.user-type{
 				@extend .input-container;
-				background-color: red;
 				display: flex;
-				.bicycle{
+				img{
+						display: block;
+						position: relative;
+						width: auto;
+						height: 50%;
+						@include calc(top, "(100px - 50%)/2");
+						margin: 0 auto;
+				}
+				.user-button{
 					width: 50%;
 					height: 100px;
-					background-color: orange;
+					background-color: #468EA6;
+					border-radius: 3px;
+					margin: 5px;
 				}
-				.pedestrian{
-					width: 50%;
-					height: 100px;
-					background-color: black;
+
+				.user-button-selected{
+					background-color: #0078a0;
 				}
+
+				.user-button:hover{
+					cursor: pointer;
+				}
+
 			}
 			.hazard-time{
 				@extend .input-container;
-				background-color: pink;
+				input{
+					font-size: 14px;
+					margin-top: 25px;
+					width: 100%;
+					height: 30px;
+				}
+				select{
+					position: relative;
+					@include calc(top, "(100% - 60px)/2");
+					font-family: $font;
+					font-size: 14px;
+					width: 100%;
+					height: 30px;
+   					border: 1px solid #808080;
+   					border-radius: 2px;
+                    outline: 0;
+				}
 			}
 			.lat-long{
 				@extend .input-container;
-				background-color: orange;
+				input{
+					position: relative;
+					@include calc(top, "(100% - 70px)/2");
+					font-size: 14px;
+					width: 100%;
+					height: 30px;
+					margin-top: 5px;
+				}
 			}
 			.description{
 				@extend .input-container;
-				background-color: green;
+				textarea{
+					padding-top: 10px;
+					font-size: 14px;
+					width: 100%;
+					height: 100%;
+					outline: 0;
+				}
 			}
 			.submit{
 				@extend .input-container;
 				height: 75px;
 				width: 200px;
 				top: 37px;
-				background-color: Magenta;
+				border-radius: 5px;
+				background-color: #468EA6;
+				text-align: center;
+				span {
+					color: white;
+					position: relative;
+					font-family: $font;
+					font-size: 18px;
+					top: (75px - 18px)/2;
+				}
+			}
+			.submit:hover{
+				cursor: pointer;
+				background-color: #0078a0;
 			}
 			@media screen and (max-width: $break-small) {
 				align-items: center;

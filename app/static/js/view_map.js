@@ -38,7 +38,7 @@ require(["components/CSMap"], function(CSMap){
                 csMap = React.createElement(CSMap, {handleMapClick: this.handleMapClick, markerData: this.markerData})
             }
             else{
-                csMap = React.createElement(CSMap, {coords: this.state.coords, zoom: 12, handleMapClick: this.handleMapClick, markerData: this.markerData})
+                csMap = React.createElement(CSMap, {coords: this.state.coords, zoom: 14, handleMapClick: this.handleMapClick, markerData: this.markerData})
             }
             return (
                 React.createElement("div", null, 
@@ -143,26 +143,35 @@ require(["components/CSMap"], function(CSMap){
                     break;
                 case 'userType':
                     fieldValue = value;
-                    console.log(fieldValue);
                     break;
                 default:
                     fieldValue = e.target.value;
-                    console.log(fieldValue);
             }
             var nextFormFields = this.state.formFields;
             nextFormFields[field] = fieldValue;
             this.setState({formFields: nextFormFields});
         },
         render: function(){
+            console.log(this.state.formFields.userType);
+            var class_bicycle_button = "user-button";
+            var class_pedestrian_button = "user-button";
+            if(this.state.formFields.userType==0){
+                class_bicycle_button+=" user-button-selected";
+            }else{
+                class_pedestrian_button+= " user-button-selected";
+            }
             return (  
                 React.createElement("div", {className: "report-hazard"}, 
                     React.createElement("div", {className: "user-type"}, 
-                        React.createElement("div", {className: "bicycle", onClick: this.handleChangeInput.bind(this,'userType',0)}), 
-                        React.createElement("div", {className: "pedestrian", onClick: this.handleChangeInput.bind(this,'userType',1)})
+                        React.createElement("div", {className: class_bicycle_button, onClick: this.handleChangeInput.bind(this,'userType',null,0)}, 
+                            React.createElement("img", {src: "/static/img/ic_bike.svg"})
+                        ), 
+                        React.createElement("div", {className: class_pedestrian_button, onClick: this.handleChangeInput.bind(this,'userType',null,1)}, 
+                            React.createElement("img", {src: "/static/img/ic_pedestrian.svg"})
+                        )
                     ), 
                     React.createElement("div", {className: "hazard-time"}, 
-                        React.createElement("input", {type: "text", defaultValue: new Date(), onChange: this.handleChangeInput.bind(this,'dateTime')}), 
-                        React.createElement("select", {ref: "subject", className: "subject-selection", onChange: this.handleChangeInput.bind(this,'hazardType')}, 
+                        React.createElement("select", {ref: "subject", onChange: this.handleChangeInput.bind(this,'hazardType')}, 
                             React.createElement("option", {value: "0"}, "Choose a Hazard"), 
                             React.createElement("option", {value: "1"}, "Construction"), 
                             React.createElement("option", {value: "2"}, "Dangerous Crossing"), 
@@ -170,16 +179,19 @@ require(["components/CSMap"], function(CSMap){
                             React.createElement("option", {value: "4"}, "Heavy Traffic"), 
                             React.createElement("option", {value: "5"}, "Low Visibility"), 
                             React.createElement("option", {value: "6"}, "Obstruction")
-                        )
+                        ), 
+                        React.createElement("input", {type: "text", defaultValue: new Date(), onChange: this.handleChangeInput.bind(this,'dateTime')})
                     ), 
                     React.createElement("div", {className: "lat-long"}, 
                         React.createElement("input", {type: "text", ref: "inputLat", value: this.state.formFields.latLong[0], onChange: this.handleChangeInput.bind(this,'latLong')}), 
                         React.createElement("input", {type: "text", ref: "inputLong", value: this.state.formFields.latLong[1], onChange: this.handleChangeInput.bind(this,'latLong')})
                     ), 
                     React.createElement("div", {className: "description"}, 
-                        React.createElement("textarea", {onChange: this.handleChangeInput.bind(this,'description')})
+                        React.createElement("textarea", {placeholder: "Description", onChange: this.handleChangeInput.bind(this,'description')})
                     ), 
-                    React.createElement("div", {className: "submit"})
+                    React.createElement("div", {className: "submit"}, 
+                        React.createElement("span", null, "Submit")
+                    )
                 )
             )
         }

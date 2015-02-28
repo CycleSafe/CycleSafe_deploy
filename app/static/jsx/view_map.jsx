@@ -38,7 +38,7 @@ require(["components/CSMap"], function(CSMap){
                 csMap = <CSMap handleMapClick={this.handleMapClick} markerData={this.markerData}/>
             }
             else{
-                csMap = <CSMap coords={this.state.coords} zoom={12} handleMapClick={this.handleMapClick} markerData={this.markerData}/>
+                csMap = <CSMap coords={this.state.coords} zoom={14} handleMapClick={this.handleMapClick} markerData={this.markerData}/>
             }
             return (
                 <div>
@@ -143,26 +143,35 @@ require(["components/CSMap"], function(CSMap){
                     break;
                 case 'userType':
                     fieldValue = value;
-                    console.log(fieldValue);
                     break;
                 default:
                     fieldValue = e.target.value;
-                    console.log(fieldValue);
             }
             var nextFormFields = this.state.formFields;
             nextFormFields[field] = fieldValue;
             this.setState({formFields: nextFormFields});
         },
         render: function(){
+            console.log(this.state.formFields.userType);
+            var class_bicycle_button = "user-button";
+            var class_pedestrian_button = "user-button";
+            if(this.state.formFields.userType==0){
+                class_bicycle_button+=" user-button-selected";
+            }else{
+                class_pedestrian_button+= " user-button-selected";
+            }
             return (  
                 <div className="report-hazard">
                     <div className="user-type">
-                        <div className="bicycle" onClick={this.handleChangeInput.bind(this,'userType',0)}></div>
-                        <div className="pedestrian" onClick={this.handleChangeInput.bind(this,'userType',1)}></div>
+                        <div className={class_bicycle_button} onClick={this.handleChangeInput.bind(this,'userType',null,0)}>
+                            <img src="/static/img/ic_bike.svg"></img>
+                        </div>
+                        <div className={class_pedestrian_button} onClick={this.handleChangeInput.bind(this,'userType',null,1)}>
+                            <img src="/static/img/ic_pedestrian.svg"></img>
+                        </div>
                     </div>
                     <div className="hazard-time">
-                        <input type="text" defaultValue={new Date()} onChange={this.handleChangeInput.bind(this,'dateTime')}></input>
-                        <select ref="subject" className="subject-selection" onChange={this.handleChangeInput.bind(this,'hazardType')}>
+                        <select ref="subject" onChange={this.handleChangeInput.bind(this,'hazardType')}>
                             <option value="0">Choose a Hazard</option>
                             <option value="1">Construction</option>
                             <option value="2">Dangerous Crossing</option>
@@ -171,15 +180,18 @@ require(["components/CSMap"], function(CSMap){
                             <option value="5">Low Visibility</option>
                             <option value="6">Obstruction</option>
                         </select>
+                        <input type="text" defaultValue={new Date()} onChange={this.handleChangeInput.bind(this,'dateTime')}></input>
                     </div>
                     <div className="lat-long">
-                        <input type="text" ref="inputLat" value={this.state.formFields.latLong[0]} onChange={this.handleChangeInput.bind(this,'latLong')}></input>
+                        <input type="text" ref="inputLat"  value={this.state.formFields.latLong[0]} onChange={this.handleChangeInput.bind(this,'latLong')}></input>
                         <input type="text" ref="inputLong" value={this.state.formFields.latLong[1]} onChange={this.handleChangeInput.bind(this,'latLong')}></input>
                     </div>
                     <div className="description">
-                        <textarea onChange={this.handleChangeInput.bind(this,'description')}></textarea>
+                        <textarea placeholder="Description" onChange={this.handleChangeInput.bind(this,'description')}></textarea>
                     </div>
-                    <div className="submit"></div>
+                    <div className="submit">
+                        <span>Submit</span>
+                    </div>
                 </div>
             )
         }
