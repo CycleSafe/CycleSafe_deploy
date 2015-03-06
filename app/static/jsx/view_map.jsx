@@ -42,7 +42,7 @@ require(["components/CSMap"], function(CSMap){
             }
             return (
                 <div>
-                    <div className="nav"><span className="title">CycleSafe</span><span className="tagline">We make roads safer for everyone</span></div>
+                    <div className="nav"><span className="title">CycleSafe</span></div>
                     <input id="pac-input" className="map-search-box" type="text" placeholder="Search for a location here."></input>
                     {csMap}
                     <CSUtils selectedCoords={this.state.selectedCoords} />
@@ -152,7 +152,6 @@ require(["components/CSMap"], function(CSMap){
             this.setState({formFields: nextFormFields});
         },
         render: function(){
-            console.log(this.state.formFields.userType);
             var class_bicycle_button = "user-button";
             var class_pedestrian_button = "user-button";
             if(this.state.formFields.userType==0){

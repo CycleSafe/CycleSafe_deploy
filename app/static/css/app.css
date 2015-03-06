@@ -1,0 +1,23 @@
+/*
+Errno::ENOENT: No such file or directory @ rb_sysopen - scss/app.scss
+
+Backtrace:
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/plugin/compiler.rb:482:in `read'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/plugin/compiler.rb:482:in `update_stylesheet'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/plugin/compiler.rb:209:in `each'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/plugin/compiler.rb:293:in `watch'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/plugin.rb:108:in `method_missing'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/exec/sass_scss.rb:370:in `watch_or_update'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/exec/sass_scss.rb:50:in `process_result'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/exec/base.rb:52:in `parse'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/lib/sass/exec/base.rb:19:in `parse!'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/gems/sass-3.4.10/bin/sass:13:in `<top (required)>'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/bin/sass:23:in `load'
+/Users/facebook/.chefdk/gem/ruby/2.1.0/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Errno::ENOENT: No such file or directory @ rb_sysopen - scss/app.scss"; }
