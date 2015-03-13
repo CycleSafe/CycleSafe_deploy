@@ -27,6 +27,7 @@ initGeolocation().then(function (coords) {
 function setDirectionsDisplay(map) {
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsDisplay.setMap(map);
+    // TODO(zemadi): Remove line below when custom directions panel is implemented.
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 }
 
@@ -103,9 +104,10 @@ function narrowResults(queryResults, directionsResponse) {
     // RouteBoxer chops up the user's route into sections.
     // Refer to: http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/docs/examples.html
     var path = directionsResponse.routes[0].overview_path;
-    var boxes = rboxer.box(path, .04);
+    var boxes = rboxer.box(path, .02); // Second param is a boundary in km from the route path.
     var mapData = {'objects': []};
 
+    // TODO(zemadi): Remove all console.logs.
     console.log(boxes);
     console.log(directionsResponse);
     // TODO(zemadi): Improve this. See if there's a way to skip routeBoxer. Avoid nested loop if possible.
@@ -114,54 +116,54 @@ function narrowResults(queryResults, directionsResponse) {
     // RouteBoxer chops up a route into sections and returns the upper and lower
     // boundaries for that section of the route.
 
-    var routeByBounds = {};
+    var routeWithBounds = {};
     var boundsWithData = {};
     var steps = directionsResponse.routes[0].legs[0].steps;
 
-    // go through each step and set of lat lngs per step.
-    for (var i = 0; i < boxes.length; i++) {
-        routeByBounds[boxes[i]] = [];
-        for (var j = 0; j < steps.length; j++) {
-            //TODO(zemadi): Test this more. Is end location enough?
-            if (boxes[i].contains(steps[j].end_location)) {
-                routeByBounds[boxes[i]].push(steps[j]);
-            }
-//            for (var k = 0; k < steps[j].lat_lngs.length; k++) {
-//                // If the lat and long of that path section falls in a routeBoxer bound, add it to the object.
-//                if (boxes[i].contains(steps[j].lat_lngs[k])) {
-//                    routeByBounds[boxes[i]].push(steps[j]);
-//                }
-//            }
-        }
-        for (var l = 0; l < queryResults.length; l++) {
+    for (var j = 0; j < boxes.length; j++) {
+        boundsWithData[j] = [];
+        for (var k = 0; k < queryResults.length; k++) {
             // If a marker is between the latitude and longitude bounds of the route, add it to the map.
-            var currentResult = new google.maps.LatLng(queryResults[l].lat, queryResults[l].lon);
-            if (boxes[i].contains(currentResult)) {
-                mapData.objects.push(queryResults[l]);
-                boundsWithData[boxes[i]] = queryResults[j];
+            var currentResult = new google.maps.LatLng(queryResults[k].lat, queryResults[k].lon);
+            if (boxes[j].contains(currentResult)) {
+                mapData.objects.push(queryResults[k]);
+                boundsWithData[j].push(queryResults[k]);
+                continue;
             }
         }
     }
-    // Build out the custom directions panel and add marker data to the path as key-value. Build custom directions
-    // panel using only the directionsResponse data.
-    console.log('test');
-    //TODO(zemadi): Fix this so it loops through each key and looks for values.
-    for (var m = 0; m < routeByBounds.length; m++) {
-        console.log(routeByBounds[m]);
-        if (routeByBounds[m].length > 0) {
-            console.log(routeByBounds[m]);
+
+    // go through each step and set of lat lngs per step.
+    for (var l = 0; l < steps.length; l++) {
+        routeWithBounds[l] = [];
+        steps[l]['markers'] = [];
+        // TODO(zemadi): Convert more loops to forEach()?
+        for (var m = 0; m < boxes.length; m++) {
+            steps[l].lat_lngs.forEach(function(lat_lng) {
+                if (routeWithBounds[l].indexOf(m) === -1 && boxes[m].contains(lat_lng)) {
+                    routeWithBounds[l].push(m);
+                    // Move on to the next iteration of the loop.
+                    return;
+                }
+            });
+        }
+        // For the current direction, look up the bound object that it's in. Use that to search for markers.
+        var boundIndex = routeWithBounds[l];
+        for (var n = boundIndex[0]; n <= boundIndex.slice(-1)[0]; n++) {
+            if (boundsWithData[n].length > 0) {
+                steps[l]['markers'].push.apply(steps[l]['markers'], boundsWithData[n]);
+            }
         }
     }
-  //  console.log(boundsWithData);
 
     // Remove existing markers from the map and map object.
     removeMarkers(true);
 
     if (mapData.objects.length > 0) {
         // Add new markers to the map.
-        console.log(mapData.objects);
         markerGenerator(map, mapData);
     }
+    console.log(directionsResponse);
 }
 
 // Function to get coordinate boundaries from the Directions route callback.
@@ -177,45 +179,3 @@ function getBounds(data) {
 
     return coordinateBounds;
 }
-
-//// Convert RouteBoxer's bounds object to a dict mapping each bound to a step on the directions path.
-//function convertBounds(boxes, directionsResponse){
-//    var routeByBounds = {};
-//    var boundsWithData = {};
-//    var steps = directionsResponse.routes[0].legs[0].steps;
-//
-//    // go through each step and set of lat lngs per step.
-//
-//    for (var i = 0; i < boxes.length; i++) {
-//        for (var j = 0; j < steps.length; j++) {
-//            for (var k = 0; k < steps[j].lat_lngs.length; k++) {
-//                var currentResult = new google.maps.LatLng(steps[j].lat_lngs[k]['D'], steps[j].lat_lngs[k]['k']);
-//                if (boxes[i].contains(currentResult)) {
-//                    routeByBounds[boxes[i]] = steps[j];
-//                    break;
-//                }
-//            }
-//        }
-//        for (var l = 0; l < queryResults.length; l++) {
-//
-//            // If a marker is between the latitude and longitude bounds of the route, add it to the map.
-//            var currentResult = new google.maps.LatLng(queryResults[l].lat, queryResults[l].lon);
-//            if (boxes[i].contains(currentResult)) {
-//                mapData.objects.push(queryResults[l]);
-//                boundsWithData[boxes[i]] = queryResults[j];
-//            }
-//        }
-//    }
-//    // Build out the custom directions panel and add marker data to the path as key-value. Build custom directions
-//    // panel using only the directionsResponse data.
-//
-//    return routebyBounds;
-//
-//
-//}
-//
-//// Function to build the custom directions panel, which holds directions and marker data.
-//// TODO(zemadi) Determine if this is needed. Build this and convert to handlebars template or React?
-//function buildDirectionsPanel(mapData, directionsResponse) {
-//    // For now, do nothing.
-//}
