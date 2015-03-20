@@ -28,7 +28,7 @@ function setDirectionsDisplay(map) {
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsDisplay.setMap(map);
     // TODO(zemadi): Remove line below when custom directions panel is implemented.
-    directionsDisplay.setPanel(document.getElementById('directions-panel'));
+    //directionsDisplay.setPanel(document.getElementById('directions-panel'));
 }
 
 // Listener for if the mode of travel is changed from an empty default to either bicycling or walking.
@@ -118,6 +118,7 @@ function narrowResults(queryResults, directionsResponse) {
 
     var routeWithBounds = {};
     var boundsWithData = {};
+    var directionsPanel = $('#custom-directions-panel').html();
     var steps = directionsResponse.routes[0].legs[0].steps;
 
     for (var j = 0; j < boxes.length; j++) {
@@ -147,6 +148,8 @@ function narrowResults(queryResults, directionsResponse) {
                 }
             });
         }
+        // TODO(zemadi): Edit docs and clean up code.
+        // TODO(zemadi): Get address from marker lat lng?
         // For the current direction, look up the bound object that it's in. Use that to search for markers.
         var boundIndex = routeWithBounds[l];
         for (var n = boundIndex[0]; n <= boundIndex.slice(-1)[0]; n++) {
@@ -163,6 +166,12 @@ function narrowResults(queryResults, directionsResponse) {
         // Add new markers to the map.
         markerGenerator(map, mapData);
     }
+
+    //TODO(zemadi): Precompile template? Better for mobile, supposedly.
+    var template = Handlebars.compile(directionsPanel);
+    var compiled = template(directionsResponse.routes[0].legs[0]);
+    $('#row').append(compiled);
+
     console.log(directionsResponse);
 }
 

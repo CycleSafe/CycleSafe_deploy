@@ -1,0 +1,32 @@
+{% verbatim %}
+	<script id="custom-directions-panel" type="text/x-handlebars-template">
+		<!-- Container -->
+		<div class="medium-12 columns">
+			<!-- Header rows -->
+			<div>Start: {{start_address}}</div>
+			<div>Distance: {{distance.text}}, {{duration.text}}</div>
+			<!-- Main row container -->
+			<div>There are 3 hazards near this route.</div>
+			   <!-- TODO(zemadi): Use flexboxes? -->
+			<div class="row-container">
+				{{#each steps}}
+				<div class="row">
+					<!-- TODO(zemadi): Create direction symbols and convert directions panel. -->
+					<div>Add custom directions symbol here</div>
+					<div>{{count @index}}</div>
+					<div>{{strip-scripts instructions}}
+						{{#if markers}}
+							{{#each markers}}
+								<span>{{this.hazard_type}} {{#if this.description}}{{this.description}}{{/if}}</span>
+							{{/each}}
+						{{/if}}
+					</div>
+					<div>{{distance.text}}</div>
+				</div>
+				{{/each}}
+			</div>
+			<div>End:</div>
+		</div>
+
+	</script>
+{% endverbatim %}
