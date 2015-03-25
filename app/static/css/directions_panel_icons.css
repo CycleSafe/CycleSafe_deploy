@@ -1,0 +1,84 @@
+/* Styling for custom Google Directions panel, using same turn images as Google Directions API */
+/* Source: https://developers.google.com/maps/documentation/javascript/examples/directions-panel */
+
+.adp-maneuver {
+    background-size: 19px 630px;
+    width: 16px;
+    height: 16px
+}
+
+.adp-ferry {
+    background-position: 0 -614px
+}
+
+.adp-ferry-train {
+    background-position: 0 -566px
+}
+
+.adp-merge {
+    background-position: 0 -143px
+}
+
+.adp-straight {
+    background-position: 0 -534px
+}
+
+.adp-fork-left {
+    background-position: 0 -550px
+}
+
+.adp-ramp-left {
+    background-position: 0 -598px
+}
+
+.adp-roundabout-left {
+    background-position: 0 -197px
+}
+
+.adp-turn-left {
+    background-position: 0 -413px
+}
+
+.adp-turn-sharp-left {
+    background-position: 0 0
+}
+
+.adp-turn-slight-left {
+    background-position: 0 -378px
+}
+
+.adp-uturn-left {
+    background-position: 0 -305px
+}
+
+.adp-fork-right {
+    background-position: 0 -499px
+}
+
+.adp-ramp-right {
+    background-position: 0 -429px
+}
+
+.adp-roundabout-right {
+    background-position: 0 -232px
+}
+
+.adp-turn-right {
+    background-position: 0 -483px
+}
+
+.adp-turn-sharp-right {
+    background-position: 0 -582px
+}
+
+.adp-turn-slight-right {
+    background-position: 0 -51px
+}
+
+.adp-uturn-right {
+    background-position: 0 -35px
+}
+
+.adp-maneuver {
+    background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/maneuvers_hdpi.png);
+}
