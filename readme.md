@@ -23,19 +23,19 @@ NOTE: You will need to install MySQL for running in production mode.
  
    > export SECRET_KEY='ADD_YOUR_SECRET_KEY_STRING_HERE'
 
-7. Follow the instructions at the bottom of this doc to get your DB set up.
- To get your own DB set up, do the following:
-
-For sqlite3:
- 1. Create a new instance of sqlite3 in the project root, /CycleSafe_deploy
- 2. Edit local_settings.py with your new DB info.
- 3. Redo schemamigration and migrate in step 7.
-
-
-For mysql:
- 1. Create a new DB in MySQL.
- 2. Add that info to local_settings.py or settings.py **(change settings.py only for production)** 
- 3. Redo schemamigration and migrate in step 7.
+7. Follow the instructions to make sure your DB is set up properly.
+  To get your own DB set up, do the following:
+  
+  For sqlite3:
+   1. Create a new instance of sqlite3 in the project root, /CycleSafe_deploy
+   2. Edit local_settings.py with your new DB info.
+   3. Redo schemamigration and migrate in step 7.
+  
+  
+  For mysql:
+   1. Create a new DB in MySQL.
+   2. Add that info to local_settings.py or settings.py **(change settings.py only for production)** 
+   3. Redo schemamigration and migrate in step 7.
 
 8. Run Django's DB management tools: syncdb, schemamigration, and migrate. Read up on these if you don't know what they already are, THEN:
    > python manage.py syncdb
