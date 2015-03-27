@@ -7,15 +7,13 @@ NOTE: You will need to install MySQL for running in production mode.
 
 ## Instructions for getting set up (from scratch):
 1. install python 2.7
-2. install pip (to get django)
+2. install pip and python-dev (to get django)
 3. > python get-pip.py
+   > pip install python-dev
  
 4. Install requirements.
- For development mode only: 
+ For local mode only: 
    > -pip install -r local_requirements.txt
-
- For production mode:
-   > pip install -r prod_requirements.txt
   
   NOTE: If you have a problem with MySQl-Python in production, follow instructions here: http://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found
 
