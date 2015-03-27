@@ -32,7 +32,7 @@ NOTE: You will need to install MySQL for running in production mode.
    3. Redo schemamigration and migrate in step 7.
   
   
-  For mysql:
+ For mysql:
    1. Create a new DB in MySQL.
    2. Add that info to local_settings.py or settings.py **(change settings.py only for production)** 
    3. Redo schemamigration and migrate in step 7.
