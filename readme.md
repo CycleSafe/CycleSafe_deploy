@@ -9,6 +9,7 @@ NOTE: You will need to install MySQL for running in production mode.
 1. install python 2.7
 2. install pip and python-dev (to get django)
 3. > python get-pip.py
+
    > pip install python-dev
  
 4. Install requirements.
