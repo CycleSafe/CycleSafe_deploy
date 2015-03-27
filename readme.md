@@ -20,21 +20,11 @@ NOTE: You will need to install MySQL for running in production mode.
 
 5. Get the secret key from someone already on the project. Add it as an environment variable. 
 6. If you are using virtualenv, add the secret key to YOURENVIRONMENTNAME/bin/activate:
-7. 
-   > export SECRET_KEY='ADD_YOUR_SECRET_KEY_STRING_HERE'
-7. Run Django's DB management tools: syncdb, schemamigration, and migrate. Read up on these if you don't know what they already are, THEN:
-   > python manage.py syncdb
-
-   > python manage.py schemamigration app --initial
-   
-   > python manage.py migrate app
-   
-   > python manage.py migrate tastypie
-   
-8. Run your local server
-  > python manage.py runserver 0.0.0.0:8000 (or leave the IP address and port run on your localhost default)
  
-To get your own DB set up, do the following:
+   > export SECRET_KEY='ADD_YOUR_SECRET_KEY_STRING_HERE'
+
+7. Follow the instructions at the bottom of this doc to get your DB set up.
+ To get your own DB set up, do the following:
 
 For sqlite3:
  1. Create a new instance of sqlite3 in the project root, /CycleSafe_deploy
@@ -46,6 +36,18 @@ For mysql:
  1. Create a new DB in MySQL.
  2. Add that info to local_settings.py or settings.py **(change settings.py only for production)** 
  3. Redo schemamigration and migrate in step 7.
+
+8. Run Django's DB management tools: syncdb, schemamigration, and migrate. Read up on these if you don't know what they already are, THEN:
+   > python manage.py syncdb
+
+   > python manage.py schemamigration app --initial
+   
+   > python manage.py migrate app
+   
+   > python manage.py migrate tastypie
+   
+9. Run your local server
+  > python manage.py runserver 0.0.0.0:8000 (or leave the IP address and port run on your localhost default)
   
 Other links:
 
