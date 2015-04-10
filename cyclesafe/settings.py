@@ -14,17 +14,14 @@ import os.path
 # When running the project locally, some production settings may need to be edited, like project_dir, debug, csrf,
 # staticfiles, etc.
 
-# TODO(debianmaster): May need to set PROJECT_PATH to the absolute path of the project, if Python can't detect it.
-# TODO(debianmaster): You may also need to run the following command, if OpenShift doesn't do it automatically: django-admin.py collectstatic
 # Example PROJECT_DIR: '/var/www/cyclesafe'
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 
-# TODO(debianmaster): Uncomment CSRF_COOKIE_SECURE once we have https set up.
+# TODO: Uncomment CSRF_COOKIE_SECURE once we have https set up? Not sure if it's needed. It's a Django recommendation.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-# TODO (debianmaster): May need to change allowed_hosts to host name. See: https://docs.djangoproject.com/en/1.6/ref/settings/#std:setting-ALLOWED_HOSTS
 ALLOWED_HOSTS = ['*']
 
 ROOT_PATH = os.path.dirname(__file__)
@@ -123,8 +120,6 @@ TEMPLATE_LOADERS = ('django.template.loaders.filesystem.Loader', 'django.templat
 # Media_url specifies the location of user-uploaded files.
 MEDIA_URL = '/static/media/'
 STATIC_URL = '/static/'
-# NOTE: The STATIC_ROOT directory is where staticfiles need to be stored. This may need to be changed depending on
-# OpenShift's requirements.
 STATIC_ROOT = os.path.join(PROJECT_DIR, '..', 'static')
 
 STATICFILES_FINDERS = (

@@ -161,6 +161,11 @@
     font-weight: bold;
 }
 
+/* Flip animation for directions panel
+Credit: http://davidwalsh.name/css-flip
+*/
+
+
 /*Time Picker*/
     .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
     .ui-timepicker-div dl { text-align: left; }
