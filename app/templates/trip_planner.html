@@ -11,10 +11,11 @@
 {% block main %}
 	<div id="row">
 		<div class="medium-12 columns">Find out if there are any hazards along your route. Enter your start and end
-			addresses, and mode of transportation.</div>
+			addresses, and mode of transportation.
+		</div>
 		<div id="trip-container" class="medium-12 columns flip-container">
-			<div class="flipper">
-				<div class="front">
+			<div>
+				<div id="trip-planner-form" class="slider">
 					<div class="medium-4 columns">
 						<label>Start: </label>
 						<input id="start" class="trip-planner-form" type="text">
@@ -32,7 +33,8 @@
 						</select>
 					</div>
 				</div>
-				<div id="directions-panel" class="back">
+				<button id="new-search-trigger" class="hidden">New Search</button>
+				<div id="directions-panel" class="slider closed">
 				</div>
 			</div>
 		</div>

@@ -34,6 +34,14 @@
         max-height: 100px;
     }
 
+    /* Override Foundation's default chunky button styling. Takes up too much space. */
+    button, .button {
+    padding-top: .5rem;
+    padding-right: 1.5rem;
+    padding-bottom: .5rem;
+    padding-left: 1.5rem;
+    margin-bottom: .5rem;
+    }
 
 /* Navbar CSS */
     .top-bar {
@@ -98,15 +106,19 @@
 }
 
 /* Trip Planner directions panel styling */
+/* TODO(zemadi): Fix flexbox alignment. */
 .directions-panel-inner-container {
     border: 1px solid dimgray;
     margin: 2%;
     padding: 1%;
 }
 
+/* TODO(zemadi): Always show scrollbar. OSX hides scroll by default. Looks confusing. */
 .directions-panel-row-container {
-    padding: 2%;
     border: 1px solid lightgray;
+    padding: 2%;
+    max-height: 40vh;
+    overflow-y: scroll;
 }
 
 .directions-panel-row {
@@ -118,8 +130,9 @@
 }
 
 .directions-panel-column {
-    padding-left: 5px;
-    padding-right: 5px;
+    max-width: 40vw;
+    padding-left: .5%;
+    padding-right: .5%;
 }
 
 .flex-item:nth-child(1) {
@@ -153,7 +166,7 @@
 
 .directions-step-count {
     display: inline-block;
-    padding-left: 5px;
+    padding-left: .5%;
 }
 
 .directions-panel-hazard {
@@ -161,10 +174,21 @@
     font-weight: bold;
 }
 
-/* Flip animation for directions panel
-Credit: http://davidwalsh.name/css-flip
-*/
+/* Slide animation for directions panel
+ Credit: http://davidwalsh.name/css-slide
+ */
+.slider {
+	overflow-y: hidden;
+	max-height: 500px; /* approximate max height */
 
+	transition-property: all;
+	transition-duration: .8s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slider.closed {
+	max-height: 0;
+}
 
 /*Time Picker*/
     .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }

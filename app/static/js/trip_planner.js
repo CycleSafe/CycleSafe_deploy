@@ -1,8 +1,8 @@
 var coords;
 var directionsDisplay;
 var map;
-//var markers = [];
 var travelMode;
+var travelModeElement = $('#mode_travel');
 
 // Order of operations for the trip planner (each function will have detailed notes):
 // 1) Calculate a user's route, with directions.
@@ -17,9 +17,6 @@ var travelMode;
 $(document).ready(function () {
     $('.active').toggleClass('active');
     $('#trip-planner').toggleClass('active');
-    //TODO(zemadi): Remove two lines below.
-    $('#start').val('1900 rock st mountain view');
-    $('#end').val('725 san antonio palo alto');
 });
 
 // Run these functions after setting geolocation. All except setFormDateTime() are dependent on geolocation to run.
@@ -37,7 +34,7 @@ function setDirectionsDisplay(map) {
 
 // Listener for if the mode of travel is changed from an empty default to either bicycling or walking.
 function formListener() {
-    $('#mode_travel').change(function(){
+    travelModeElement.change(function(){
         // Launch route calculation, markers, and directions panel.
         calcRoute();
     });
@@ -46,10 +43,10 @@ function formListener() {
 // Once the mode of travel is selected, start calculating routes and get marker data.
 function calcRoute() {
     var directionsService = new google.maps.DirectionsService();
-    var start = document.getElementById('start').value;
-    var end = document.getElementById('end').value;
+    var start = $('#start').val();
+    var end = $('#end').val();
 
-    travelMode = document.getElementById('mode_travel').value;
+    travelMode = travelModeElement.val();
     var request = {
         origin: start,
         destination: end,
@@ -136,7 +133,7 @@ function narrowResults(queryResults, directionsResponse) {
     // Variables needed for routeBoxer.
     var path = directionsResponse.routes[0].overview_path;
     var rboxer = new RouteBoxer();
-    var boxes = rboxer.box(path, .02); // Second param is a boundary in km from the route path.
+    var boxes = rboxer.box(path, .03); // Second param is a boundary in km from the route path.
 
     //Variables to hold mapData and match a marker to a specific section of the route.
     var mapData = {'objects': []};
@@ -206,14 +203,27 @@ function mapDirectionsToBoxes(boxes, directionsResponse, mapBoxesAndMarkers){
 }
 
 function generateDirectionsPanel(directionsResponse) {
-    var directionsPanelHtml = $('#custom-directions-panel').html();
+    var directionsPanel = $('#directions-panel');
+    var directionsPanelHtml = $('#directions-panel-template').html();
+    var newSearchTrigger = $('#new-search-trigger');
     var template = Handlebars.compile(directionsPanelHtml);
     var compiledDirectionsPanel = template(directionsResponse.routes[0].legs[0]);
 
-    var directionsPanel = $('#directions-panel');
     if (directionsPanel[0].children.length > 0) {
        directionsPanel[0].innerHTML = compiledDirectionsPanel;
     } else {
       directionsPanel.append(compiledDirectionsPanel);
     }
+
+    // Close the trip planner form and display the directions panel.
+    $('#trip-planner-form').addClass('closed');
+    directionsPanel.removeClass('closed');
+    newSearchTrigger.removeClass('hidden');
+
+    // Listen for a new search event, which shows the form and closes the directions panel.
+    newSearchTrigger.click(function(){
+        directionsPanel.addClass('closed');
+        newSearchTrigger.addClass('hidden');
+        $('#trip-planner-form').removeClass('closed');
+    });
 }
