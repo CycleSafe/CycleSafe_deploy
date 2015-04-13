@@ -142,7 +142,7 @@ function narrowResults(queryResults, directionsResponse) {
 
     // For each section of the route, look through markers to see if any fit in the section's boundaries.
     // Using a for loop here because routeBoxer returns an array.
-    for (var j = 0; j < boxes.length; j++) {
+    for (var j = 0, b=boxes.length; j < b; j++) {
         // For each section of the route, record the index as a key and create an empty array to hold marker values.
         mapBoxesAndMarkers[j] = [];
         queryResults.forEach(function(result) {
@@ -177,7 +177,7 @@ function mapDirectionsToBoxes(boxes, directionsResponse, mapBoxesAndMarkers){
     // go through each step and set of lat lngs per step.
      directions.forEach(function(direction) {
         var routeBoxesinDirection = [];
-        for (var l = 0; l < boxes.length; l++) {
+        for (var l = 0, b=boxes.length; l < b; l++) {
             direction.lat_lngs.forEach(function(lat_lng) {
                 // If the index isn't already in the array and the box contains the current route's lat and long, add the
                 // index.
