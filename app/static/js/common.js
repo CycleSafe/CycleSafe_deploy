@@ -213,4 +213,3 @@ function httpGet(requestUrl) {
 
     return JSON.parse(xmlHttp.responseText);
 }
-
