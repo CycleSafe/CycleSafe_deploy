@@ -1,11 +1,12 @@
-** Notes:**
- This is the CycleSafe_deploy project, found here: https://github.com/zemadi/CycleSafe_deploy (python/django)
- It is a reimplementation of this project: https://github.com/zemadi/CycleSafe (groovy/rails)
+## Get started with CycleSafe
+#### We make roads safer for everyone.
 
+CycleSafe allows cyclists and pedestrians to view and report road hazards.
+This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</a>, a <a href="https://www.codeforamerica.org/">Code for America</a> brigade.
+
+### Instructions to run CycleSafe locally
 **Installing into a virtual evironment is highly recommended!**
-NOTE: You will need to install MySQL for running in production mode.
 
-## Instructions for getting set up (from scratch):
 1. install python 2.7
 2. install pip and python-dev (to get django)
 3. > python get-pip.py
@@ -34,7 +35,7 @@ NOTE: You will need to install MySQL for running in production mode.
   
  For mysql:
    1. Create a new DB in MySQL.
-   2. Add that info to local_settings.py or settings.py **(change settings.py only for production)** 
+   2. Add that info to local_settings.py (don't change settings.py)
    3. Redo schemamigration and migrate in step 7.
 
 8. Run Django's DB management tools: syncdb, schemamigration, and migrate. Read up on these if you don't know what they already are, THEN:
