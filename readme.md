@@ -10,8 +10,6 @@ This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</
 1. install python 2.7
 2. install pip and (if using Linux) python-dev
 3. > python get-pip.py
-
-   > pip install python-dev
  
 4. Install requirements.
  For local mode only: 
