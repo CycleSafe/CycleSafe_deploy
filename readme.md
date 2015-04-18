@@ -8,14 +8,14 @@ This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</
 **Installing into a virtual evironment is highly recommended!**
 
 1. install python 2.7
-2. install pip and python-dev (to get django)
+2. install pip and (if using Linux) python-dev
 3. > python get-pip.py
 
    > pip install python-dev
  
 4. Install requirements.
  For local mode only: 
-   > -pip install -r local_requirements.txt
+   > pip install -r local_requirements.txt
   
   NOTE: If you have a problem with MySQl-Python in production, follow instructions here: http://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found
 
