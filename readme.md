@@ -17,12 +17,10 @@ This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</
   
   NOTE: If you have a problem with MySQl-Python in production, follow instructions here: http://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found
 
-5. Get the secret key from someone already on the project. Add it as an environment variable. 
-6. If you are using virtualenv, add the secret key to YOURENVIRONMENTNAME/bin/activate:
- 
-   > export SECRET_KEY='ADD_YOUR_SECRET_KEY_STRING_HERE'
+5. Django requires that every project use a secret key. Generate a local settings file containing a local secret key (credit to <a href="https://github.com/netinept">@netinept</a> for the idea):
+ > KEY="$(openssl rand -base64 40)" && printf "SECRET_KEY = '%s' \nDEBUG = True \nTEMPLATE_DEBUG = True" $KEY > ./cyclesafe/local_settings.py
 
-7. Follow the instructions to make sure your DB is set up properly.
+6. Follow the instructions to make sure your DB is set up properly.
   To get your own DB set up, do the following:
   
   For sqlite3:
@@ -36,7 +34,7 @@ This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</
    2. Add that info to local_settings.py (don't change settings.py)
    3. Redo schemamigration and migrate in step 7.
 
-8. Run Django's DB management tools: syncdb, schemamigration, and migrate. Read up on these if you don't know what they already are, THEN:
+7. Run Django's DB management tools: syncdb, schemamigration, and migrate. Read up on these if you don't know what they already are, THEN:
    > python manage.py syncdb
 
    > python manage.py schemamigration app --initial
@@ -45,7 +43,7 @@ This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</
    
    > python manage.py migrate tastypie
    
-9. Run your local server
+8. Run your local server
   > python manage.py runserver 0.0.0.0:8000 (or leave the IP address and port run on your localhost default)
   
 Other links:
