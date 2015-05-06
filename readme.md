@@ -67,27 +67,42 @@ Right now there's only two commands needed to build our frontend but this could 
  This is the CycleSafe_deploy project, found here: https://github.com/zemadi/CycleSafe_deploy (python/django)
  It is a reimplementation of this project: https://github.com/zemadi/CycleSafe (groovy/rails)
 
-**Installing into a virtual evironment is highly recommended!**
-NOTE: You will need to install MySQL for running in production mode.
+## Get started with CycleSafe
+#### We make roads safer for everyone.
 
+CycleSafe allows cyclists and pedestrians to view and report road hazards.
+This project is part of <a href="http://codeforsanjose.com/">Code for San Jose</a>, a <a href="https://www.codeforamerica.org/">Code for America</a> brigade.
+
+### Instructions to run CycleSafe locally
+**Installing into a virtual evironment is highly recommended!**
 
 1. install python 2.7
-2. install pip (to get django)
+2. install pip and (if using Linux) python-dev
 3. > python get-pip.py
  
 4. Install requirements.
- For development mode only: 
-   > -pip install -r local_requirements.txt
-
- For production mode:
-   > pip install -r prod_requirements.txt
+ For local mode only: 
+   > pip install -r local_requirements.txt
   
   NOTE: If you have a problem with MySQl-Python in production, follow instructions here: http://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found
 
-5. Get the secret key from someone already on the project. Add it as an environment variable. 
-6. If you are using virtualenv, add the secret key to YOURENVIRONMENTNAME/bin/activate:
-7. 
-   > export SECRET_KEY='ADD_YOUR_SECRET_KEY_STRING_HERE'
+5. Django requires that every project use a secret key. Generate a local settings file containing a local secret key (credit to <a href="https://github.com/netinept">@netinept</a> for the idea):
+ > KEY="$(openssl rand -base64 40)" && printf "SECRET_KEY = '%s' \nDEBUG = True \nTEMPLATE_DEBUG = True" $KEY > ./cyclesafe/local_settings.py
+
+6. Follow the instructions to make sure your DB is set up properly.
+  To get your own DB set up, do the following:
+  
+  For sqlite3:
+   1. Create a new instance of sqlite3 in the project root, /CycleSafe_deploy
+   2. Edit local_settings.py with your new DB info.
+   3. Redo schemamigration and migrate in step 7.
+  
+  
+ For mysql:
+   1. Create a new DB in MySQL.
+   2. Add that info to local_settings.py (don't change settings.py)
+   3. Redo schemamigration and migrate in step 7.
+
 7. Run Django's DB management tools: syncdb, schemamigration, and migrate. Read up on these if you don't know what they already are, THEN:
    > python manage.py syncdb
 
@@ -99,19 +114,6 @@ NOTE: You will need to install MySQL for running in production mode.
    
 8. Run your local server
   > python manage.py runserver 0.0.0.0:8000 (or leave the IP address and port run on your localhost default)
- 
-To get your own DB set up, do the following:
-
-For sqlite3:
- 1. Create a new instance of sqlite3 in the project root, /CycleSafe_deploy
- 2. Edit local_settings.py with your new DB info.
- 3. Redo schemamigration and migrate in step 7.
-
-
-For mysql:
- 1. Create a new DB in MySQL.
- 2. Add that info to local_settings.py or settings.py **(change settings.py only for production)** 
- 3. Redo schemamigration and migrate in step 7.
   
 Other links:
 

@@ -2,8 +2,9 @@ from django.conf import settings
 from tastypie import bundle
 from tastypie.authentication import Authentication
 from tastypie.authorization import DjangoAuthorization
+from tastypie.bundle import Bundle
 from tastypie.fields import CharField
-from tastypie.resources import ModelResource, Resource
+from tastypie.resources import ModelResource, Resource, ALL
 from app.models import Hazard
 
 
@@ -23,6 +24,7 @@ class HazardResource(ModelResource):
             # Lookup range in ORM
             "lat": ['gte', 'lte'],
             "lon": ['gte', 'lte'],
+            "user_type": ['exact'],
         }
 
     def query_params(self, bundle):
