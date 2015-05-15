@@ -6,6 +6,7 @@ $(document).ready(function () {
 // Run these functions after setting geolocation. All except setFormDateTime() are dependent on geolocation to run.
 initGeolocation().then(function (coords) {
     map = mapGenerator(coords);
+    searchBoxGenerator('#pac-input', true);
     setFormLatLon(coords[0], coords[1], '#id_lat', '#id_lon');
     setFormListeners();
     setFormDateTime();

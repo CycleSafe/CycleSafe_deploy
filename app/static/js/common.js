@@ -60,7 +60,7 @@ function error(err) {
 
 
 //Generate the map and event listeners using lat and lon, set map center to user's location.
-function mapGenerator(coords, skipMarker) {
+function mapGenerator(coords) {
     var mapOptions = {
         center: new google.maps.LatLng(coords[0], coords[1]),
         zoom: 14,
@@ -74,7 +74,6 @@ function mapGenerator(coords, skipMarker) {
 
     //Generate markers and search box.
     markerGenerator(map);
-    searchboxGenerator(map);
 
     return map;
 
@@ -131,13 +130,27 @@ function removeMarkers(deleteMarkers) {
     }
 }
 
-//Add searchbox to map. When place is selected, add markers and lat and lon to form.
-function searchboxGenerator(map) {
-    var markers = [];
+// Adds places search to an input. If needed, positions the searchbox in the top-left of its parent.
+// opt_setLatLon: Optional boolean used in index and report map views.
+function searchBoxGenerator(searchBoxSelector, opt_setLatLon) {
     // Create the search box and link it to the UI element.
-    var input = document.getElementById('pac-input');
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    var searchBox = new google.maps.places.SearchBox(input);
+    var placesInputs = $(searchBoxSelector);
+    var searchBoxes = [];
+
+    for (var a = 0; a < placesInputs.length; a++) {
+        var searchBox = new google.maps.places.SearchBox(placesInputs[a]);
+        searchBoxes.push(searchBox);
+    }
+
+    if (opt_setLatLon) {
+        searchBoxSetLatLon(searchBoxes);
+    }
+}
+
+// Set a latitude and longitude on the map for index and report map views.
+function searchBoxSetLatLon(searchBoxes){
+    var markers = [];
+    var searchBox = searchBoxes[0];
 
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
@@ -152,7 +165,6 @@ function searchboxGenerator(map) {
         }
 
         // For each place, get the icon, place name, and location.
-        // markers = [];
         var bounds = new google.maps.LatLngBounds();
         for (var i = 0, place; place = places[i]; i++) {
             var image = {
@@ -183,7 +195,6 @@ function searchboxGenerator(map) {
             return setFormLatLon(lat, lon, '#id_lat', '#id_lon');
         }
     });
-
 }
 
 //Set latitude and longitude in forms.
@@ -198,11 +209,9 @@ function setFormLatLon(lat, lon, element1, element2) {
     return true;
 }
 
-// Convert coordinates to an address (coords must be an array [lat, lon]).
-function coordsToAddress(coords) {
-    var test = httpGet('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coords[0] + ',' + coords[1]);
-
-    return test;
+// Special numeric sort function to account for negative values.
+function compareNumbers(a, b) {
+  return a - b;
 }
 
 //Get data from API to generate markers.

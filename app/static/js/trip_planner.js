@@ -17,6 +17,7 @@ var travelModeElement = $('#mode_travel');
 $(document).ready(function () {
     $('.active').toggleClass('active');
     $('#trip-planner').toggleClass('active');
+    searchBoxGenerator('.places-input');
 });
 
 // Run these functions after setting geolocation. All except setFormDateTime() are dependent on geolocation to run.
@@ -86,39 +87,26 @@ function getMarkers(response){
     }
 
     // Build the query string, limiting the results for cyclists and pedestrians.
-    var queryString = '/api/v1/hazard/?format=json&?user_type=' + userType;
+    var queryString = '/api/v1/hazard/?format=json&user_type=' + userType;
 
     // Get the maximum and minimum lat/lon bounds for the route.
     // This will narrow the query to a box around the route as a whole.
     var routeBounds = getBounds(response.routes[0].bounds);
-
-    // TODO(zemadi): Look up alternatives for building the querystring.
-    //Build the querystring. Negative numbers require different greater/less than logic,
-    // so testing for that here.
-    if (routeBounds.lat1 >= 0 && routeBounds.lat2 >= 0) {
-        queryString += '&lat__gte=' + routeBounds.lat1 + '&lat__lte=' + routeBounds.lat2;
-    } else {
-        queryString += '&lat__gte=' + routeBounds.lat2 + '&lat__lte=' + routeBounds.lat1;
-    }
-
-    if (routeBounds.lon1 >= 0 && routeBounds.lon2 >= 0) {
-        queryString += '&lon__gte=' + routeBounds.lon1 + '&lon__lte=' + routeBounds.lon2;
-    } else {
-        queryString += '&lon__gte=' + routeBounds.lon2 + '&lon__lte=' + routeBounds.lon1;
-    }
+    queryString += '&lat__gte=' + routeBounds.lats[0] + '&lat__lte=' + routeBounds.lats[1] +
+        '&lon__gte=' + routeBounds.lons[0] + '&lon__lte=' + routeBounds.lons[1];
 
     return httpGet(queryString);
 }
 
-// Function to get coordinate boundaries from the Directions route callback.
+// Function to get sorted coordinate boundaries from the Directions route callback.
 function getBounds(data) {
     var coordinateBounds = {};
-    var keyByIndex = Object.keys(data);
 
-    coordinateBounds['lat1'] = data[keyByIndex[0]]['k'];
-    coordinateBounds['lat2'] = data[keyByIndex[0]]['j'];
-    coordinateBounds['lon1'] = data[keyByIndex[1]]['k'];
-    coordinateBounds['lon2'] = data[keyByIndex[1]]['j'];
+    // Sort lats and lons so that the query can have greater than/less than values.
+    // Apply a special compareFunction so that negative numbers are sorted properly.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    coordinateBounds['lats'] = [data.getSouthWest().lat(), data.getNorthEast().lat()].sort(compareNumbers);
+    coordinateBounds['lons'] = [data.getSouthWest().lng(), data.getNorthEast().lng()].sort(compareNumbers);
 
     return coordinateBounds;
 }
