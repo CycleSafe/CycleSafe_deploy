@@ -10,4 +10,4 @@ app/migrations/*
 .idea
 local_settings_old.py
 local_settings.py
-node_modules/*
+node_modules

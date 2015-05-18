@@ -2,12 +2,12 @@ var React = require('react/addons'),
     $ = require('jquery'),
     ReactGoogleMaps = require('react-google-maps'),
     GoogleMaps = ReactGoogleMaps.GoogleMaps,
-    Marker = GoogleMaps.Marker,
-    InfoWindow = GoogleMaps.InfoWindow;
+    Marker = ReactGoogleMaps.Marker,
+    InfoWindow = ReactGoogleMaps.InfoWindow;
 
 var CSViewMap  = React.createClass({displayName: "CSViewMap",
     getInitialState: function(){
-        return {coords:{lat:37.6,lng:-95.665},zoom:5,selectedCoords:[],markerData: []}
+        return {coords:{lat:37.6,lng:-95.665},zoom:5,selectedCoords:[],markerData:{meta:{},objects:[]}}
     },
     componentDidMount: function(){
         var geoOptions = {
@@ -40,7 +40,7 @@ var CSViewMap  = React.createClass({displayName: "CSViewMap",
         return (
             React.createElement("div", null, 
                 React.createElement("div", {className: "nav"}, React.createElement("span", {className: "title"}, "CycleSafe")), 
-                React.createElement(CSMap, {handleClick: this.handleMapClick, coords: this.state.coords, zoom: this.state.zoom}), 
+                React.createElement(CSMap, {handleClick: this.handleMapClick, markerData: this.state.markerData, coords: this.state.coords, zoom: this.state.zoom}), 
                 React.createElement(CSUtils, {selectedCoords: this.state.selectedCoords})
             )
         )
@@ -59,7 +59,15 @@ var CSMap = React.createClass({displayName: "CSMap",
             onClick: this.handleClick, 
             googleMapsApi: google.maps, 
             zoom: this.props.zoom, 
-            center: {lat: this.props.coords.lat, lng: this.props.coords.lng}})
+            center: {lat: this.props.coords.lat, lng: this.props.coords.lng}}, 
+            this.props.markerData.objects.map(function(marker, index){
+                return (
+                    React.createElement(Marker, {
+                      position: new google.maps.LatLng(marker.lat,marker.lon), 
+                      key: marker.date_time})
+                )
+            }, this)
+            )
         )
     },
     handleClick: function(e){
