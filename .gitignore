@@ -9,3 +9,5 @@ app/migrations/*
 *.sass-cache
 .idea
 local_settings_old.py
+local_settings.py
+node_modules/*

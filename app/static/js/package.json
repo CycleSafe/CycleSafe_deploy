@@ -1,0 +1,13 @@
+{
+  "name": "js",
+  "version": "0.0.0",
+  "description": "CycleSafe",
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "react": "^0.13.3",
+    "react-google-maps": "^1.2.0"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
