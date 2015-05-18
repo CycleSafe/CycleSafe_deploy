@@ -1,13 +1,28 @@
+#General
+*.swp
+*.DS_Store
+*.map
+
+#Python
 venv
 *.pyc
+
+#Sqlite3
 db.sqlite3
-*.idea
-app/migrations/*
 *.sqlite3
-*.css.map
-*.swp
-*.sass-cache
+
+#IntelliJ
+*.idea
 .idea
-local_settings_old.py
+
+#CycleSafe App
+app/migrations/*
 local_settings.py
-node_modules
+local_settings_old.py
+
+#SASS
+.sass-cache/
+
+#NPM Modules
+node_modules/
+
