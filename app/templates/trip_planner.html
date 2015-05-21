@@ -18,11 +18,13 @@
 				<div id="trip-planner-form" class="slider">
 					<div class="medium-4 columns">
 						<label>Start: </label>
-						<input id="start" class="trip-planner-form" type="text">
+						<input id="start" class="trip-planner-form places-input"
+							   type="text" placeholder="Search for a location">
 					</div>
 					<div class="medium-4 columns">
 						<label>End: </label>
-						<input id="end" class="trip-planner-form" type="text">
+						<input id="end" class="trip-planner-form places-input"
+							   type="text" placeholder="Search for a location">
 					</div>
 					<div class="medium-4 columns">
 						<label>Mode of Travel: </label>
@@ -39,9 +41,6 @@
 			</div>
 		</div>
 		<div class="medium-12 columns">
-			<!-- TODO(zemadi): Add places search. -->
-			<input id="pac-input" class="controls" type="text"
-				   placeholder="Places search is currently disabled. We'll add this feature soon!">
 			<div id="map-canvas" class="edit-form-map"></div>
 			<div id="directions-panel"></div>
 		</div>
