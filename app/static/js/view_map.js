@@ -48,27 +48,64 @@ var CSViewMap  = React.createClass({displayName: "CSViewMap",
 });
 
 var CSMap = React.createClass({displayName: "CSMap",
+    getInitialState: function(){
+        /* infoCenter is set when an InfoWindow is open. This is so that when CSMap is re-rendered, it won't flash back to the old coordinates before panning */
+        return {infoOpen: false, infoCenter:{}}
+    },
     render:function(){
+        var center={}
+        this.state.infoOpen?center=this.state.infoCenter:center={lat: this.props.coords.lat, lng: this.props.coords.lng}
+        console.log(center);
         return (
             React.createElement(GoogleMaps, {
-            containerProps: 
-                {
-                  className:"map-canvas"
-                }, 
-            
-            onClick: this.handleClick, 
-            googleMapsApi: google.maps, 
-            zoom: this.props.zoom, 
-            center: {lat: this.props.coords.lat, lng: this.props.coords.lng}}, 
-            this.props.markerData.objects.map(function(marker, index){
-                return (
-                    React.createElement(Marker, {
-                      position: new google.maps.LatLng(marker.lat,marker.lon), 
-                      key: marker.date_time})
-                )
-            }, this)
+                containerProps: 
+                    {
+                      className:"map-canvas"
+                    }, 
+                
+                onClick: this.handleClick, 
+                googleMapsApi: google.maps, 
+                zoom: this.props.zoom, 
+                center: center}, 
+                this.props.markerData.objects.map(toMarker,this)
             )
         )
+
+        function toMarker(marker,index){
+            return (
+                React.createElement(Marker, {
+                    ref: "marker-"+index, 
+                    position: new google.maps.LatLng(marker.lat,marker.lon), 
+                    key: index, 
+                    onMouseover: this.handleMouseOver.bind(this,marker)}, 
+                    renderInfoWindow.call(this,marker,index,this.ref)
+                )
+            )
+        }
+
+        function renderInfoWindow(marker,index){
+            var markerRef="marker-"+index;
+            var contentString = '<div class="infoindow">' +
+            '<h4><span class="blue">User: </span>' + marker.user_type + '</h4>' +
+            '<p> <span class="blue">Date and Time: </span>' + marker.date_time + '<br>' +
+            '<span class="blue">Hazard: </span>' + marker.hazard_type + '<br>' +
+            '<span class="blue">Description: </span>' + marker.description + '</p>' +
+            '</div>';
+            return marker.showInfo ? React.createElement(InfoWindow, {disableAutoPan: true, content: contentString, owner: markerRef, onCloseclick: this.handleCloseClick.bind(this, marker)}) : null;
+        }
+    },
+    handleMouseOver: function(marker,index,e){
+        if(!marker.showInfo){
+            marker.showInfo = true;
+            /* parseFloat is changing the decimals by a small amount */
+            this.setState({infoOpen:true,infoCenter:{lat:parseFloat(marker.lat),lng:parseFloat(marker.lon)}});
+        }
+    },
+    handleCloseClick: function(marker){
+        if(marker.showInfo){
+            marker.showInfo = false;
+            this.forceUpdate();
+        }
     },
     handleClick: function(e){
         this.props.handleClick(e);
