@@ -8,7 +8,7 @@
 	<title>CycleSafe</title>
 	<meta name="viewport" content="width=device-width , initial-scale=1.0">
 	<meta name="description" content="">
-	<meta name="author" content="Zhila Emadi, Danny McCue, Ghaida Zahran">
+	<meta name="author" content="Zhila Emadi, Danny McCue, Zach Pallin, Ajay Ramesh, Ghaida Zahran">
 	<link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}css/app.css" rel="stylesheet">
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
@@ -53,6 +53,8 @@
 		{% block main %}
 		{% endblock %}
 
+		{% include '_cyclesafe_handlebars.html' %}
+
 <!-- Footer
 	================================================== -->
 	<footer class="footer">
@@ -65,6 +67,8 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYj-5SiLbT7Ssu4c4q2nUIUZK4Q3lJYFI&sensor=true&libraries=places"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/foundation.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/foundation.reveal.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/handlebars-v3.0.0.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/handlebars_helpers.js"></script>
 	<script>$(document).foundation();</script>
 
 	{# For loading scripts at the bottom of the view. #}

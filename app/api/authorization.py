@@ -34,7 +34,7 @@ class AdminObjectsOnlyAuthorization(Authorization):
             raise Unauthorized("You are not allowed to make any modifications to the data.")
 
     def delete_detail(self, object_list, bundle):
-        if bundle.request.user.is_superuser:
+        if bundle.obj.user == bundle.request.user:
             return True
         else:
             raise Unauthorized("You are not allowed to make any modifications to the data.")

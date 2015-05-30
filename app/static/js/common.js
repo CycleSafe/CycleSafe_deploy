@@ -1,10 +1,12 @@
 // Common js file for all maps.
 
 var coords;
+var baseRequestUrl = '/api/v1/hazard/?format=json';
 var defaultLat = 37.3394444;
 var defaultLon = -121.8938889;
 var deferred = new $.Deferred();
 var mapMarkers = [];
+var infowindowTemplate = Handlebars.compile($('#infowindow-content-template').html());
 
 //Run geolocation checks. Success and error callbacks are separate functions.
 function initGeolocation() {
@@ -87,7 +89,7 @@ function markerGenerator(map, mapData) {
 
     // TODO(zemadi): Build a limit on the query so only data points within the map bounds are displayed.
     if (!mapData) {
-     var mapData = httpGet('/api/v1/hazard/?format=json');
+     var mapData = httpRequest(baseRequestUrl, 'GET');
     }
 
     //Add markers to map.
@@ -99,26 +101,25 @@ function markerGenerator(map, mapData) {
             title: mapData.objects[i].description
 
         });
-        contentString = '<div class="infoindow">' +
-            '<h4><span class="blue">User: </span>' + mapData.objects[i].user_type + '</h4>' +
-            '<p> <span class="blue">Date and Time: </span>' + mapData.objects[i].date_time + '<br>' +
-            '<span class="blue">Hazard: </span>' + mapData.objects[i].hazard_type + '<br>' +
-            '<span class="blue">Description: </span>' + mapData.objects[i].description + '</p>' +
-            '</div>';
 
-        google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString) {
+        var infoWindowContent = infowindowTemplate(mapData.objects[i]);
+
+        google.maps.event.addListener(marker, 'mouseover', (function (marker, infoWindowContent) {
             return function () {
-                infoWindow.setContent(contentString);
+                infoWindow.setContent(infoWindowContent);
                 infoWindow.open(map, marker);
             }
-        })(marker, contentString));
+        })(marker, infoWindowContent));
         mapMarkers.push(marker);
     }
+
+    initDeleteListener();
+
     return mapMarkers;
 }
 
 // Hide and optionally remove all existing markers from a map and the map object.
-function removeMarkers(deleteMarkers) {
+function removeMarkersFromMap(deleteMarkers) {
     // Hide the markers on the map.
     for(i = 0; i < mapMarkers.length; i++) {
         mapMarkers[i].setMap(null);
@@ -209,16 +210,31 @@ function setFormLatLon(lat, lon, element1, element2) {
     return true;
 }
 
+// Delete the hazard record.
+function initDeleteListener() {
+    $('body').on('click', '.delete-marker', null, function() {
+        var requestUrl = baseRequestUrl + '&id=' + this.getAttribute('data-hazard-id');
+        console.log(requestUrl);
+        httpRequest(requestUrl, 'DELETE');
+    });
+
+    return true;
+}
+
 // Special numeric sort function to account for negative values.
 function compareNumbers(a, b) {
   return a - b;
 }
 
-//Get data from API to generate markers.
-function httpGet(requestUrl) {
+// Http request handler.
+function httpRequest(requestUrl, requestType) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", requestUrl, false);
+    xmlHttp.open(requestType, requestUrl, false);
     xmlHttp.send(null);
 
-    return JSON.parse(xmlHttp.responseText);
+    if (xmlHttp.responseText) {
+     return JSON.parse(xmlHttp.responseText);
+    } else {
+        return xmlHttp;
+    }
 }

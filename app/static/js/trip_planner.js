@@ -59,7 +59,7 @@ function calcRoute() {
             directionsDisplay.setDirections(response);
 
             // Remove existing markers from the map and map object.
-            removeMarkers(true);
+            removeMarkersFromMap(true);
 
             queryResults = getMarkers(response);
             // Check if results are along the route.
@@ -95,7 +95,7 @@ function getMarkers(response){
     queryString += '&lat__gte=' + routeBounds.lats[0] + '&lat__lte=' + routeBounds.lats[1] +
         '&lon__gte=' + routeBounds.lons[0] + '&lon__lte=' + routeBounds.lons[1];
 
-    return httpGet(queryString);
+    return httpRequest(queryString, 'GET');
 }
 
 // Function to get sorted coordinate boundaries from the Directions route callback.

@@ -44,15 +44,12 @@
 			<div id="map-canvas" class="edit-form-map"></div>
 			<div id="directions-panel"></div>
 		</div>
-		{% include 'trip_planner_handlebars.html' %}
 	</div>
 {% endblock %}
 
 {% block scripts_bottom %}
 	<script type="text/javascript"
 			src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/handlebars-v3.0.0.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/handlebars_helpers.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/common.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/trip_planner.js"></script>
 {% endblock %}

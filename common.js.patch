@@ -1,0 +1,26 @@
+Index: local_history.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- local_history.patch	(revision )
++++ local_history.patch	(revision )
+@@ -0,0 +1,1 @@
++
+\ No newline at end of file
+Index: app/static/js/common.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/static/js/common.js	(revision )
++++ app/static/js/common.js	(revision )
+@@ -235,6 +235,6 @@
+     if (xmlHttp.responseText) {
+      return JSON.parse(xmlHttp.responseText);
+     } else {
+-        console.log(xmlHttp);
++        return xmlHttp;
+     }
+ }
+\ No newline at end of file

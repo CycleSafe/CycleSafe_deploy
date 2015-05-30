@@ -1,4 +1,23 @@
 {% verbatim %}
+	<!-- Handlebars templates used in Cyclesafe. -->
+
+	<!-- Maps infowindow builder. -->
+	<script id="infowindow-content-template" type="text/x-handlebars-template">
+		<div>
+			<div class="infowindow-main-content">
+				<h4><span class="blue">User: </span>{{this.user_type}}</h4>
+				<p><span class="blue">Date and Time: </span>{{this.date_time}}<br>
+				<span class="blue">Hazard: </span>{{this.hazard_type}}<br>
+				<span class="blue">Description: </span>{{this.description}}</p>
+			</div>
+			<div class="infowindow-additional-content">
+				<div class="delete-marker" data-hazard-id="{{this.id}}">DELETE THIS MARKER</div>
+			</div>
+        </div>
+	</script>
+
+
+	<!-- Trip planner directions panel. -->
 	<script id="directions-panel-template" type="text/x-handlebars-template">
 		<!-- Container -->
 		<div class="medium-12 columns directions-panel-container">

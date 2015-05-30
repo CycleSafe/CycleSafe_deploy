@@ -1,7 +1,7 @@
 from django.conf import settings
 from tastypie import bundle
 from tastypie.authentication import Authentication
-from tastypie.authorization import DjangoAuthorization
+from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.bundle import Bundle
 from tastypie.fields import CharField
 from tastypie.resources import ModelResource, Resource, ALL
@@ -25,6 +25,7 @@ class HazardResource(ModelResource):
             "lat": ['gte', 'lte'],
             "lon": ['gte', 'lte'],
             "user_type": ['exact'],
+            "id": ['exact']
         }
 
     def query_params(self, bundle):

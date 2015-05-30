@@ -1,0 +1,16 @@
+Index: app/static/js/common.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/static/js/common.js	(revision )
++++ app/static/js/common.js	(revision )
+@@ -235,6 +235,6 @@
+     if (xmlHttp.responseText) {
+      return JSON.parse(xmlHttp.responseText);
+     } else {
+-        console.log(xmlHttp);
++        return xmlHttp;
+     }
+ }
+\ No newline at end of file

@@ -56,6 +56,31 @@
         border-bottom: none;
     }
 
+/* Marker styling */
+
+.infowindow-additional-content {
+    padding: 0 2px 10px 0;
+    text-align: right;
+}
+
+.delete-marker {
+  background-color: rgba(216,67,21,0.8);
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 5px 0 5px;
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.delete-marker:active {
+  background-color: rgb(216,67,21);
+}
+
 /* Map CSS */
 
     #modal-img {
@@ -159,7 +184,7 @@
     align-self: auto;
     }
 
-/* Additional styling on directions panel elements*/
+/* Additional styling on directions panel elements */
 .adp-maneuver {
     display: inline-block;
 }
