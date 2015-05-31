@@ -72,8 +72,8 @@ function mapGenerator(coords) {
         document.getElementById("map-canvas"),
         mapOptions);
 
-    //Generate markers and search box.
-    markerGenerator(map);
+    // TODO(zemadi): Build a limit on the query so only data points within the map bounds are displayed.
+    httpGet('/api/v1/hazard/?format=json', markerGenerator.bind(this, map));
 
     return map;
 
@@ -84,11 +84,6 @@ function markerGenerator(map, mapData) {
     //Get current data for map.
     var contentString;
     var infoWindow = new google.maps.InfoWindow();
-
-    // TODO(zemadi): Build a limit on the query so only data points within the map bounds are displayed.
-    if (!mapData) {
-     var mapData = httpGet('/api/v1/hazard/?format=json');
-    }
 
     //Add markers to map.
     for (var i = 0; i < mapData.objects.length; i++) {
@@ -214,11 +209,24 @@ function compareNumbers(a, b) {
   return a - b;
 }
 
-//Get data from API to generate markers.
-function httpGet(requestUrl) {
+//Get data from API to generate markers. Callback function is optional.
+function httpGet(requestUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", requestUrl, false);
-    xmlHttp.send(null);
+    xmlHttp.open("GET", requestUrl, true);
 
-    return JSON.parse(xmlHttp.responseText);
+    xmlHttp.onload = function (e) {
+      if (xmlHttp.readyState === 4) {
+        if (xmlHttp.status === 200) {
+            // If there's a callback, call it and pass in the response. If not, return the response.
+            return callback ? callback(JSON.parse(xmlHttp.responseText)) : JSON.parse(xmlHttp.responseText);
+        } else {
+          return console.error(xmlHttp.statusText);
+        }
+      }
+    };
+    xmlHttp.onerror = function (e) {
+      return console.error(xmlHttp.statusText);
+    };
+
+    xmlHttp.send(null);
 }
