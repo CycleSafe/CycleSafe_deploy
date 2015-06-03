@@ -120,8 +120,6 @@ TEMPLATE_LOADERS = ('django.template.loaders.filesystem.Loader', 'django.templat
 # Media_url specifies the location of user-uploaded files.
 MEDIA_URL = '/static/media/'
 STATIC_URL = '/static/'
-# NOTE: The STATIC_ROOT directory is where staticfiles need to be stored. This may need to be changed depending on
-# OpenShift's requirements.
 STATIC_ROOT = os.path.join(PROJECT_DIR, '..', 'static')
 
 STATICFILES_FINDERS = (

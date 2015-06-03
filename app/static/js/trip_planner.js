@@ -61,16 +61,8 @@ function calcRoute() {
             // Remove existing markers from the map and map object.
             removeMarkers(true);
 
-            queryResults = getMarkers(response);
-            // Check if results are along the route.
-            if (queryResults.objects.length > 0) {
-                // Filter the query results further by comparing coords with each route section.
-                narrowResults(queryResults.objects, response);
-            // If no query results, set the marker count to 0 and generate the directions panel.
-            } else {
-                response.routes[0].legs[0]['marker_count'] = 0;
-                generateDirectionsPanel(response);
-            }
+            getMarkers(response);
+
         }
     });
 
@@ -78,7 +70,7 @@ function calcRoute() {
 
 // Get markers near a route. This is done by getting the boundaries for the route as a whole and using those
 // as query params.
-function getMarkers(response){
+function getMarkers(directionsResponse){
     var userType;
     if (travelMode == "BICYCLING") {
         userType = 1;
@@ -91,11 +83,24 @@ function getMarkers(response){
 
     // Get the maximum and minimum lat/lon bounds for the route.
     // This will narrow the query to a box around the route as a whole.
-    var routeBounds = getBounds(response.routes[0].bounds);
+    var routeBounds = getBounds(directionsResponse.routes[0].bounds);
     queryString += '&lat__gte=' + routeBounds.lats[0] + '&lat__lte=' + routeBounds.lats[1] +
         '&lon__gte=' + routeBounds.lons[0] + '&lon__lte=' + routeBounds.lons[1];
 
-    return httpGet(queryString);
+    return httpGet(queryString, getMarkersCallback.bind(this, directionsResponse));
+}
+
+// Callback used after httpGet is complete.
+function getMarkersCallback(directionsResponse, queryResults) {
+    // Check if results are along the route.
+    if (queryResults.objects.length > 0) {
+        // Filter the query results further by comparing coords with each route section.
+        narrowResults(queryResults.objects, directionsResponse);
+    // If no query results, set the marker count to 0 and generate the directions panel.
+    } else {
+        directionsResponse.routes[0].legs[0]['marker_count'] = 0;
+        generateDirectionsPanel(directionsResponse);
+    }
 }
 
 // Function to get sorted coordinate boundaries from the Directions route callback.
