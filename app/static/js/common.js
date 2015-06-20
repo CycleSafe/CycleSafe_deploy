@@ -1,10 +1,13 @@
 // Common js file for all maps.
 
 var coords;
+var currentZoomLevel = 14;
+var baseQueryString = '/api/v1/hazard/?format=json';
 var defaultLat = 37.3394444;
 var defaultLon = -121.8938889;
 var deferred = new $.Deferred();
 var mapMarkers = [];
+var zoomOutLevels = [9, 10, 11, 12, 13];
 
 //Run geolocation checks. Success and error callbacks are separate functions.
 function initGeolocation() {
@@ -63,20 +66,48 @@ function error(err) {
 function mapGenerator(coords) {
     var mapOptions = {
         center: new google.maps.LatLng(coords[0], coords[1]),
-        zoom: 14,
+        zoom: currentZoomLevel,
         mapTypeId: google.maps.MapTypeId.ROAD
     };
 
     //Create the map at the specified element.
-    var map = new google.maps.Map(
-        document.getElementById("map-canvas"),
-        mapOptions);
+    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-    // TODO(zemadi): Build a limit on the query so only data points within the map bounds are displayed.
-    httpGet('/api/v1/hazard/?format=json', markerGenerator.bind(this, map));
+    // Get marker data the first time the map loads.
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
+        getMarkerData(map);
+    });
+
+    // When map tiles load, get the bounds and run the marker generator.
+    google.maps.event.addListener(map, 'dragend', function() {
+        if (map.getZoom() > 9) {
+            getMarkerData(map);
+        }
+    });
+
+    // Get new data only if the user zooms out to within a range of useful levels.
+    // Other levels are too high to be worth a DB query. Zooming in uses the same data points so
+    // it doesn't need a DB query either.
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        var newZoomLevel = map.getZoom();
+        // If the zoom level is in the list of valid zoom levels, get new marker data.
+        if (zoomOutLevels.indexOf(newZoomLevel) > -1 && currentZoomLevel > newZoomLevel) {
+          getMarkerData(map);
+        };
+        currentZoomLevel = newZoomLevel;
+    });
 
     return map;
 
+}
+
+// Get marker data limited by map bounds.
+function getMarkerData(map) {
+    var routeBounds = getBounds(map.getBounds());
+    var queryString = baseQueryString + '&lat__gte=' + routeBounds.lats[0] + '&lat__lte=' + routeBounds.lats[1] +
+        '&lon__gte=' + routeBounds.lons[0] + '&lon__lte=' + routeBounds.lons[1];
+
+    return httpGet(queryString, markerGenerator.bind(this, map));
 }
 
 //Generate map markers, info windows, and event listeners.
@@ -155,6 +186,7 @@ function searchBoxSetLatLon(searchBoxes){
         if (places.length == 0) {
             return;
         }
+
         for (var i = 0, marker; marker = markers[i]; i++) {
             marker.setMap(null);
         }
@@ -183,6 +215,9 @@ function searchBoxSetLatLon(searchBoxes){
             //Add marker to map.
             markers.push(marker);
 
+            // Get new marker data.
+            getMarkerData(map);
+
             // Set the marker's lat and lon in the form.
             var lat = place.geometry.location.lat();
             var lon = place.geometry.location.lng();
@@ -207,6 +242,19 @@ function setFormLatLon(lat, lon, element1, element2) {
 // Special numeric sort function to account for negative values.
 function compareNumbers(a, b) {
   return a - b;
+}
+
+// Function to get sorted coordinate boundaries from a LatLng object.
+function getBounds(data) {
+    var coordinateBounds = {};
+
+    // Sort lats and lons so that the query can have greater than/less than values.
+    // Apply a special compareFunction so that negative numbers are sorted properly.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    coordinateBounds['lats'] = [data.getSouthWest().lat(), data.getNorthEast().lat()].sort(compareNumbers);
+    coordinateBounds['lons'] = [data.getSouthWest().lng(), data.getNorthEast().lng()].sort(compareNumbers);
+
+    return coordinateBounds;
 }
 
 //Get data from API to generate markers. Callback function is optional.
