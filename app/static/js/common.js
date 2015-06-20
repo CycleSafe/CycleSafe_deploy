@@ -90,7 +90,8 @@ function mapGenerator(coords) {
     // it doesn't need a DB query either.
     google.maps.event.addListener(map, 'zoom_changed', function() {
         var newZoomLevel = map.getZoom();
-        // If the zoom level is in the list of valid zoom levels, get new marker data.
+        // If the zoom level is in the list of valid levels and if the user zooms out, get new marker data.
+        // We determine if a user has zoomed out by comparing the old and new zoom levels.
         if (zoomOutLevels.indexOf(newZoomLevel) > -1 && currentZoomLevel > newZoomLevel) {
           getMarkerData(map);
         };
