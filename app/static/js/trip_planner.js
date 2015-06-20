@@ -79,7 +79,7 @@ function getMarkers(directionsResponse){
     }
 
     // Build the query string, limiting the results for cyclists and pedestrians.
-    var queryString = '/api/v1/hazard/?format=json&user_type=' + userType;
+    var queryString = baseQueryString +'&user_type=' + userType;
 
     // Get the maximum and minimum lat/lon bounds for the route.
     // This will narrow the query to a box around the route as a whole.
@@ -101,19 +101,6 @@ function getMarkersCallback(directionsResponse, queryResults) {
         directionsResponse.routes[0].legs[0]['marker_count'] = 0;
         generateDirectionsPanel(directionsResponse);
     }
-}
-
-// Function to get sorted coordinate boundaries from the Directions route callback.
-function getBounds(data) {
-    var coordinateBounds = {};
-
-    // Sort lats and lons so that the query can have greater than/less than values.
-    // Apply a special compareFunction so that negative numbers are sorted properly.
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-    coordinateBounds['lats'] = [data.getSouthWest().lat(), data.getNorthEast().lat()].sort(compareNumbers);
-    coordinateBounds['lons'] = [data.getSouthWest().lng(), data.getNorthEast().lng()].sort(compareNumbers);
-
-    return coordinateBounds;
 }
 
 
